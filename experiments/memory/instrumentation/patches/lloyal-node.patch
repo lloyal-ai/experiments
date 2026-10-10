@@ -1,0 +1,37 @@
+diff --git a/src/index.ts b/src/index.ts
+index cf4113e..305fd0b 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -127,6 +127,24 @@ const foreignImages = (binding: NativeBinding): string[] => {
+   );
+ };
+ 
++const recordedImages = new Set<string>();
++const recordBenchIdentity = (binding: NativeBinding): void => {
++  const destination = process.env.LLOYAL_BENCH_IDENTITY_LOG;
++  if (!destination) return;
++  const fs = require('node:fs') as typeof import('node:fs');
++  const crypto = require('node:crypto') as typeof import('node:crypto');
++  const addon = Object.entries(require.cache).find(([p, m]) => p.endsWith('.node') && m?.exports === binding)?.[0];
++  if (!addon) throw new Error('Benchmark identity: loaded addon not found');
++  if (recordedImages.has(addon)) return;
++  const report = process.report.getReport() as unknown as { sharedObjects: string[] };
++  const paths = [...new Set([addon, ...report.sharedObjects.filter(p => /(?:lloyal|llama|ggml|mtmd)/.test(p))])];
++  const files = paths.map(p => ({ path: fs.realpathSync(p), sha256: crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex') }));
++  fs.appendFileSync(destination, JSON.stringify({ schema: 'lloyal.native.identity.v1', pid: process.pid,
++    unixMs: Date.now(), node: process.version, packageRoot: path.resolve(__dirname, '..'),
++    local: process.env.LLOYAL_LOCAL === '1', files }) + '\n');
++  recordedImages.add(addon);
++};
++
+ const claimImage = (binding: NativeBinding): NativeBinding => {
+   const globals = globalThis as unknown as Record<
+     symbol,
+@@ -136,6 +154,7 @@ const claimImage = (binding: NativeBinding): NativeBinding => {
+   const foreign = held ? [] : foreignImages(binding);
+ 
+   if (!held && foreign.length === 0) {
++    recordBenchIdentity(binding);
+     globals[IMAGE_CLAIM] = { binding, owner: __dirname };
+     return binding;
+   }

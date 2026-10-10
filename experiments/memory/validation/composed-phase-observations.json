@@ -1,0 +1,131 @@
+{
+  "version": 1,
+  "comparisonEligible": false,
+  "status": "single observed completed Survey per backend; quality and routing differences retained",
+  "native": {
+    "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+    "attempt": 2,
+    "branches": 8,
+    "context": 32768,
+    "preflight": "coverage cache reused",
+    "plannerMs": 21781,
+    "researchMs": 343604.845875,
+    "synthesisMs": 97067.88445800007,
+    "researchStartToCompleteMs": 443376.45800000004,
+    "totalIncludingReviewMs": 512494.16316700005,
+    "inquiryTokens": 5814,
+    "synthesisTokens": 2021,
+    "researchToolCalls": 22,
+    "firstInquiryFindingMs": 100540.56383300002,
+    "evidenceSeq": {
+      "researchStart": 6918,
+      "firstInquiryReturn": 10341,
+      "researchDone": 18242,
+      "synthesisStart": 18243,
+      "synthesisDone": 24575,
+      "complete": 24585
+    },
+    "synthesisSize": {
+      "answerChars": 5717,
+      "approxVisibleWords": 665,
+      "generatedTokensIncludingReasoning": 2021,
+      "reasoningCharsBeforeEndThink": 3185
+    }
+  },
+  "http": {
+    "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+    "attempt": 1,
+    "preflightMs": 99395.495375,
+    "plannerMs": 12952.231042,
+    "researchMs": 278666.52512500004,
+    "synthesisMs": 188162.27141700004,
+    "researchStartToCompleteMs": 466841.832667,
+    "totalIncludingReviewMs": 606926.555542,
+    "inquiryTokens": 5900,
+    "synthesisTokens": 5694,
+    "researchToolCalls": 26,
+    "http": {
+      "requests": 34,
+      "completed": 34,
+      "failed": 0,
+      "withoutTerminalObservation": 0,
+      "requestBodyBytes": 2736897,
+      "reportedPromptTokens": {
+        "total": 151804,
+        "reportingResponses": 34
+      },
+      "reportedOutputTokens": {
+        "total": 14307,
+        "reportingResponses": 34
+      },
+      "reportedCachedPromptTokens": {
+        "total": 88477,
+        "reportingResponses": 34
+      },
+      "note": "HTTP fields are observed requests only; absent native HTTP is not zero native inference work. Failed/unfinished streams may lack final token counts. Cached tokens do not establish app-owned or continuously resident KV."
+    },
+    "firstInquiryFindingMs": 129098.80220899999,
+    "evidenceSeq": {
+      "preflightDone": 2282,
+      "acceptPlan": 2583,
+      "researchStart": 2584,
+      "firstInquiryReturn": 5311,
+      "researchDone": 7799,
+      "synthesisStart": 7800,
+      "synthesisDone": 13763,
+      "complete": 13765
+    },
+    "followup": {
+      "attempt": 2,
+      "elapsedMs": 50948.01220800006,
+      "http": {
+        "requests": 3,
+        "completed": 3,
+        "failed": 0,
+        "withoutTerminalObservation": 0,
+        "requestBodyBytes": 845327,
+        "reportedPromptTokens": {
+          "total": 20307,
+          "reportingResponses": 3
+        },
+        "reportedOutputTokens": {
+          "total": 897,
+          "reportingResponses": 3
+        },
+        "reportedCachedPromptTokens": {
+          "total": 13214,
+          "reportingResponses": 3
+        },
+        "note": "HTTP fields are observed requests only; absent native HTTP is not zero native inference work. Failed/unfinished streams may lack final token counts. Cached tokens do not establish app-owned or continuously resident KV."
+      },
+      "toolCalls": 2,
+      "libraryReopenVerified": true
+    },
+    "synthesisSize": {
+      "answerChars": 5525,
+      "approxVisibleWords": 732,
+      "generatedTokensIncludingReasoning": 5694,
+      "reasoningChars": 16968
+    }
+  },
+  "limits": [
+    "One completed observation per backend; not repeated estimates.",
+    "Same question, objective descriptions, source originals, main weights/projector/reranker and shared frontend. Planner-selected abilities, tool traces and output lengths differ.",
+    "Native entry/context/build versus stock llama-server are different inference implementations; no isolated KV causal claim.",
+    "Native reused preflight coverage; HTTP performed fresh preflight. Review dwell also differs; compare recorded phases rather than presenting total elapsed as a controlled ratio.",
+    "PDF config provenance differs only in pdfium version field (2.15.0 HTTP vs 2.15.1 native); original PDF, extracted Markdown, rendered page and figure bytes match.",
+    "Output quality is reviewed separately; completed does not mean all facts/citations are correct.",
+    "Later HTTP control attempt failed; no corrected paired control comparison is claimed.",
+    "First inquiry finding is a host return receipt, not an independent quality pass or time-to-human-reading measurement.",
+    "Power state was not sampled throughout either measurement. Later low-battery hibernation was confirmed after HTTP attempt 4; it did not overlap that timeout. See session power-interruption-review.json."
+  ],
+  "failedControlAttempt": {
+    "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+    "attempt": 4,
+    "reportedResearchMs": 240040.54533400014,
+    "allFourInitialRequestsTimedOut": true,
+    "controlsExercised": false,
+    "review": "sessions/langgraph-2026-10-08T11-44-18.678Z/J1-controlled-review.json"
+  },
+  "synthesisAudit": "validation/synthesis-size-quality-review.json"
+}

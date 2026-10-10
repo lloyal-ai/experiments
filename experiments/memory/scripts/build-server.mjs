@@ -1,0 +1,13 @@
+import { readFileSync, existsSync, mkdirSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=fileURLToPath(new URL('..',import.meta.url));
+const config=JSON.parse(readFileSync(resolve(root,'bench.config.json'),'utf8'));
+const source=resolve(root,'.cache/llama.cpp'),build=resolve(root,'.cache/llama-build');
+const run=(cmd,args)=>{const r=spawnSync(cmd,args,{cwd:root,stdio:'inherit'});if(r.status!==0)throw new Error(`${cmd} failed (${r.status})`);};
+mkdirSync(resolve(root,'.cache'),{recursive:true});
+if(!existsSync(resolve(source,'.git')))run('git',['clone','https://github.com/ggml-org/llama.cpp.git',source]);
+run('git',['-C',source,'checkout','--detach',config.serverRevision]);
+run('cmake',['-S',source,'-B',build,'-DCMAKE_BUILD_TYPE=Release','-DGGML_METAL=ON','-DLLAMA_BUILD_TESTS=OFF','-DLLAMA_BUILD_EXAMPLES=OFF','-DLLAMA_BUILD_SERVER=ON','-DLLAMA_CURL=OFF','-DLLAMA_OPENSSL=OFF']);
+run('cmake',['--build',build,'--target','llama-server','-j4']);

@@ -1,0 +1,188 @@
+[
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/clarify.eta",
+    "sourceSha256": "da886b1b57f38922216e004bc6e718b8650b70d617f43a374e30be33e56ce9bb",
+    "snapshot": "reference/fieldnote/prompts/clarify.eta",
+    "snapshotSha256": "da886b1b57f38922216e004bc6e718b8650b70d617f43a374e30be33e56ce9bb"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/plan.user.eta",
+    "sourceSha256": "8d31a3e6eed00403afddb6b45fe1602908d5bcb232425a904b9cea195dc70e40",
+    "snapshot": "reference/fieldnote/prompts/plan.user.eta",
+    "snapshotSha256": "8d31a3e6eed00403afddb6b45fe1602908d5bcb232425a904b9cea195dc70e40"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/framed.eta",
+    "sourceSha256": "d9e47d0ce7d258150de58ba494cdcafeb19da7a9a7bb5fc931d83862fa44bc3b",
+    "snapshot": "reference/fieldnote/prompts/framed.eta",
+    "snapshotSha256": "d9e47d0ce7d258150de58ba494cdcafeb19da7a9a7bb5fc931d83862fa44bc3b"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/plan-flat.user.eta",
+    "sourceSha256": "bcd6d5052f202b864f9922b5f557182d10ca05d3f05acb860fb0c9e3c84d360b",
+    "snapshot": "reference/fieldnote/prompts/plan-flat.user.eta",
+    "snapshotSha256": "bcd6d5052f202b864f9922b5f557182d10ca05d3f05acb860fb0c9e3c84d360b"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/cite.eta",
+    "sourceSha256": "d7113f999435bc7baaa1b3cf16abc3a99ff00aa242a116903fc275fb0177833d",
+    "snapshot": "reference/fieldnote/prompts/cite.eta",
+    "snapshotSha256": "d7113f999435bc7baaa1b3cf16abc3a99ff00aa242a116903fc275fb0177833d"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/recovery.system.eta",
+    "sourceSha256": "222120c74528c0401b337c7ed9a1456f3f90277d6090b84824ab6f5e48c75fb0",
+    "snapshot": "reference/fieldnote/prompts/recovery.system.eta",
+    "snapshotSha256": "222120c74528c0401b337c7ed9a1456f3f90277d6090b84824ab6f5e48c75fb0"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/synthesize.user.eta",
+    "sourceSha256": "feb7431a3a19d81447ee852fbe1b7dc5edd040d6ddcae94bf3c7862ba6a11ff4",
+    "snapshot": "reference/fieldnote/prompts/synthesize.user.eta",
+    "snapshotSha256": "feb7431a3a19d81447ee852fbe1b7dc5edd040d6ddcae94bf3c7862ba6a11ff4"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/preflight.system.eta",
+    "sourceSha256": "2a00b0295d7592196a1c54cd8e39af1769b522c222ffe232dc02b3475fd4c990",
+    "snapshot": "reference/fieldnote/prompts/preflight.system.eta",
+    "snapshotSha256": "2a00b0295d7592196a1c54cd8e39af1769b522c222ffe232dc02b3475fd4c990"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/inquiry.system.eta",
+    "sourceSha256": "ff256b52808e869c281e1be4602da87662d96ed0f12f066135189923a8a9eaea",
+    "snapshot": "reference/fieldnote/prompts/inquiry.system.eta",
+    "snapshotSha256": "ff256b52808e869c281e1be4602da87662d96ed0f12f066135189923a8a9eaea"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/plan-flat.system.eta",
+    "sourceSha256": "cf8e261e77cf729ac6bafd06e3200e56c90db688ea2f6c9f120d847284da2a44",
+    "snapshot": "reference/fieldnote/prompts/plan-flat.system.eta",
+    "snapshotSha256": "cf8e261e77cf729ac6bafd06e3200e56c90db688ea2f6c9f120d847284da2a44"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/plan.system.eta",
+    "sourceSha256": "cf8e261e77cf729ac6bafd06e3200e56c90db688ea2f6c9f120d847284da2a44",
+    "snapshot": "reference/fieldnote/prompts/plan.system.eta",
+    "snapshotSha256": "cf8e261e77cf729ac6bafd06e3200e56c90db688ea2f6c9f120d847284da2a44"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/preflight-recover.user.eta",
+    "sourceSha256": "c167f1efaef4853df39c03bf4c4ebee81486dd89dda1d1a5ad19437812bc103f",
+    "snapshot": "reference/fieldnote/prompts/preflight-recover.user.eta",
+    "snapshotSha256": "c167f1efaef4853df39c03bf4c4ebee81486dd89dda1d1a5ad19437812bc103f"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/preflight.user.eta",
+    "sourceSha256": "0c68af76d540aa58e64c29bea89e29a1a21995169618d84366f2de121cd6ce4f",
+    "snapshot": "reference/fieldnote/prompts/preflight.user.eta",
+    "snapshotSha256": "0c68af76d540aa58e64c29bea89e29a1a21995169618d84366f2de121cd6ce4f"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/synthesize.system.eta",
+    "sourceSha256": "751d212ee07b255430bc8115a0933b22000bbcd4d80efa3d2b48ef6493d2be4f",
+    "snapshot": "reference/fieldnote/prompts/synthesize.system.eta",
+    "snapshotSha256": "751d212ee07b255430bc8115a0933b22000bbcd4d80efa3d2b48ef6493d2be4f"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/synthesize-flat.system.eta",
+    "sourceSha256": "6a8ff78f88c1970c59a02469c85e389aecffa4d40630b52397cf800eee8965c3",
+    "snapshot": "reference/fieldnote/prompts/synthesize-flat.system.eta",
+    "snapshotSha256": "6a8ff78f88c1970c59a02469c85e389aecffa4d40630b52397cf800eee8965c3"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/answer.system.eta",
+    "sourceSha256": "23324c387c4dbef46da31919be31221f6a177f96131e832af92d328500f112ff",
+    "snapshot": "reference/fieldnote/prompts/answer.system.eta",
+    "snapshotSha256": "23324c387c4dbef46da31919be31221f6a177f96131e832af92d328500f112ff"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/preflight-recover.system.eta",
+    "sourceSha256": "41b84ce95255848c37be6c3c262b4914da1b4d5b1981248dff9924fb95928dc2",
+    "snapshot": "reference/fieldnote/prompts/preflight-recover.system.eta",
+    "snapshotSha256": "41b84ce95255848c37be6c3c262b4914da1b4d5b1981248dff9924fb95928dc2"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/synthesize-flat.user.eta",
+    "sourceSha256": "bfb5bc7abd96a099fbbeb7607b83cdeecd103c81335224419068b011068454ed",
+    "snapshot": "reference/fieldnote/prompts/synthesize-flat.user.eta",
+    "snapshotSha256": "bfb5bc7abd96a099fbbeb7607b83cdeecd103c81335224419068b011068454ed"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/prompts/recovery.user.eta",
+    "sourceSha256": "9ab22b880618bd5cb8d2ac4e14a3cfdb6f9b86d48d78e5e1d78b21898d5a42da",
+    "snapshot": "reference/fieldnote/prompts/recovery.user.eta",
+    "snapshotSha256": "9ab22b880618bd5cb8d2ac4e14a3cfdb6f9b86d48d78e5e1d78b21898d5a42da"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/instructions.ts",
+    "sourceSha256": "7d789fc3f00c9f93e183b43503b78ab6b144abe3338f207aad1bdb9de1e03099",
+    "snapshot": "reference/fieldnote/instructions.ts",
+    "snapshotSha256": "7d789fc3f00c9f93e183b43503b78ab6b144abe3338f207aad1bdb9de1e03099"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/casework/fieldnote/src/harness/budgets.ts",
+    "sourceSha256": "d753bc29a87aca81116267b88e504d36d67eec527627eb3640326c9a5e774029",
+    "snapshot": "reference/fieldnote/budgets.ts",
+    "snapshotSha256": "d753bc29a87aca81116267b88e504d36d67eec527627eb3640326c9a5e774029"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/abilities/corpus/ability.json",
+    "sourceSha256": "f45e4b57998927b304c1640bbfab1ecbc4a026e9f1e234fa2d6cf6f41efee9e3",
+    "snapshot": "reference/abilities/corpus/ability.json",
+    "snapshotSha256": "f45e4b57998927b304c1640bbfab1ecbc4a026e9f1e234fa2d6cf6f41efee9e3"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/abilities/corpus/skill.eta",
+    "sourceSha256": "a399ce4581124c93916bcbc23d5758d8706bf72ceb3370a8bf274572b9333ac5",
+    "snapshot": "reference/abilities/corpus/skill.eta",
+    "snapshotSha256": "a399ce4581124c93916bcbc23d5758d8706bf72ceb3370a8bf274572b9333ac5"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/abilities/documents/ability.json",
+    "sourceSha256": "82c397c6afb4f5eba8853567f485be366f63bb1c1d8dc7d562666e2f132f105e",
+    "snapshot": "reference/abilities/documents/ability.json",
+    "snapshotSha256": "82c397c6afb4f5eba8853567f485be366f63bb1c1d8dc7d562666e2f132f105e"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/abilities/documents/skill.eta",
+    "sourceSha256": "68c4dde4aafb5ac706a96f16011022b7783f1229b0cb79322eb091a714121230",
+    "snapshot": "reference/abilities/documents/skill.eta",
+    "snapshotSha256": "68c4dde4aafb5ac706a96f16011022b7783f1229b0cb79322eb091a714121230"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/resources/fit.ts",
+    "sourceSha256": "a44758cdb644805bdbcddc16356bd5c483f3ab108c2c79e7b4c4957e5e375e4a",
+    "snapshot": "src/content/fit.ts",
+    "snapshotSha256": "24ae211360be5884670152a3ca980cab6b916cd69d59ec08625e5b2e3fd31c05"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/resources/documents.ts",
+    "sourceSha256": "d4fa0f19a49800d87e68d83226542d9d58c97f2a49ac3763fa4f180ab74fd9d5",
+    "snapshot": "src/content/documents.ts",
+    "snapshotSha256": "e87f2a599f3f1e33d2175863c45e5a21d7704bf864622e98d2a45d7f65270dcd"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/ranges.ts",
+    "sourceSha256": "f5b224f231c0eed253f53df55268307c7e1b05163b59d49c68752117a8733259",
+    "snapshot": "src/content/ranges.ts",
+    "snapshotSha256": "f5b224f231c0eed253f53df55268307c7e1b05163b59d49c68752117a8733259"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/bm25.ts",
+    "sourceSha256": "1e194c01e6f78b80effc03ee93a1d30da883f6685817a9e1719f54ea611fc63a",
+    "snapshot": "src/content/bm25.ts",
+    "snapshotSha256": "1e194c01e6f78b80effc03ee93a1d30da883f6685817a9e1719f54ea611fc63a"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/tools/weave-sources.ts",
+    "sourceSha256": "ec371597dfe47eb750fb32ce7fcbfde37689ec530532e6e7a235525a3ac3a7b0",
+    "snapshot": "src/content/weave-sources.ts",
+    "snapshotSha256": "ec371597dfe47eb750fb32ce7fcbfde37689ec530532e6e7a235525a3ac3a7b0"
+  },
+  {
+    "source": "/Users/zuhairnaqvi/dev/apps/lloyal-sdk/packages/rig/src/resources/files.ts",
+    "sourceSha256": "2b1947f0fc494fc08cab468eeeeba278985c3c7e093c6913c6e81bf6b8053152",
+    "snapshot": "src/content/files.ts",
+    "snapshotSha256": "b54aedf428247ff3ab6e3034bd5ef005bbf9e6c9fc919e8f91d80e0cbc9157b8"
+  }
+]

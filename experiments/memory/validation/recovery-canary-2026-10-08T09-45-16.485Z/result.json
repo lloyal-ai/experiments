@@ -1,0 +1,19 @@
+{
+  "comparisonEligible": false,
+  "kind": "GPU integration canary",
+  "source": "sessions/langgraph-2026-10-08T08-24-36.547Z/http/8a1b4d18-cb5a-4ded-a528-65f16c9d3f5d.request.json",
+  "change": "Recovery instructions are a normal user follow-up; one initial system message; required report tool",
+  "result": {
+    "result": "## Findings on Figure 1: Treatment Routing\n\n### Document Discrepancy\nThe document \"Harbor Water Pilot\" contains a section titled \"Figure 1: Treatment routing\" on page 2 [attachment://9a503717ac5a/page/2]. However, the visual evidence provided by the user shows a different diagram than what appears in the document.\n\n### What the Document Actually Shows\nThe actual Figure 1 in the Harbor Water Pilot document is a **treatment process routing diagram**, not a site map. It displays:\n\n- **Blue line**: normal treatment route (Intake → UV chamber → Storage)\n- **Orange dashed line**: maintenance bypass (skips the UV chamber, going directly from Intake to Storage)\n- Three process blocks: Intake, UV chamber, and Storage\n\nThe document text states: \"The diagram below records normal and maintenance routes. Inspect its arrows and component labels to explain the bypass.\" [attachment://9a503717ac5a/page/2]\n\n### What Was NOT Found\nThe user's visual evidence shows a site map with:\n- Cedar (green circle) on the west bank\n- Birch (orange circle) on the east bank  \n- Blue shared pipeline channel between them\n\n**This site map was NOT found in the Harbor Water Pilot document.** The document only contains the treatment process routing diagram on page 2, not a geographic site map showing the relative positions of Cedar and Birch treatment sites.\n\n### Conclusion\nThe document's Figure 1 depicts a treatment process flow schematic (Intake → UV chamber → Storage), not a geographic site map. The visual evidence provided by the user appears to be from a different document or an external illustration not included in the Harbor Water Pilot PDF being searched.",
+    "sources": [
+      {
+        "title": "Harbor Water Pilot - Figure 1: Treatment routing",
+        "url": "attachment://9a503717ac5a/page/2"
+      },
+      {
+        "title": "Harbor Water Pilot - Trial results",
+        "url": "attachment://9a503717ac5a/page/1"
+      }
+    ]
+  }
+}

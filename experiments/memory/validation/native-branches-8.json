@@ -1,0 +1,177 @@
+{
+  "version": 1,
+  "status": "completed synthesis and library reopen; full output-quality gate failed",
+  "comparisonEligible": false,
+  "issue": "https://github.com/lloyal-ai/hdk/issues/145",
+  "sourceFailure": {
+    "session": "sessions/fieldnote-2026-10-08T10-14-37.954Z",
+    "attempt": 5
+  },
+  "configuration": {
+    "branches": 8,
+    "previousBranches": 5,
+    "context": 32768,
+    "source": "work/fieldnote-app/harness.yml",
+    "sdkUnchanged": true
+  },
+  "procedure": {
+    "mode": "Survey",
+    "effort": "Standard",
+    "sources": [
+      "documents",
+      "corpus"
+    ],
+    "web": false,
+    "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.",
+    "attachments": [
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf",
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png"
+    ],
+    "reviewedObjectives": [
+      {
+        "id": "task:0",
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit."
+      },
+      {
+        "id": "task:1",
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option."
+      },
+      {
+        "id": "task:2",
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2."
+      },
+      {
+        "id": "task:3",
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources."
+      }
+    ],
+    "controls": "Uninterrupted after accepting the four reviewed objectives; no Hold/cancellation/early Close",
+    "acceptance": "All four inquiry results followed by successful synthesis, saved brief and reviewed evidence coverage/citations"
+  },
+  "caveats": [
+    "New launch starts with fresh native session/preflight state; previous failure reused cached coverage.",
+    "Increasing sequence capacity may admit more inquiries concurrently; this tests whether the journey completes, not a controlled timing comparison.",
+    "Success is capacity-workaround evidence, not proof of the suspected cleanup diagnosis.",
+    "The completed repeat reuses source-coverage cache from the controller-aborted first attempt. The first attempt performed the real preflight.",
+    "Eight branches admits four simultaneous inquiries whereas the five-branch run queued work; no latency comparison is claimed.",
+    "Final inquiry branch-prune receipts (196611, 131077) still occur at seq 24591/24592 after complete, so this is a capacity workaround and not a cleanup fix."
+  ],
+  "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+  "docId": "2026-10-08T11-22-44-335-e012579e-bfc1-460d-aa9b-2eaa4c55d51e",
+  "controllerDeviations": [
+    {
+      "attempt": 1,
+      "docId": "2026-10-08T11-19-25-692-e3ec249f-4add-4144-87b1-40c8121d27ab",
+      "reason": "Review autoaccepted after three edits; fourth input did not open. Aborted through Start a new run. Not a completed diagnostic."
+    }
+  ],
+  "attempt": 2,
+  "result": {
+    "synthesisAllocated": true,
+    "sequenceRefusals": [],
+    "normalInquiryReturns": 3,
+    "recoveredInquiryResults": [
+      {
+        "seq": 18236,
+        "agentId": 131076,
+        "result": "# Harbor Water Pilot Analysis Report\n\n## Summary\nThe requested analysis cannot be completed as the available documents do not contain information about operating costs, installation constraints, council requirements, audit reconciliation, or ledgers. The documents searched contain only trial results and maintenance data for Cedar and Birch water treatment systems.\n\n## Evidence Found\n\n### Trial Results (Page 1, lines 5-8)\n\"The fictional Harbor water pilot compared the Cedar and Birch treatment systems over 30 days. Cedar delivered 1200 liters per day; Birch delivered 900 liters per day. Both met the drinking-water quality target. Cedar used 6 kWh per day and Birch used 3 kWh per day. Figures refer to the same operating conditions, not annual forecasts.\" [Harbor Water Pilot](attachment://3b32f5401dfe/page/1)\n\n### Maintenance Requirements (Page 1, lines 9-12)\n\"Cedar requires filter inspection every 7 days; Birch requires it every 14 days. The pilot measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee.\" [Harbor Water Pilot](attachment://3b32f5401dfe/page/1)\n\n### Key Limitations\n- **No winter performance data**: The pilot \"measured no winter performance\"\n- **No annual reliability**: \"Neither system has established annual reliability from this short pilot\"\n- **No operational cost data**: Operating costs were not measured or reported in the trial\n- **No installation specifications**: Installation constraints were not documented\n- **No audit/ledger reconciliation**: No financial audit or ledger documents were provided\n\n## Missing Information\nThe following critical information required to complete the requested analysis was not found in any available document:\n\n| Information Requested | Status |\n|----------------------|--------|\n| Operating cost comparison | NOT FOUND |\n| Installation constraints | NOT FOUND |\n| Council requirements | NOT FOUND |\n| Audit document | NOT FOUND |\n| Ledger document | NOT FOUND |\n| Audit-ledger reconciliation | NOT FOUND |\n\n## Conclusion\nThe available documents contain only trial performance data (capacity and energy use) and maintenance schedules for Cedar and Birch systems. They do not contain the financial, operational, or regulatory information required to compare operating costs, installation constraints, or council requirements. Without audit and ledger documents, it is impossible to reconcile financial data or determine the feasible option for the council.\n\nThe trial data (Cedar: 1200L/day, 6kWh/day; Birch: 900L/day, 3kWh/day) shows Birch is more energy-efficient, but without cost data, this cannot determine cost-effectiveness. The 30-day trial period is insufficient to establish annual reliability, and winter performance remains unmeasured for both systems.\n\n**Recommendation**: The council requires additional documentation including operating cost analysis, installation specifications, council requirements, and audit/ledger reconciliation before a feasible option can be determined.\n\nSources:\n- [Harbor Water Pilot](attachment://3b32f5401dfe/page/1)"
+      }
+    ],
+    "completion": {
+      "intent": "research",
+      "planTokens": 276,
+      "agentTokens": 5814,
+      "synthTokens": 2021,
+      "synthPpl": 1.4276847839355469,
+      "totalToolCalls": 22,
+      "agentCount": 4,
+      "planMs": 21781,
+      "researchMs": 343605,
+      "synthMs": 97068
+    },
+    "timing": {
+      "clock": "host observation receipt, monotonic milliseconds",
+      "elapsedMs": 512494.16316700005,
+      "observedUntilMs": 512494.16316700005,
+      "lastSessionObservationMs": 812927.8524580001,
+      "acknowledgedHoldMs": 0,
+      "elapsedExcludingAcknowledgedHoldMs": 512494.16316700005,
+      "planReviewMs": 24538.47858300002,
+      "researchStartMs": 69117.70516700001,
+      "firstAgentReturnMs": 169658.26900000003,
+      "answerMs": 512494.0965420001,
+      "settledMs": 512494.16316700005
+    },
+    "answerChars": 5717,
+    "researchDoneSeq": 18242,
+    "synthesizeStartSeq": 18243,
+    "synthesizeDoneSeq": 24575,
+    "answerSeq": 24583,
+    "completeSeq": 24585,
+    "normalInquiryReturnSeqs": [
+      10341,
+      15301,
+      16419
+    ]
+  },
+  "plan": {
+    "editCommandSeqs": [
+      6888,
+      6893,
+      6896,
+      6900
+    ],
+    "acceptCommandSeq": 6917,
+    "acceptance": "All four edits verified while review held; Start now click committed the open editor, then the unchanged five-second timer sent accept_plan.",
+    "acceptedTasks": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "document_research"
+      }
+    ]
+  },
+  "checks": [
+    {
+      "name": "Sequence allocation",
+      "status": "pass-diagnostic",
+      "evidence": "Synthesis agent 196612 spawned at seq 18267; synthesize:done 24575; complete 24585. No pool:spawnRefused during attempt 2."
+    },
+    {
+      "name": "Saved brief and library reopen",
+      "status": "pass",
+      "evidence": "UI Settled, library count 1; Start a new run then library entry reopened the saved final report and attachment previews. Saved report directory has the same docId."
+    },
+    {
+      "name": "Visual answer and usable PDF citation",
+      "status": "pass",
+      "evidence": "Final report correctly gives blue Intake → UV chamber → Storage and orange Intake → Storage bypassing UV. Its page-2 citation opened the expected routing diagram, representation digest prefix 2df6e1f921."
+    },
+    {
+      "name": "Capacity, energy and maintenance facts",
+      "status": "pass-content",
+      "evidence": "Cedar 1200 L/day and 6 kWh/day; Birch 900 and 3; 1400 brochure correction; 1000 requirement; 7/14-day inspections; winter/annual uncertainty."
+    },
+    {
+      "name": "Cost and installation coverage",
+      "status": "fail",
+      "evidence": "Generated plan routed the cost task to document_research; editing its description preserved that ability. It searched only attached documents and recovered with missing-data claims. Final report omits Cedar 18/Birch 12 credits/day, the 400-credit Cedar inlet upgrade, and grant scope; falsely states no cost data exists although corpus cost.md contains it."
+    },
+    {
+      "name": "Citation identity and supported claims",
+      "status": "fail",
+      "evidence": "Capacity/audit citations use attachment://Harbor_Water_Pilot_-_2_pages/page/1, which is not an admitted digest; final UI displays those as plain citation text. Valid PDF page citations work. Report also speculates about shorter/longer maintenance operations without fixture support."
+    }
+  ]
+}

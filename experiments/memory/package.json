@@ -1,0 +1,49 @@
+{
+  "name": "lloyal-bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "bench": "tsx src/cli.ts",
+    "test": "tsx --test test/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "fixtures": "tsx src/cli.ts fixtures",
+    "doctor": "tsx src/cli.ts doctor",
+    "server:build": "node scripts/build-server.mjs",
+    "calibrate": "node scripts/calibrate.mjs",
+    "fieldnote:snapshot": "node scripts/snapshot-fieldnote.mjs",
+    "fieldnote:verify": "node scripts/snapshot-fieldnote.mjs --verify --source-only",
+    "fieldnote:build": "node scripts/build-fieldnote.mjs",
+    "fieldnote:ui": "node scripts/prepare-ui.mjs",
+    "portable:extract": "node scripts/extract-portable.mjs",
+    "start": "tsx src/cli.ts serve",
+    "instrumentation:prepare": "node scripts/prepare-instrumentation.mjs"
+  },
+  "dependencies": {
+    "@embedpdf/pdfium": "2.15.0",
+    "@langchain/core": "1.2.17",
+    "@langchain/langgraph": "1.4.21",
+    "@langchain/openai": "1.6.2",
+    "@lloyal-labs/media": "file:vendor/lloyal-labs-media-0.2.0.tgz",
+    "@types/ws": "8.18.1",
+    "dompurify": "3.4.16",
+    "eta": "4.6.0",
+    "ignore": "7.0.5",
+    "marked": "18.1.0",
+    "partial-json": "0.1.7",
+    "pdfkit": "0.20.2",
+    "sharp": "0.35.5",
+    "undici": "8.11.2",
+    "ws": "8.22.0",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.4",
+    "@types/pdfkit": "0.17.6",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}

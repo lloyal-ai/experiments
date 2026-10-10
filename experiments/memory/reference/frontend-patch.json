@@ -1,0 +1,65 @@
+{
+  "reason": "Shared transport presentation and passive observations; native execution unchanged",
+  "patches": [
+    {
+      "file": "src/protocol.ts",
+      "original": "e5c845dc4c59bbcdff962a65683f9e80f5295aa0bdd7cfddbd3557aeedac4b80",
+      "modified": "f9b9c5352ab9e3ad990f01e7d950dc311cd05e335447faa30b51537630f05c80"
+    },
+    {
+      "file": "src/ui/state.ts",
+      "original": "0adb5c789b31c3c4bd493b75458d949c19bde6b786e744cc6286553cf8a1f97e",
+      "modified": "7ad97d0b0b148976d4e5a34ea43ed7b1ad60712fcc3a8460419ca521704bafbf"
+    },
+    {
+      "file": "src/ui/reduce.ts",
+      "original": "2cbb15e5e9fdcf8198bd1413a2ce211d20692438a3a481181ff19b6d0bf9df96",
+      "modified": "b657ace0b852df9c2bcadf6b98cefb132e3d84e0fcfa169821a9a38afab4f898"
+    },
+    {
+      "file": "src/ui/select/inquiry.ts",
+      "original": "c66a2d45610ca56e20fd8499483f1ae8ef80eb66def11b373f2275632d40c8ec",
+      "modified": "a1e879881050e643756508a0dc4abaa67f907ab40b8844fca99cd748767208a8"
+    },
+    {
+      "file": "src/ui/App.tsx",
+      "original": "d663050229ff4e3eb878866127dffa4b8b3cd142150c63b03cfacf7cd1ceb698",
+      "modified": "d4bfc85ba90a45900d5c67fbf0a0d819b6a8f3e714b6ec00975631b5873ba97a"
+    },
+    {
+      "file": "src/ui/parts/Figures.tsx",
+      "original": "0462739cd59cd6e351b29f074da93da94ce57771a15fe18dabb59c275da933c6",
+      "modified": "cffd3b6f2c3e7d121f3e61bb17e8d202daf36a03a53e0d650c70c31cfbfef762"
+    },
+    {
+      "file": "src/ui/moments/Write.tsx",
+      "original": "662b7202bfffcfde85f292e667ad96d0f01b61fa8d34aee364ee8ffb5a85e398",
+      "modified": "67d5343b47f61cf1ef9a2f50f23bab0c01d1bc230f34c37dfcf6fd883718f995"
+    },
+    {
+      "file": "src/ui/parts/Prose.tsx",
+      "original": "658cbb2e6b420b796a649e17454b3711cbbec89f5a93ccc78ca4525e40cdcef5",
+      "modified": "33c82a458480b20944415df5f24fce7fe3a4a50cac4ac486ec2875f74667fd68"
+    },
+    {
+      "file": "node_modules/@lloyal-labs/ui/dist/fold.js",
+      "original": "92fceeeacc8fa95653d09d02bf3f19f4924af49b709595f05e7c009af10341dd",
+      "modified": "2b2c7165e1450e1134ac1d7b7ad6843f80523645ba9c09d0e6fb29bf1864547c"
+    },
+    {
+      "file": "targets/web/web-bridge.ts",
+      "original": "33c33f1a8df324d2df1bc592f2f8240125682a333c2cc8b3065cd2b206e413f2",
+      "modified": "d0e73f8b3722342dabdaff695b5ad058a3caaaa18aa74126c8c15c04ad62a847"
+    },
+    {
+      "file": "node_modules/@lloyal-labs/dev-tools/dist/index.js",
+      "original": "88cffb27c0ce0cfbf006b07fa506c388ff74b7b0eb0e0e8615de4b9d36144cce",
+      "modified": "38ee14e310568ec3fbc0aa7efe624a396f1a3e0c07365a6c7cbc369cf0b6c3a0"
+    },
+    {
+      "file": "node_modules/@lloyal-labs/dev-tools/dist/react.js",
+      "original": "e0bf38b65bd9d42332b44c3f85e514d492de4a535663d66e48c1d17f048c36de",
+      "modified": "b4e48d0547e8d37f4584f24907e678480e1713755270ba0ac8b8d772db1b204d"
+    }
+  ]
+}

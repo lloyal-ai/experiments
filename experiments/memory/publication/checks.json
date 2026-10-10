@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-10",
+  "environment": {
+    "platform": "macOS arm64",
+    "node": "26.10.0",
+    "benchmarkRecordedNode": "24.6.0"
+  },
+  "checks": {
+    "freshRootNpmCi": "passed",
+    "freshReferenceFieldnoteNpmCi": "passed",
+    "freshWorkingFieldnoteNpmCi": "passed",
+    "pinnedNativeSourceFetchAndPatchHashes": "passed",
+    "referenceSourceSnapshot": "passed (133 files)",
+    "typecheck": "passed",
+    "nodeContractTests": {
+      "passed": 37,
+      "failed": 0
+    },
+    "pythonRawLogTests": {
+      "passed": 9,
+      "failed": 0
+    },
+    "referenceWebAndHostBuild": "passed",
+    "sharedFieldnoteWebBuild": "passed",
+    "capacityChartRegeneration": "passed",
+    "credentialPatternScan": "no matches in 905 files/archive entries",
+    "incumbentDependencyBoundary": "passed; 921 inputs, no native inference/Effection/ability factories",
+    "publicationContents": "626 indexed files, all pinned Fieldnote source files included; runtime artifacts excluded; three upstream .env templates contain only loopback/port/session defaults"
+  },
+  "notRun": [
+    "Fresh Linux/CUDA build through the publication bootstrap",
+    "GPU benchmark rerun",
+    "Dedicated reasoning experiment"
+  ],
+  "notes": [
+    "Package tests use scripted model responses for contracts; no mock output is benchmark data.",
+    "Historical raw journals and installed dependency trees are not published in this import.",
+    "Build warnings from the pinned Vite dependencies were retained; builds completed."
+  ]
+}

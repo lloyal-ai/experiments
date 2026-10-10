@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "comparisonEligible": false,
+  "status": "Reported upstream; higher-branch diagnostic authorized; no SDK/native code modified",
+  "session": "sessions/fieldnote-2026-10-08T10-14-37.954Z",
+  "attempt": 5,
+  "docId": "2026-10-08T10-35-31-113-de0986f7-0dd1-447b-8bb8-9cc8f3b803ca",
+  "error": "useAgent: the agent was not seated (no_sequence)",
+  "configuration": {
+    "context": 32768,
+    "branches": 5,
+    "matchesOriginalFieldnote": true,
+    "agentsPackageVersion": "6.0.0"
+  },
+  "evidence": {
+    "researchDoneSeq": 36175,
+    "synthesizeStartSeq": 36176,
+    "abortSeq": 36186,
+    "errorSeq": 36187,
+    "finalInquiryBranches": [
+      458754,
+      524292
+    ],
+    "finalInquiryPruneSeqs": [
+      36189,
+      36188
+    ]
+  },
+  "diagnosis": "In this non-shared-mode agentPool, inquiry agents fork from the caller spine. The wrapper prunes its inner separator spine on return, but the pool resource remains in the enclosing scope. The two final inquiry branches are still alive when synthesis useAgent needs its root and agent sequence; they are pruned only as the enclosing scope unwinds after the failure. Earlier completed inquiries were pruned while the pool continued to tick. Trace plus installed source indicate a resource-lifetime boundary problem; regression reproduction remains to be built.",
+  "sourceReferences": [
+    {
+      "file": "reference/fieldnote-app/src/harness/research.ts",
+      "lines": [
+        450,
+        453,
+        494
+      ],
+      "note": "pool followed by settle on the same caller spine"
+    },
+    {
+      "file": "reference/fieldnote-app/node_modules/@lloyal-labs/lloyal-agents/dist/create-agent-pool.js",
+      "lines": [
+        30,
+        70
+      ],
+      "note": "plain generator withSpine; non-shared agents use warmParent"
+    },
+    {
+      "file": "reference/fieldnote-app/node_modules/@lloyal-labs/lloyal-agents/dist/agent-pool.js",
+      "lines": [
+        66,
+        215,
+        372,
+        515
+      ],
+      "note": "resource cleanup waits for containing scope; prunePass occurs at loop start"
+    },
+    {
+      "file": "reference/fieldnote-app/node_modules/@lloyal-labs/lloyal-agents/dist/use-agent.js",
+      "lines": [
+        60,
+        98,
+        119
+      ],
+      "note": "synthesis needs new root and live child; raises no_sequence if child cannot be seated"
+    }
+  ],
+  "proposedNextStep": "Rerun the reviewed native UI journey with branches: 8 and context: 32768. Preserve five-branch failure evidence and distinguish a capacity workaround from a proven lifecycle fix.",
+  "issue": "https://github.com/lloyal-ai/hdk/issues/145"
+}

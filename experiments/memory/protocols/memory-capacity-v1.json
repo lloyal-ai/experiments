@@ -1,0 +1,9 @@
+{
+  "description": "Predeclared context-budget ladder for eight one-round ledger tasks. All failures retained. Report the smallest tested allocation returning eight correct answers within 300 seconds; not a global minimum or a whole-stack memory result.",
+  "counts": [8],
+  "contexts": [4096, 8192, 16384, 32768],
+  "rounds": 1,
+  "repeats": 3,
+  "records": 96,
+  "backend": "both"
+}

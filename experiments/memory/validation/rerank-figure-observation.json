@@ -1,0 +1,39 @@
+{
+  "query": "Figure 1",
+  "comparisonEligible": false,
+  "nativeTraceSeq": 579,
+  "httpRequest": "sessions/langgraph-2026-10-08T08-24-36.547Z/reranker-requests/e516b281-4773-4c2d-a929-49e32574f08c.request.json",
+  "httpCandidateChars": 876,
+  "nativeTotalChars": 876,
+  "nativeOrder": [
+    "Figure 1: Treatment routing",
+    "Trial results",
+    "Harbor Water Pilot",
+    "Maintenance and limitations"
+  ],
+  "httpOrder": [
+    "Figure 1: Treatment routing",
+    "Trial results",
+    "Harbor Water Pilot",
+    "Maintenance and limitations"
+  ],
+  "nativeScores": [
+    0.911412239074707,
+    -4.802731513977051,
+    -5.923691749572754,
+    -8.833444833755493
+  ],
+  "httpScores": [
+    0.9139184355735779,
+    0.017866935580968857,
+    0.0029613524675369263,
+    0.0002391026064287871
+  ],
+  "notes": [
+    "One naturally matching real query, not a full retrieval-quality validation.",
+    "Both rank the visual-figure section first and order all four sections identically.",
+    "Four candidates fit within top-five selection and the token budget, so neither backend discarded a section in this case.",
+    "Native event retains previews, not full input candidate bytes; matching previews/count/totalChars is not an exact prompt-byte proof. HTTP full candidates and raw responses are preserved.",
+    "Scores are not interchangeable; do not assume a sigmoid transformation or compare an absolute relevance threshold."
+  ]
+}

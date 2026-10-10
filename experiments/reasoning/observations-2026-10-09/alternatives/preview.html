@@ -1,0 +1,26 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lloyal · Featured benchmark figures</title>
+<style>
+body{margin:0;background:white;color:#171717;font:16px/1.65 system-ui,sans-serif}
+main{max-width:1100px;margin:auto;padding:28px 24px}h1{font-size:30px;margin:0 0 8px}
+.plots{display:flex;gap:24px;margin:22px 0}.plots figure{width:50%;margin:0}
+.plots h2{font-size:19px;line-height:1.4;margin:0 0 6px;min-height:54px}
+img{display:block;width:100%;height:auto}figcaption,small{color:#555;font-size:14px}
+a{color:#4361ee}summary{cursor:pointer;font-weight:600}details{margin:24px 0}
+.note{border-left:3px solid #ff5a36;padding-left:16px;color:#555;font-size:14px}
+</style>
+<main>
+<h1>Less deliberation, earlier findings</h1>
+<p>The comparison starts at <b>4B parameters</b> on the same model files and infrastructure. Both panels use raw measurements, with <b>lower values indicating less reasoning or less waiting</b>. The HTTP backend has prefix caching enabled.</p>
+<div class="plots">
+<figure><h2>76.7–89.3% fewer synthesis reasoning tokens</h2><img src="../assets/thinking-fast-and-slow.png" alt="Reasoning bars with Lloyal reductions labeled"><figcaption>Three selected comparisons. Revised pair C produced approximately <b>964 words with Lloyal and 942 with LangGraph</b>, using 698 versus 2,994 reasoning tokens. Counts use the same GGUF tokenizer; answer quality remains separately unverified.</figcaption></figure>
+<figure><h2>The second finding arrives two minutes earlier</h2><img src="../assets/time-to-findings-C.png" alt="Time to return each finding in comparison C; Lloyal reaches all four milestones earlier"><figcaption>Revised pair C. The second finding arrived at <b>162.4 versus 282.6 seconds</b>; all four arrived at 251.2 versus 288.1 seconds. Each agent counts once, including recoveries. The clock begins at research start, after preflight and plan review.</figcaption></figure>
+</div>
+<p class="note">Exploratory selected runs across evolving conditions. Synthesis system instructions were byte-identical within each pair; full inputs differed and effective sampler parity is unverified. HTTP reused 44–59% of prompt positions across the workload, with zero synthesis cache hits. The shared-prefix synthesis control remains unmeasured. A’s findings arrived sooner initially but completed later; the full event table retains that mixed result.</p>
+<details><summary>Supporting synthesis timing bars</summary>
+<p>Synthesis took 31.9–70.5% less time across the selected pairs. This stage timing is related to the reasoning observation; total workflow time includes other stages.</p>
+<img style="max-width:550px;margin:auto" src="../assets/synthesis-time.png" alt="Raw synthesis durations with per-pair reduction labels">
+</details>
+<p><a href="../preview.html">Full README preview</a> · <a href="../README.md">README copy</a> · <a href="../METHODS.md">Methods</a> · <a href="README.md#findings-over-time">All-pair return times</a> · <a href="../PEER-NOTES.md">Peer presentation references</a></p>
+</main>

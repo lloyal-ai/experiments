@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fieldnote workload bench</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<aside class="sidebar"><div class="brand"><span class="mark">f(n)</span><div><strong>Workload bench</strong><small>Fieldnote · single user</small></div></div>
+<label>Backend<select id="adapter"><option value="fieldnote">Fieldnote / Lloyal (KV)</option><option value="langgraph">LangGraph / llama-server (Transcript resent over HTTP)</option></select></label><p id="continuation-mode" class="transport-label">Fieldnote / Lloyal (KV)</p>
+<label>Journey<select id="journey"><option value="J1">Survey · concurrent inquiries</option><option value="J1-investigate">Investigate · dependent inquiries</option><option value="J2">Ask · visual PDF + follow-up</option></select></label>
+<label>Session<select id="automatic"><option value="true">Recorded benchmark gestures</option><option value="false">Explore manually</option></select></label>
+<label>Control<select id="control"><option value="interactive">Hold, inspect, cancel, close</option><option value="uninterrupted">Uninterrupted paired control</option></select></label>
+<button id="start" class="primary" disabled>Runs disabled · workload mismatch</button><p class="fine">Shared diagnostic viewer. Fieldnote's application workload is not yet reproduced in the LangGraph path.</p>
+<div class="history-head"><h2>Diagnostic archive</h2><button id="refresh" class="icon" title="Refresh saved runs">↻</button></div><button id="compare">Inspect diagnostic records</button><div id="history"></div>
+<footer>Existing timings are invalid architecture comparisons.</footer></aside>
+<main><header><div><span class="dot" id="dot"></span><strong id="status">Runs disabled</strong><span id="run-label">Workload correction in progress</span></div><nav><button data-action="hold" disabled>Ⅱ Hold</button><button data-action="resume" disabled>▶ Resume</button><button data-action="close" disabled>Close the brief</button><button data-action="finish" disabled>Save & finish</button><button id="stop" disabled class="danger">Stop</button></nav></header>
+<aside id="workload-warning" role="note"><strong>Invalid comparison: LangGraph was given less work.</strong><p>The prototype omitted preflight, simplified retrieval, supplied prepared PDF evidence, and requested shorter free-text reports instead of Fieldnote's citedReport contract. Saved runs are retained as diagnostics. Their timings cannot establish an architectural advantage.</p><p>Browser timings belong to this shared viewer, not Fieldnote's existing frontend.</p></aside>
+<div id="notice" role="status"></div>
+<div class="content"><p class="eyebrow">A COMPOSED WORKLOAD</p><h1 id="title">Research you can interrupt,<br>inspect and continue.</h1><p id="question" class="lead">A small fictional water-treatment decision combines parallel research, conflicting evidence, visual reasoning, live controls and a follow-up.</p>
+<div class="attachments"><button id="original">▧ Harbor pilot · 2-page PDF</button><span>+ site map + 5 corpus sources</span></div>
+<section id="plan" hidden><div class="section-head"><h2>Review the plan</h2><button id="accept" class="primary">Accept edited plan</button></div><p class="fine">The model proposes a plan. Automated runs replace it with the same fixed objectives for both backends.</p><div id="plan-rows"></div></section>
+<section id="work"><div class="section-head"><h2>Live inquiries</h2><span id="phase">Waiting for a session</span></div><div id="inquiries"><div class="empty">Useful findings will appear here as each inquiry writes.</div></div></section>
+<section id="answer-section" hidden><div class="section-head"><h2>The brief</h2><button id="download">Download</button></div><div id="answer" class="prose"></div></section>
+<section id="follow-section" hidden><h2>Follow-up</h2><div id="follow-answer" class="prose"></div></section>
+<form id="follow-form"><input id="follow-question" placeholder="Ask about this brief…" disabled><button class="primary" id="ask" disabled>↑</button></form>
+<section id="result" hidden><h2>Diagnostic measurements · invalid comparison</h2><div id="metric-grid"></div><p class="fine">The two implementations performed different workloads. These measurements cannot establish which architecture is faster.</p><div id="gaps"></div></section>
+</div>
+<section class="inspector"><div class="section-head"><h2>Run inspector</h2><span id="telemetry">No model loaded</span></div><div class="inspector-grid"><div><h3>Timeline</h3><div id="timeline"><span class="fine">Activity, tool calls and control events</span></div></div><div><h3>Evidence supplied</h3><div id="sources"><span class="fine">Inspect exact text or image bytes and their receipt.</span></div></div></div></section>
+</main>
+<dialog id="evidence-dialog"><div class="section-head"><h2 id="evidence-title">Evidence</h2><button id="dismiss">Close ×</button></div><p id="receipt-meta" class="fine"></p><div id="evidence-body"></div></dialog>
+<script type="module" src="/app.js"></script></body></html>

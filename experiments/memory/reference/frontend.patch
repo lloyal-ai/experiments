@@ -1,0 +1,319 @@
+--- a/src/protocol.ts
++++ b/src/protocol.ts
+@@ -136,7 +136,7 @@
+   | { type: "research:start"; agentCount: number; mode: Mode; reports: Reports | null }
+   | { type: "research:done"; totalTokens: number; totalToolCalls: number; timeMs: number }
+   | { type: "synthesize:start" }
+-  | { type: "synthesize:done"; agentId: number; ppl: number; tokenCount: number; toolCallCount: number; timeMs: number }
++  | { type: "synthesize:done"; agentId: number; ppl?: number; tokenCount: number; toolCallCount: number; timeMs: number }
+   /** The answer — or null when the inquiries found nothing to settle: the ask is over, nothing was invented,
+    *  committed or kept, and the view says so. */
+   | { type: "answer"; text: string | null }
+@@ -160,7 +160,13 @@
+   /** The corpus ability indexed the library (at boot, and after every settle). */
+   | { type: "corpus:indexed"; corpusPath: string; fileCount: number; chunkCount: number };
+ 
+-export type WorkflowEvent = AgentEvent | BriefEvent | LibraryEvent | SettingsEvent<Config, Origin> | HostResourcesEvent;
++export type HttpObservation =
++  | { type: 'agent:ranking'; agentId: number; callId: string; tool: string; ranking: Record<string, unknown> }
++  | { type: 'bench:capabilities'; backend: string; continuation: string; nativeTelemetry: boolean }
++  | { type: 'agent:http_images'; agentId: number; attachments: Descriptor[]; requestId: string; evidence: 'submitted' }
++  | { type: 'agent:report_delta' | 'agent:text_delta' | 'agent:reasoning_delta' | 'agent:plan_delta'; agentId: number; text: string }
++  | { type: 'agent:usage'; agentId: number; tokenCount: number };
++export type WorkflowEvent = HttpObservation | AgentEvent | BriefEvent | LibraryEvent | SettingsEvent<Config, Origin> | HostResourcesEvent;
+ 
+ // ── The small builders ───────────────────────────────────────────
+ 
+--- a/src/ui/state.ts
++++ b/src/ui/state.ts
+@@ -56,7 +56,7 @@
+   /** The settling agent, once it has spawned; null before, and for a run that never settled. */
+   agentId: number | null;
+   done: boolean;
+-  stats: { tokens: number; toolCalls: number; ppl: number; timeMs: number } | null;
++  stats: { tokens: number; toolCalls: number; ppl?: number; timeMs: number } | null;
+ }
+ 
+ export interface Toast {
+@@ -74,6 +74,7 @@
+  *  survive every document birth and switch — there is NO code path that
+  *  resets them. */
+ export interface SessionState {
++  backend?: { name: string; continuation: string; nativeTelemetry: boolean }; 
+   phase: SessionPhase;
+   /** The wire's dev signal (`config:loaded.dev` — the boot's LLOYAL_DEV). */
+   dev: boolean;
+--- a/src/ui/reduce.ts
++++ b/src/ui/reduce.ts
+@@ -62,6 +62,8 @@
+  *  compile until it is given a route, so none is dropped by omission. */
+ type Scope = 'session' | 'run' | 'own' | 'ignored';
+ const SCOPE: Record<WorkflowEvent['type'], Scope> = {
++  'bench:capabilities': 'session',
++  'agent:ranking': 'ignored', 'agent:http_images': 'run', 'agent:report_delta': 'run', 'agent:text_delta': 'run', 'agent:reasoning_delta': 'run', 'agent:plan_delta': 'run', 'agent:usage': 'run',
+   'query': 'own', 'doc': 'own', 'doc:active': 'own', 'run:aborted': 'own', 'ui:error': 'own',
+   'agent:trace': 'ignored', 'host:resources': 'ignored',   // the dev pane folds these itself
+   // session facts
+@@ -258,6 +260,7 @@
+ 
+ function sessionReduce(s: SessionState, ev: WorkflowEvent): SessionState {
+   switch (ev.type) {
++    case 'bench:capabilities': return { ...s, backend: { name: ev.backend, continuation: ev.continuation, nativeTelemetry: ev.nativeTelemetry } };
+     case 'config:loaded':
+       return {
+         ...s,
+@@ -508,6 +511,11 @@
+       return { ...doc, roster };
+     }
+ 
++    case 'agent:usage': return replaceAgent(doc, ev.agentId, a => ({ ...a, tokenCount: ev.tokenCount }));
++    case 'agent:plan_delta': return replaceAgent(doc, ev.agentId, a => ({ ...a, contentBuffer: ev.text }));
++    case 'agent:report_delta': return replaceAgent(doc, ev.agentId, a => ({ ...a, httpProse: ev.text, phase: 'content' } as AgentRuntime));
++    case 'agent:text_delta': return replaceAgent(doc, ev.agentId, a => ({ ...a, httpProse: ((a as any).httpProse ?? '') + ev.text, contentBuffer: a.contentBuffer + ev.text, phase: 'content' } as AgentRuntime));
++    case 'agent:reasoning_delta': return replaceAgent(doc, ev.agentId, a => ({ ...a, timeline: (a.timeline ?? []).map(t => t.kind === 'think' && t.live ? { ...t, body: t.body + ev.text } : t) }));
+     case 'agent:produce': {
+       // Planner stream: the outline drafts itself in the view — the planner's grammar JSON accumulates so a
+       // renderer can lift task descriptions as they complete (the planner keeps no timeline: the plan grammar
+@@ -533,6 +541,7 @@
+     case 'agent:tool_progress':
+       return doc;
+ 
++    case 'agent:http_images':
+     case 'agent:prefilled': {
+       // A tool result that carried roots admitted them onto the run: they join the live ask (or the cold brief)
+       // as they land, once each — the same roots the meta line books and a reopen restores.
+--- a/src/ui/select/inquiry.ts
++++ b/src/ui/select/inquiry.ts
+@@ -51,6 +51,7 @@
+  *  and no other: an ordinary tool may share the argument's name. An agent that was cut short and asked to report
+  *  may write bare prose with no call around it; leading tag fragments are held back until real text arrives. */
+ export const liveProse = (a: AgentRuntime, reports: Reports): string | null => {
++  if (typeof (a as any).httpProse === 'string') return (a as any).httpProse || null;
+   const report = reports.field === null ? null : extractStreamingReport(a.contentBuffer, { tool: reports.tool, field: reports.field });
+   if (report !== null) return report;
+   if (!a.recovering) return null;
+--- a/src/ui/App.tsx
++++ b/src/ui/App.tsx
+@@ -1,3 +1,4 @@
++import { useContentOrigin } from '@lloyal-labs/ui';
+ /**
+  * The view, shared by the desktop window and the browser: it shows what the harness says and sends what the
+  * reader does. It holds no truth of its own — everything on screen is derived from the one fold every surface
+@@ -30,7 +31,7 @@
+   ask: "Ask a question worth a brief…",
+   frame: "Answer, or refine the framing…",
+   write: "The brief is writing…",
+-  settle: "Ask about this brief — the context is still warm…",
++  settle: "Ask about this brief…",
+ };
+ 
+ export function HarnessApp(): ReactElement {
+@@ -38,6 +39,10 @@
+   const { bridge, projection } = useHarness<WorkflowEvent, Command, AppState>();
+   const moment = useProjection(selectMoment);
+   const live = useProjection(selectLive);
++  const backend = useProjection((s: AppState) => s.session.backend);
++  const hostOrigin = useContentOrigin();
++  const [hostBackend, setHostBackend] = useState<string | null>(null);
++  useEffect(() => { let active = true; fetch((hostOrigin ?? "") + "/__bench/status").then(r => r.ok ? r.json() : null).then(s => { if (active && s) setHostBackend(s.backend); }).catch(() => {}); return () => { active = false; }; }, [hostOrigin]);
+   const activeDocId = useProjection(selectActiveDocId);
+   const askInFlight = useProjection(selectAskInFlight);
+   const configuredShape = useProjection(selectShape);
+@@ -80,6 +85,9 @@
+       title={APP.name}
+       runCommands={{ stop: true, wrapUp: true, cancelAgent: true, pause: true }}
+     >
++      <div role="status" style={{ padding: '4px 16px', fontSize: 11, background: '#f2f2ef', color: '#555' }}>
++        {backend ? backend.name + ' · ' + backend.continuation : hostBackend === 'fieldnote' ? 'Fieldnote / Lloyal (KV telemetry)' : hostBackend === 'langgraph' ? 'LangGraph + llama-server · Transcript resent over HTTP · connecting' : 'Backend not yet confirmed'}
++      </div>
+       <Shell
+         library={<Library />}
+         dock={<Composer shape={shape} placeholder={askInFlight ? COMPOSER_HINT.write : COMPOSER_HINT[moment]} />}
+--- a/src/ui/parts/Figures.tsx
++++ b/src/ui/parts/Figures.tsx
+@@ -6,11 +6,11 @@
+  *  by mistake. For an image under the pixel ceiling normalization returns the
+  *  file byte-identical, so this usually IS what you dropped; where it differs
+  *  the image was too large, rotated by its EXIF tag, or carried a non-sRGB
+- *  profile — the cases where what the model saw is the honest thing to show,
++ *  profile — the cases where submitted representation is the honest thing to show,
+  *  because it is what the brief rests on.
+  *
+  *  A document shows as a card — its title, its page count, its first page —
+- *  because what the model was given is its text, and a page image is what the
++ *  because evidence attached or submitted is its text, and a page image is what the
+  *  model looks at only when a tool puts one in front of it. */
+ import { useState, type CSSProperties, type ReactElement } from "react";
+ import { Lightbox as UiLightbox, pageFacts, resolveAsset, useAssets, useContentOrigin, useProjection } from "@lloyal-labs/ui";
+@@ -36,6 +36,7 @@
+  *  question that carried it, in thread order. */
+ export function FigureStrip({ digests }: { digests: string[] }): ReactElement | null {
+   const origin = useContentOrigin();
++  const http = useProjection((s: import('../state.js').AppState) => s.session.backend?.nativeTelemetry === false);
+   const assets = useAssets(digests);
+   // Page renders the thread holds — admitted by a tool, persisted with the run —
+   // say which pages the model looked at.
+@@ -56,7 +57,7 @@
+           if (asset?.kind === "document") {
+             const { meta } = asset;
+             const cover = meta.pages.find((p) => p.page === 1)?.render;
+-            const facts = pageFacts(meta, new Set(threadDigests));
++            const facts = pageFacts(meta, new Set(threadDigests)).map(line => http ? line.replace('Viewed as images', 'Submitted as images') : line);
+             // The card opens the document itself in the browser's PDF viewer
+             // when the ingest kept the original; else its first page render.
+             const openIt = (): void => {
+@@ -93,7 +94,7 @@
+             >
+               <img
+                 src={representationUrl(origin, digest)}
+-                alt="Attached image, as the model received it"
++                alt="Attached or submitted image representation"
+                 style={S.img}
+                 onLoad={(e) => {
+                   // Read the element NOW. `currentTarget` is only valid while the
+--- a/src/ui/moments/Write.tsx
++++ b/src/ui/moments/Write.tsx
+@@ -30,7 +30,7 @@
+       <Figures />
+ 
+       {sections.map((s) => (
+-        <section key={s.index} style={S.section}>
++        <section key={s.index} data-bench-section={s.index} style={S.section}>
+           <h2 id={`s${s.index}`} style={{ ...S.head, ...(s.inquiry ? null : S.headPending) }}>
+             {s.title}
+             {s.waiting && (
+--- a/src/ui/parts/Prose.tsx
++++ b/src/ui/parts/Prose.tsx
+@@ -58,7 +58,7 @@
+       <Tag id={anchors[next++]?.anchor} style={HEADING[Tag]}>{children}</Tag>;
+   return (
+     <>
+-      <Markdown
++      <div data-bench-prose><Markdown
+         markdown={markdown}
+         style={S.prose}
+         components={{
+@@ -124,7 +124,7 @@
+             ),
+           pre: ({ children }) => <pre style={S.pre}>{children}</pre>,
+         }}
+-      />
++      /></div>
+       {openPage !== null && (
+         <Lightbox digest={openPage.digest} label={openPage.label} onClose={() => setOpenPage(null)} styles={LIGHTBOX} />
+       )}
+--- a/node_modules/@lloyal-labs/ui/dist/fold.js
++++ b/node_modules/@lloyal-labs/ui/dist/fold.js
+@@ -262,7 +262,7 @@
+                 return replaceAgent(working, ev.agentId, (a) => ({ ...a, phase: 'tool', toolCallCount: a.toolCallCount + 1, contentBuffer: '' }));
+             }
+             const id = working.nextTimelineId;
+-            const next = replaceAgent(working, ev.agentId, (a) => pushTimeline({ ...a, phase: 'tool', toolCallCount: a.toolCallCount + 1, pendingToolCallId: id, contentBuffer: '' }, { kind: 'tool_call', id, tool: ev.tool, argsSummary: formatArgSummary(ev.tool, ev.args) }));
++            const next = replaceAgent(working, ev.agentId, (a) => pushTimeline({ ...a, phase: 'tool', toolCallCount: a.toolCallCount + 1, pendingToolCallId: id, contentBuffer: '' }, { kind: 'tool_call', id, transportCallId: ev.callId, tool: ev.tool, argsSummary: formatArgSummary(ev.tool, ev.args) }));
+             return { ...next, nextTimelineId: working.nextTimelineId + 1 };
+         }
+         case 'agent:tool_retry': {
+@@ -279,7 +279,7 @@
+             const summary = summarizeResult(ev.tool, ev.result);
+             const id = r.nextTimelineId;
+             const next = replaceAgent(r, ev.agentId, (a) => pushTimeline({ ...a, phase: 'idle', pendingToolCallId: null, retry: null }, {
+-                kind: 'tool_result', id, tool: ev.tool, callId: agent.pendingToolCallId, byteLength: ev.result.length,
++                kind: 'tool_result', id, tool: ev.tool, callId: typeof ev.callId === 'string' ? (agent.timeline.find(t => t.kind === 'tool_call' && t.transportCallId === ev.callId)?.id ?? null) : agent.pendingToolCallId, byteLength: ev.result.length,
+                 preview: summary.preview, hosts: Array.from(new Set(summary.hosts)), resultCount: summary.resultCount, sources: summary.sources,
+             }));
+             return { ...next, nextTimelineId: r.nextTimelineId + 1 };
+--- a/targets/web/web-bridge.ts
++++ b/targets/web/web-bridge.ts
+@@ -46,11 +46,24 @@
+ }
+ 
+ export function installWebBridge(): void {
+-  window.harness = createBridge<WorkflowEvent, Command, AppState>(configuredWssUrl() ?? DEFAULT_WSS, {
++  window.harness = createBridge<WorkflowEvent, Command, AppState>(configuredWssUrl() ?? ((import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV ? DEFAULT_WSS : (window.location.protocol === 'https:' ? 'wss://' : 'ws://') + window.location.host), {
+     initialState,
+     reduce,
+     contentOrigin: resolveContentBaseUrl(),
+     // A served host cannot re-admit an existing connection, so a working session means a new one.
+     recover: () => window.location.reload(),
+   });
++  const bridge = window.harness;
++  let observations: unknown[] = [];
++  const post = () => { if (!observations.length) return; const batch = observations; observations = []; navigator.sendBeacon('/__bench/browser', new Blob([JSON.stringify(batch)], { type: 'application/json' })); };
++  const send = bridge.send.bind(bridge);
++  bridge.send = command => { observations.push({ kind: 'command', at: performance.now(), command }); send(command); };
++  let scheduled=false,lastSample=-Infinity,lastSignature='';
++  bridge.onEvent(frame => {
++    if (['query','plan','ui:plan_review','ui:clarify','research:start','agent:return','answer','complete','run:paused','run:resumed'].includes(frame.ev.type)) requestAnimationFrame(() => requestAnimationFrame(() => { observations.push({kind:'paint-observation', at:performance.now(), seq:frame.seq, type:frame.ev.type}); }));
++    if(scheduled||performance.now()-lastSample<200)return;scheduled=true;
++    requestAnimationFrame(()=>requestAnimationFrame(()=>{scheduled=false;lastSample=performance.now();const prose=[...document.querySelectorAll('[data-bench-prose]')].map(el=>({section:el.closest('[data-bench-section]')?.getAttribute('data-bench-section')??null,chars:el.textContent?.trim().length??0,rendered:(el as HTMLElement).offsetHeight>0}));const signature=JSON.stringify(prose);if(signature!==lastSignature){lastSignature=signature;observations.push({kind:'prose-render',at:lastSample,seq:frame.seq,visibility:document.visibilityState,prose});}}));
++  });
++  setInterval(post, 500);
++  window.addEventListener('pagehide', post);
+ }
+--- a/node_modules/@lloyal-labs/dev-tools/dist/index.js
++++ b/node_modules/@lloyal-labs/dev-tools/dist/index.js
+@@ -108,6 +108,7 @@
+     return undefined;
+ }
+ export function foldEvent(m, ev, now, framing = DEFAULT_FRAMING) {
++    if(ev.type === 'bench:capabilities') m.nativeTelemetry = ev.nativeTelemetry;
+     m.eventCount++;
+     if (m.t0 === null)
+         m.t0 = now;
+@@ -139,7 +140,7 @@
+     // (framing.instruction), never guessed from event shapes. First one per
+     // run wins: a re-plan re-emits the same event and must not reseed.
+     const instr = framing.instruction;
+-    if (instr && ev.type === instr.event && (m.spine === null || m.spine.query === null)) {
++    if (m.nativeTelemetry !== false && instr && ev.type === instr.event && (m.spine === null || m.spine.query === null)) {
+         const s = ensureSpine(m, now);
+         const q = ev[instr.field];
+         if (typeof q === 'string')
+@@ -268,6 +269,7 @@
+             });
+             return;
+         }
++        case 'agent:usage':
+         case 'agent:produce': {
+             const lane = m.lanes.get(ev.agentId);
+             if (!lane)
+@@ -353,7 +355,7 @@
+                 settledAt: null,
+                 result: null,
+                 contextAvailablePercent: null,
+-                callId: null,
++                callId: typeof ev.callId === 'string' ? ev.callId : null,
+                 explore: null,
+                 admission: null,
+                 exploitChunks: null,
+@@ -375,13 +377,18 @@
+                 lane.inflightTool = null;
+             // Settle the OLDEST unsettled call for this agent+tool — dispatch is
+             // per-agent serial, so there is at most one.
+-            const r = m.retrievals.find((x) => x.agentId === agentId && x.tool === tool && x.settledAt === null);
++            const r = m.retrievals.find((x) => x.agentId === agentId && x.tool === tool && x.settledAt === null && (typeof ev.callId !== 'string' || x.callId === ev.callId));
+             if (r) {
+                 r.settledAt = now;
+                 r.result = typeof ev.result === 'string' ? ev.result : null;
+                 r.contextAvailablePercent =
+                     typeof ev.contextAvailablePercent === 'number' ? ev.contextAvailablePercent : null;
+             }
++            return;
++        }
++        case 'agent:ranking': {
++            const r = m.retrievals.find(x => x.callId === ev.callId && x.agentId === ev.agentId);
++            if (r && ev.ranking) { r.admission = ev.ranking; r.explore = true; }
+             return;
+         }
+         case 'agent:trace': {
+--- a/node_modules/@lloyal-labs/dev-tools/dist/react.js
++++ b/node_modules/@lloyal-labs/dev-tools/dist/react.js
+@@ -396,7 +396,7 @@
+                                             ? 'finishing — the run is winding down'
+                                             : m.pausedAt !== null
+                                                 ? 'play — the next tick proceeds from the settled state'
+-                                                : 'pause — hold at the tick boundary; branches stay resident', style: m.windingDownAt !== null ? { ...runBtn, opacity: 0.4, cursor: 'default' }
++                                                : (m.nativeTelemetry === false ? 'pause — hold at the next asynchronous boundary; in-flight HTTP may continue' : 'pause — hold at the tick boundary; branches stay resident'), style: m.windingDownAt !== null ? { ...runBtn, opacity: 0.4, cursor: 'default' }
+                                             : m.pausedAt !== null ? { ...runBtn, color: C.ok, borderColor: '#c9e7d4' } : runBtn, children: m.pausedAt !== null ? '▶ play' : '⏸ pause' })), runCommands.wrapUp && (_jsx("button", { onClick: () => store.send({ type: 'wrap_up' }), disabled: m.pausedAt !== null || m.windingDownAt !== null, title: m.windingDownAt !== null
+                                             ? 'agents are wrapping up and reporting'
+                                             : m.pausedAt !== null

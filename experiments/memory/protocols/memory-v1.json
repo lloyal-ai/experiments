@@ -1,0 +1,16 @@
+{
+  "description": "Primary single-round shared-ledger text diagnostic. Native public agentPool + parallel; cache-enabled HTTP with stable shared prefix. Three fresh-process repeats. Scope exit releases native workers. Full Fieldnote validation is separate.",
+  "counts": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "repeats": 3,
+  "rounds": 1,
+  "contexts": [
+    32768
+  ],
+  "records": 96,
+  "backend": "both"
+}

@@ -1,0 +1,44 @@
+{
+  "scope": "Single-user local corpus/documents journeys; ordinary LangGraph + HTTP",
+  "implemented": {
+    "submit_query": "Validate original attachment descriptors, snapshot sources; direct, planned or saved-thread continuation",
+    "submit_clarification": "Revision-checked dialogue retained before replanning",
+    "accept_plan": "Revision-checked; one accepted plan resumes the graph checkpoint",
+    "cancel_plan": "Cancel pending round; no saved stillborn brief",
+    "edit_plan": "Abort the planning round; UI owns editing the question",
+    "change_mode": "Replan pending round under same document identity; new revision",
+    "update_task_description": "Preserve routing hint while editing description",
+    "add_task": "Add user task; planner maxTasks is not a user-edit cap",
+    "delete_task": "Keep at least one task",
+    "move_task": "Reorder task list",
+    "toggle_participation": "Corpus/documents affect next ask; active source snapshot remains stable",
+    "new_run": "Stop active work and clear canvas selection",
+    "open_doc": "View-only navigation during work; persisted report and exchanges restore on reopening",
+    "library_list": "Saved records only",
+    "library_search": "Stock neural reranking of title + first 400 answer characters; disabled while a run is active",
+    "library_delete": "Confined to listed library records; rejected during active writing",
+    "stop": "Abort HTTP/graph work, suppress late output, release incomplete document",
+    "pause": "Gate asynchronous boundaries; in-flight HTTP may continue",
+    "resume": "Release held boundaries; deliberate Hold excluded from inquiry deadline",
+    "wrap_up": "Abort ongoing inquiry requests and request reports from completed evidence; then settle",
+    "cancel_agent": "Abort selected agent; surviving inquiry findings can still settle",
+    "set_ability_config": "Corpus file/directory/glob; documents has no settings. Changes preserve active snapshot",
+    "set_config": "Effort and default mode in memory; other changes explicitly rejected"
+  },
+  "limitations": {
+    "quit": "Closes application session; host process remains owned by launcher",
+    "reload_runtime": "Explicit error; use launcher for model residency configuration",
+    "web": "Outside current local-source scope; no simulated web evidence",
+    "native_pressure_entropy_perplexity": "Unavailable through this HTTP integration; no fabricated values",
+    "image_evidence": "HTTP submission recorded separately from native admission/prefill",
+    "tick_level_hold": "Not emulated; asynchronous boundary behavior is observable",
+    "native_replay": "Raw native traces retained; incumbent uses HTTP and application records, not a native-state replay emulator"
+  },
+  "content": {
+    "ingress": "Pinned standalone media pipeline receives original bytes",
+    "inspect": "Original PDF, extracted metadata and actual derived image representations by content digest",
+    "tools": ["grep", "search", "read_file", "search_documents", "read_document", "view_page"]
+  },
+  "validation": "Contract tests plus shared Fieldnote invariants; real paired journey and quality validation pending",
+  "comparisonEligible": false
+}

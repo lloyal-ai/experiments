@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "prompt": {
+    "sameSystemBytes": true,
+    "chars": 9238,
+    "sha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "source": "reference/fieldnote-app/src/harness/prompts/synthesize-flat.system.eta",
+    "nativePromptTraceSeq": 18265,
+    "httpRequest": "sessions/langgraph-2026-10-08T11-44-18.678Z/http/f1da5c8a-d04c-4ea0-86c9-fd2e315549d1.request.json",
+    "lengthInstruction": "End naturally when the report is complete.",
+    "queryLengthInstruction": "Give a concise cited research brief",
+    "numericWordLimit": null,
+    "nativeBudget": "BUDGETS.settle = { maxTurns: 10 }; no numeric token/word cap",
+    "httpOutputCap": {
+      "maxTokens": null,
+      "maxCompletionTokens": null
+    },
+    "findings": "Different inquiry findings supplied; no identical-input synthesis experiment"
+  },
+  "native": {
+    "answerChars": 5717,
+    "approxVisibleWords": 665,
+    "generatedTokensIncludingReasoning": 2021,
+    "reasoningCharsBeforeEndThink": 3185
+  },
+  "http": {
+    "answerChars": 5525,
+    "approxVisibleWords": 732,
+    "generatedTokensIncludingReasoning": 5694,
+    "reasoningChars": 16968
+  },
+  "wordCountMethod": "Host answer text only; remove Markdown link destinations and formatting characters, split whitespace. Includes headings/source labels; excludes reasoning and exported document wrapper/annexures. Approximate visible word counts, not tokenizer counts.",
+  "quality": {
+    "overall": "Mixed; neither final report passes all requested coverage/citation checks",
+    "native": {
+      "stronger": "Explains blue normal route and orange UV bypass with valid page-2 attachment citation",
+      "failures": [
+        "Omits existing operating-cost and installation evidence because inquiry findings omitted it",
+        "Invalid attachment identifier on capacity/audit citations",
+        "Infers shorter/more frequent versus longer/less frequent maintenance without evidence"
+      ]
+    },
+    "http": {
+      "stronger": "Reports daily operating costs, 400-credit inlet upgrade, and installation-only grant",
+      "failures": [
+        "Omits requested routing explanation despite available visual inquiry findings",
+        "Invalid/unresolved corpus citation URLs",
+        "Infers equal long-term reliability risk from absence of winter data"
+      ]
+    },
+    "attribution": "Differences reflect the whole pipeline, including different inquiry findings, not isolated synthesis capability."
+  }
+}

@@ -1,0 +1,409 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index d15ccfd99..f08c48194 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -16,6 +16,7 @@ add_library(llama
+             llama-batch.cpp
+             llama-chat.cpp
+             llama-context.cpp
++            llama-bench-memory.cpp
+             llama-cparams.cpp
+             llama-grammar.cpp
+             llama-graph.cpp
+diff --git a/src/llama-context.cpp b/src/llama-context.cpp
+index 9a40c4366..6e7d35837 100644
+--- a/src/llama-context.cpp
++++ b/src/llama-context.cpp
+@@ -1,4 +1,5 @@
+ #include "llama-context.h"
++#include "llama-bench-memory.h"
+ 
+ #include "ggml.h"
+ #include "llama-arch.h"
+@@ -405,6 +406,8 @@ llama_context::llama_context(
+ }
+ 
+ llama_context::~llama_context() {
++    llama_bench_context(this, "context.beforeDestroy", true);
++    llama_bench_forget(this);
+     if (!model.hparams.no_alloc) {
+         for (size_t i = 0; i < backend_ptrs.size(); ++i) {
+             ggml_backend_t             backend = backend_ptrs[i];
+@@ -3468,6 +3471,7 @@ llama_context * llama_init_from_model(
+ 
+     try {
+         auto * ctx = new llama_context(*model, params);
++        llama_bench_context(ctx, "context.ready", true);
+         return ctx;
+     } catch (const std::exception & err) {
+         LLAMA_LOG_ERROR("%s: failed to initialize the context: %s\n", __func__, err.what());
+@@ -3721,6 +3725,7 @@ void llama_memory_clear(llama_memory_t mem, bool data) {
+     }
+ 
+     mem->clear(data);
++    llama_bench_memory(mem, "memory.clear");
+ }
+ 
+ bool llama_memory_seq_rm(
+@@ -3732,7 +3737,9 @@ bool llama_memory_seq_rm(
+         return true;
+     }
+ 
+-    return mem->seq_rm(seq_id, p0, p1);
++    const bool removed = mem->seq_rm(seq_id, p0, p1);
++    llama_bench_memory(mem, "memory.seq_rm");
++    return removed;
+ }
+ 
+ void llama_memory_seq_cp(
+@@ -3745,7 +3752,9 @@ void llama_memory_seq_cp(
+         return;
+     }
+ 
++    llama_bench_memory(mem, "memory.before_seq_cp");
+     mem->seq_cp(seq_id_src, seq_id_dst, p0, p1);
++    llama_bench_memory(mem, "memory.seq_cp");
+ }
+ 
+ void llama_memory_seq_keep(
+@@ -3756,6 +3765,7 @@ void llama_memory_seq_keep(
+     }
+ 
+     mem->seq_keep(seq_id);
++    llama_bench_memory(mem, "memory.seq_keep");
+ }
+ 
+ void llama_memory_seq_add(
+@@ -3769,6 +3779,7 @@ void llama_memory_seq_add(
+     }
+ 
+     mem->seq_add(seq_id, p0, p1, delta);
++    llama_bench_memory(mem, "memory.seq_add");
+ }
+ 
+ void llama_memory_seq_div(
+@@ -3782,6 +3793,7 @@ void llama_memory_seq_div(
+     }
+ 
+     mem->seq_div(seq_id, p0, p1, d);
++    llama_bench_memory(mem, "memory.seq_div");
+ }
+ 
+ llama_pos llama_memory_seq_pos_min(
+@@ -3946,6 +3958,7 @@ int32_t llama_decode(
+         llama_context * ctx,
+           llama_batch   batch) {
+     const int ret = ctx->decode(batch);
++    llama_bench_context(ctx, ret == 0 ? "decode" : "decode.error", ret != 0);
+     if (ret != 0 && ret != 1) {
+         LLAMA_LOG_ERROR("%s: failed to decode, ret = %d\n", __func__, ret);
+     }
+diff --git a/src/llama-kv-cache.h b/src/llama-kv-cache.h
+index 3d68f98c1..8323781f7 100644
+--- a/src/llama-kv-cache.h
++++ b/src/llama-kv-cache.h
+@@ -153,6 +153,13 @@ public:
+     // llama_kv_cache specific API
+     //
+ 
++    std::vector<llama_bench_cell_counts> benchmark_cells() const {
++        std::vector<llama_bench_cell_counts> out;
++        for (const auto & cells : v_cells) out.push_back(cells.benchmark_cells());
++        return out;
++    }
++    uintptr_t benchmark_pool_id() const { return reinterpret_cast<uintptr_t>(v_cells_impl.get()); }
++
+     uint32_t get_size()     const;
+     uint32_t get_n_stream() const;
+ 
+diff --git a/src/llama-kv-cells.h b/src/llama-kv-cells.h
+index fddd31a0b..fdf5118c7 100644
+--- a/src/llama-kv-cells.h
++++ b/src/llama-kv-cells.h
+@@ -1,6 +1,7 @@
+ #pragma once
+ 
+ #include "llama.h"
++#include "llama-bench-memory.h"
+ #include "llama-cparams.h"
+ 
+ #include <bitset>
+@@ -76,6 +77,18 @@ public:
+         return pos[i] == -1;
+     }
+ 
++    llama_bench_cell_counts benchmark_cells() const {
++        llama_bench_cell_counts out;
++        out.capacity = size(); out.used = used.size();
++        std::bitset<LLAMA_MAX_SEQ> owners;
++        for (auto i : used) {
++            const auto n = seq[i].count();
++            out.references += n; out.shared += n > 1; owners |= seq[i];
++        }
++        out.sequences = owners.count();
++        return out;
++    }
++
+     uint32_t get_used() const {
+         return used.size();
+     }
+diff --git a/tools/server/server-context.cpp b/tools/server/server-context.cpp
+index bdfa51718..cd332be6a 100644
+--- a/tools/server/server-context.cpp
++++ b/tools/server/server-context.cpp
+@@ -19,6 +19,7 @@
+ 
+ // TODO: tmp until the mtmd draft processing is refactored [TAG_MTMD_DRAFT_PROCESSING]
+ #include "../../src/llama-ext.h"
++#include "../../src/llama-bench-memory.h"
+ 
+ #include <algorithm>
+ #include <cstddef>
+@@ -158,6 +159,7 @@ struct server_slot {
+ 
+     bool prompt_load(server_prompt_cache & prompt_cache, const server_tokens & tokens) {
+         bool res = prompt_cache.load(prompt, tokens, ctx_tgt, ctx_dft, id);
++        llama_bench_cache(res ? "cache.load" : "cache.miss", prompt_cache.size(), prompt_cache.states.size(), prompt_cache.n_tokens(), prompt_cache.limit_size);
+         if (!res) {
+             SLT_WRN(*this, "%s", "failed to load prompt from cache\n");
+         }
+diff --git a/tools/server/server-task.cpp b/tools/server/server-task.cpp
+index 72a4bd076..07db1ae5b 100644
+--- a/tools/server/server-task.cpp
++++ b/tools/server/server-task.cpp
+@@ -1,4 +1,5 @@
+ #include "server-task.h"
++#include "../../src/llama-bench-memory.h"
+ 
+ #include "build-info.h"
+ #include "server-chat.h"
+@@ -2024,6 +2025,7 @@ server_prompt * server_prompt_cache::alloc(const server_prompt & prompt, size_t
+             SRV_WRN(" - removing obsolete cached prompt with length %d\n", len);
+ 
+             it = states.erase(it);
++            llama_bench_cache("cache.obsolete", size(), states.size(), n_tokens(), limit_size);
+         } else {
+             ++it;
+         }
+@@ -2057,6 +2059,7 @@ server_prompt * server_prompt_cache::alloc(const server_prompt & prompt, size_t
+         /*.checkpoints =*/ prompt.checkpoints,
+     });
+ 
++    llama_bench_cache("cache.allocated", size(), states.size(), n_tokens(), limit_size);
+     return &states.back();
+ }
+ 
+@@ -2130,12 +2133,14 @@ bool server_prompt_cache::load(server_prompt & prompt, const server_tokens & tok
+         prompt = std::move(*it_best);
+ 
+         states.erase(it_best);
++        llama_bench_cache("cache.restored", size(), states.size(), n_tokens(), limit_size);
+     }
+ 
+     return true;
+ }
+ 
+ void server_prompt_cache::update() {
++    llama_bench_cache("cache.beforeUpdate", size(), states.size(), n_tokens(), limit_size);
+     if (limit_size > 0) {
+         // always keep at least one state, regardless of the limits
+         while (states.size() > 1 && size() > limit_size) {
+@@ -2146,6 +2151,7 @@ void server_prompt_cache::update() {
+             SRV_WRN(" - cache size limit reached, removing oldest entry (size = %.3f MiB)\n", states.front().size() / (1024.0 * 1024.0));
+ 
+             states.pop_front();
++            llama_bench_cache("cache.evicted", size(), states.size(), n_tokens(), limit_size);
+         }
+     }
+ 
+@@ -2165,9 +2171,11 @@ void server_prompt_cache::update() {
+                     limit_tokens, limit_tokens_cur, states.front().size() / (1024.0 * 1024.0));
+ 
+             states.pop_front();
++            llama_bench_cache("cache.evicted", size(), states.size(), n_tokens(), limit_size);
+         }
+     }
+ 
++    llama_bench_cache("cache.afterUpdate", size(), states.size(), n_tokens(), limit_size);
+     SRV_INF(" - cache state: %zu prompts, %.3f MiB (limits: %.3f MiB, %zu tokens, %zu est)\n",
+             states.size(), size() / (1024.0 * 1024.0), limit_size / (1024.0 * 1024.0), limit_tokens, limit_tokens_cur);
+ 
+diff --git a/src/llama-bench-memory.cpp b/src/llama-bench-memory.cpp
+new file mode 100644
+index 000000000..15045b44b
+--- /dev/null
++++ b/src/llama-bench-memory.cpp
+@@ -0,0 +1,154 @@
++#include "llama-bench-memory.h"
++#include "llama-context.h"
++#include "llama-memory-hybrid.h"
++#include "llama-memory-recurrent.h"
++#include "../vendor/nlohmann/json.hpp"
++#include <chrono>
++#include <cstdio>
++#include <cstdlib>
++#include <mutex>
++#include <unordered_map>
++#if defined(__APPLE__)
++#include <mach/mach.h>
++#endif
++#if defined(_WIN32)
++#include <process.h>
++#define bench_getpid _getpid
++#else
++#include <unistd.h>
++#define bench_getpid getpid
++#endif
++
++using json = nlohmann::ordered_json;
++using clock_type = std::chrono::steady_clock;
++namespace {
++struct context_record { uint64_t id; clock_type::time_point last{}; };
++struct observer {
++    FILE * file = nullptr;
++    uint64_t next = 1, sequence = 0;
++    bool failed = false;
++    uint64_t observer_ns = 0;
++    clock_type::time_point flushed{};
++    std::mutex mutex;
++    std::unordered_map<llama_context *, context_record> contexts;
++    observer() {
++        const char * path = std::getenv("LLAMA_BENCH_MEMORY_LOG");
++        if (path && *path) {
++            file = std::fopen(path, "a");
++            if (file) std::setvbuf(file, nullptr, _IOFBF, 65536);
++            if (!file) { failed = true; std::fprintf(stderr, "memory telemetry: cannot open %s\n", path); }
++        }
++    }
++    ~observer() { if (file) std::fclose(file); }
++    void write(json record) {
++        record["schema"] = "llama.memory.v1";
++        record["pid"] = bench_getpid();
++        record["seq"] = ++sequence;
++        record["steadyNs"] = std::chrono::duration_cast<std::chrono::nanoseconds>(clock_type::now().time_since_epoch()).count();
++        record["unixMs"] = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
++        const std::string line = record.dump() + "\n";
++        const auto now = clock_type::now();
++        bool bad = std::fwrite(line.data(), 1, line.size(), file) != line.size();
++        if (now-flushed >= std::chrono::milliseconds(250)) { bad = bad || std::fflush(file); flushed=now; }
++        if (bad) {
++            failed = true;
++            std::fprintf(stderr, "memory telemetry: write failed\n");
++        }
++    }
++};
++observer & sink() { static observer value; return value; }
++json counts(const llama_bench_cell_counts & c) {
++    return {{"capacityCells",c.capacity},{"occupiedCells",c.used},{"sharedCells",c.shared},
++            {"sequenceReferences",c.references},{"residentSequences",c.sequences}};
++}
++json buffers(const llama_memory_i * mem) {
++    auto rows = json::array();
++    for (const auto & entry : mem->memory_breakdown()) {
++        rows.push_back({{"bufferType",ggml_backend_buft_name(entry.first)},{"bytes",entry.second}});
++    }
++    return rows;
++}
++json recurrent(const llama_memory_recurrent * mem) {
++    uint64_t used = 0, shared = 0, refs = 0;
++    std::set<llama_seq_id> sequences;
++    for (const auto & cell : mem->cells) {
++        if (cell.seq_id.empty()) continue;
++        ++used; refs += cell.seq_id.size(); shared += cell.seq_id.size() > 1;
++        sequences.insert(cell.seq_id.begin(), cell.seq_id.end());
++    }
++    return {{"capacityStateRows",mem->size},{"occupiedStateRows",used},{"sharedStateRows",shared},
++            {"sequenceReferences",refs},{"residentSequences",sequences.size()},
++            {"rollbackSnapshotsPerSequence",mem->n_rs_seq},{"allocation",buffers(mem)}};
++}
++json attention(const llama_kv_cache * mem) {
++    auto rows = json::array();
++    for (const auto & c : mem->benchmark_cells()) rows.push_back(counts(c));
++    return {{"streams",rows},{"poolIdentity",mem->benchmark_pool_id()},{"allocation",buffers(mem)}, {"typeK",ggml_type_name(mem->type_k())},
++            {"typeV",ggml_type_name(mem->type_v())}};
++}
++json process_memory() {
++#if defined(__APPLE__)
++    task_vm_info_data_t info{};
++    mach_msg_type_number_t n = TASK_VM_INFO_COUNT;
++    if (task_info(mach_task_self(), TASK_VM_INFO, reinterpret_cast<task_info_t>(&info), &n) == KERN_SUCCESS)
++        return {{"source","mach.task_vm_info"},{"physicalFootprintBytes",info.phys_footprint},
++                {"residentBytes",info.resident_size},{"compressedBytes",info.compressed}};
++#endif
++    return nullptr;
++}
++void snapshot(observer & s, llama_context * ctx, const char * event, bool force) {
++    auto inserted = s.contexts.emplace(ctx, context_record{s.next,{}});
++    if (inserted.second) ++s.next;
++    auto & record = inserted.first->second;
++    const auto now = clock_type::now();
++    if (!force && now-record.last < std::chrono::milliseconds(250)) return;
++    record.last = now;
++    const auto start = clock_type::now();
++    json result = {{"event",event},{"contextId",record.id},{"nCtx",ctx->n_ctx()},
++                   {"nSeqMax",ctx->n_seq_max()},{"nCtxPerSequence",ctx->n_ctx_seq()},
++                   {"nBatch",ctx->n_batch()},{"nUbatch",ctx->n_ubatch()},
++                   {"modelIdentity",reinterpret_cast<uintptr_t>(&ctx->get_model())},
++                   {"attention",nullptr},{"recurrent",nullptr}};
++    auto allocation = json::array();
++    for (const auto & entry : ctx->memory_breakdown()) {
++        allocation.push_back({{"bufferType",ggml_backend_buft_name(entry.first)},
++                              {"modelBytes",entry.second.model},{"contextBytes",entry.second.context},
++                              {"computeBytes",entry.second.compute}});
++    }
++    result["allocation"] = allocation;
++    auto * memory = ctx->get_memory();
++    if (auto * hybrid = dynamic_cast<llama_memory_hybrid *>(memory)) {
++        result["attention"] = attention(hybrid->get_mem_attn());
++        result["recurrent"] = recurrent(hybrid->get_mem_recr());
++    } else if (auto * kv = dynamic_cast<llama_kv_cache *>(memory)) {
++        result["attention"] = attention(kv);
++    } else if (auto * rec = dynamic_cast<llama_memory_recurrent *>(memory)) {
++        result["recurrent"] = recurrent(rec);
++    }
++    result["occupancySupported"] = !result["attention"].is_null() || !result["recurrent"].is_null();
++    result["processMemory"] = process_memory();
++    result["collectionNs"] = std::chrono::duration_cast<std::chrono::nanoseconds>(clock_type::now()-start).count();
++    result["priorObserverNs"] = s.observer_ns;
++    s.write(result);
++    s.observer_ns += std::chrono::duration_cast<std::chrono::nanoseconds>(clock_type::now()-start).count();
++}
++}
++void llama_bench_context(llama_context * ctx, const char * event, bool force) noexcept {
++    try { auto & s=sink(); if (!s.file || s.failed) return; std::lock_guard<std::mutex> lock(s.mutex); snapshot(s,ctx,event,force); }
++    catch (...) { std::fprintf(stderr,"memory telemetry: sample failed\n"); }
++}
++void llama_bench_memory(llama_memory_t mem, const char * event) noexcept {
++    try { auto & s=sink(); if (!s.file || s.failed) return; std::lock_guard<std::mutex> lock(s.mutex);
++        for (const auto & item : s.contexts) if (item.first->get_memory()==mem) { snapshot(s,item.first,event,true); break; }
++    } catch (...) { std::fprintf(stderr,"memory telemetry: mutation sample failed\n"); }
++}
++void llama_bench_forget(llama_context * ctx) noexcept {
++    try { auto & s=sink(); if (!s.file || s.failed) return; std::lock_guard<std::mutex> lock(s.mutex);
++        auto it=s.contexts.find(ctx); if(it!=s.contexts.end()) { s.write({{"event","context.destroy"},{"contextId",it->second.id},{"observerTotalNs",s.observer_ns}}); s.contexts.erase(it); }
++    } catch (...) { std::fprintf(stderr,"memory telemetry: close failed\n"); }
++}
++void llama_bench_cache(const char * event, uint64_t bytes, uint64_t states, uint64_t tokens, uint64_t limit) noexcept {
++    try { auto & s=sink(); if (!s.file || s.failed) return; std::lock_guard<std::mutex> lock(s.mutex);
++        s.write({{"event",event},{"cacheBytes",bytes},{"cacheEntries",states},{"cacheTokens",tokens},{"cacheLimitBytes",limit}});
++    } catch (...) { std::fprintf(stderr,"memory telemetry: cache sample failed\n"); }
++}
+diff --git a/src/llama-bench-memory.h b/src/llama-bench-memory.h
+new file mode 100644
+index 000000000..61fffbd8b
+--- /dev/null
++++ b/src/llama-bench-memory.h
+@@ -0,0 +1,13 @@
++#pragma once
++#include "llama.h"
++#include <cstdint>
++
++struct llama_bench_cell_counts {
++    uint64_t capacity = 0, used = 0, shared = 0, references = 0, sequences = 0;
++};
++
++void llama_bench_context(llama_context * ctx, const char * event, bool force = false) noexcept;
++void llama_bench_forget(llama_context * ctx) noexcept;
++void llama_bench_memory(llama_memory_t mem, const char * event) noexcept;
++LLAMA_API void llama_bench_cache(const char * event, uint64_t bytes, uint64_t states,
++                                uint64_t tokens, uint64_t limit) noexcept;

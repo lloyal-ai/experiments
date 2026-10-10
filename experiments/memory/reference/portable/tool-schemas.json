@@ -1,0 +1,154 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "grep",
+      "description": "Search the entire corpus for a regex pattern. Returns every matching line with line numbers and total match count. Complements search() which ranks by relevance — grep scans exhaustively.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string",
+            "description": "Regex pattern (e.g. \"\\bshor\\b\" for whole-word, \"hidden_secret\" for literal)"
+          },
+          "ignoreCase": {
+            "type": "boolean",
+            "description": "Case-insensitive matching (default: true)"
+          }
+        },
+        "required": [
+          "pattern"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "read_file",
+      "description": "Read content from a file at specific line ranges. Use startLine/endLine from search results.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "filename": {
+            "type": "string",
+            "description": "Filename from search results",
+            "enum": []
+          },
+          "startLine": {
+            "type": "number",
+            "description": "Start line (1-indexed, from search results)"
+          },
+          "endLine": {
+            "type": "number",
+            "description": "End line (1-indexed, from search results)"
+          }
+        },
+        "required": [
+          "filename"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search",
+      "description": "Search the knowledge base. Returns sections ranked by relevance with line ranges for read_file.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search_documents",
+      "description": "Search the attached documents. Returns passages ranked by relevance, each with its document, line range and pages for read_document. Pass `document` to search one document only.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Search query"
+          },
+          "document": {
+            "type": "string",
+            "description": "Document id or title, to search one document only"
+          }
+        },
+        "required": [
+          "query"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "read_document",
+      "description": "Read the exact text of an attached document: a whole page, or a line range from search results. Name the document by id or title.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "Document id or title, from search results or the briefing"
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number — returns every section that touches the page"
+          },
+          "startLine": {
+            "type": "number",
+            "description": "Start line (1-indexed, from search results)"
+          },
+          "endLine": {
+            "type": "number",
+            "description": "End line (1-indexed, from search results)"
+          }
+        },
+        "required": [
+          "document"
+        ]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "view_page",
+      "description": "Look at a page of an attached document as an image — for a table, chart or figure, after reading the text around it. `figure` picks one figure on the page by its number.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "document": {
+            "type": "string",
+            "description": "Document id or title"
+          },
+          "page": {
+            "type": "number",
+            "description": "Page number, from search or read_document results"
+          },
+          "figure": {
+            "type": "number",
+            "description": "Which figure on the page (1 = first), to view just the figure"
+          }
+        },
+        "required": [
+          "document",
+          "page"
+        ]
+      }
+    }
+  }
+]

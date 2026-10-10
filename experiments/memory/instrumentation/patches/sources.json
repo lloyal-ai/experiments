@@ -1,0 +1,20 @@
+{
+  "lloyal-node": {
+    "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/instrumentation/lloyal-node",
+    "head": "e83f240e335dd2846a6730b52baac795501c3d42",
+    "branch": "bench/memory-instrumentation",
+    "patchSha256": "de2ac3e2063a99a18b5c2ee277f383b34316b8a626b83241aeb946b1728592eb"
+  },
+  "liblloyal": {
+    "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/instrumentation/lloyal-node/liblloyal",
+    "head": "a857ca7d99efafb42b3d5dec1c96aa7c120655d0",
+    "branch": "bench/memory-instrumentation",
+    "patchSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "llama.cpp": {
+    "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/instrumentation/lloyal-node/llama.cpp",
+    "head": "d6d0ce8215a1c324e8de04b52f9dd65c5edc129f",
+    "branch": "bench/memory-instrumentation",
+    "patchSha256": "0ad033046428c95f350b9a7bc41a45a389143a39d011454e38e32eb8b88d45d9"
+  }
+}

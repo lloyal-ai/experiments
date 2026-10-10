@@ -1,0 +1,316 @@
+[
+  {
+    "id": "@lloyal-labs/media@0.2.0",
+    "name": "@lloyal-labs/media",
+    "version": "0.2.0",
+    "size": 91152,
+    "unpackedSize": 321773,
+    "shasum": "4e112569b4c743c81797a1f67f3c9c4075ef7750",
+    "integrity": "sha512-tsa/bJpuO4VWEKfNZ2FixOvmsjV2GKUcPc+oIJ6IwaJ60Thf6VGcPTwHFlWUdEcqGsUeRgNnmktn6g5+2VB75A==",
+    "filename": "lloyal-labs-media-0.2.0.tgz",
+    "files": [
+      {
+        "path": "LICENSE",
+        "size": 3712,
+        "mode": 420
+      },
+      {
+        "path": "LICENSE-FAQ.md",
+        "size": 12578,
+        "mode": 420
+      },
+      {
+        "path": "README.md",
+        "size": 15776,
+        "mode": 420
+      },
+      {
+        "path": "dist/attachment.d.ts",
+        "size": 9732,
+        "mode": 420
+      },
+      {
+        "path": "dist/attachment.d.ts.map",
+        "size": 1898,
+        "mode": 420
+      },
+      {
+        "path": "dist/attachment.js",
+        "size": 8760,
+        "mode": 420
+      },
+      {
+        "path": "dist/attachment.js.map",
+        "size": 2894,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-ingress.d.ts",
+        "size": 1230,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-ingress.d.ts.map",
+        "size": 523,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-ingress.js",
+        "size": 1175,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-ingress.js.map",
+        "size": 671,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-urls.d.ts",
+        "size": 2697,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-urls.d.ts.map",
+        "size": 921,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-urls.js",
+        "size": 3403,
+        "mode": 420
+      },
+      {
+        "path": "dist/content-urls.js.map",
+        "size": 1945,
+        "mode": 420
+      },
+      {
+        "path": "dist/document.d.ts",
+        "size": 3986,
+        "mode": 420
+      },
+      {
+        "path": "dist/document.d.ts.map",
+        "size": 2092,
+        "mode": 420
+      },
+      {
+        "path": "dist/document.js",
+        "size": 3470,
+        "mode": 420
+      },
+      {
+        "path": "dist/document.js.map",
+        "size": 4002,
+        "mode": 420
+      },
+      {
+        "path": "dist/file-store.d.ts",
+        "size": 2203,
+        "mode": 420
+      },
+      {
+        "path": "dist/file-store.d.ts.map",
+        "size": 945,
+        "mode": 420
+      },
+      {
+        "path": "dist/file-store.js",
+        "size": 9350,
+        "mode": 420
+      },
+      {
+        "path": "dist/file-store.js.map",
+        "size": 5367,
+        "mode": 420
+      },
+      {
+        "path": "dist/gate.d.ts",
+        "size": 3215,
+        "mode": 420
+      },
+      {
+        "path": "dist/gate.d.ts.map",
+        "size": 685,
+        "mode": 420
+      },
+      {
+        "path": "dist/gate.js",
+        "size": 4972,
+        "mode": 420
+      },
+      {
+        "path": "dist/gate.js.map",
+        "size": 2732,
+        "mode": 420
+      },
+      {
+        "path": "dist/image.d.ts",
+        "size": 7874,
+        "mode": 420
+      },
+      {
+        "path": "dist/image.d.ts.map",
+        "size": 1196,
+        "mode": 420
+      },
+      {
+        "path": "dist/image.js",
+        "size": 19971,
+        "mode": 420
+      },
+      {
+        "path": "dist/image.js.map",
+        "size": 7787,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts",
+        "size": 1787,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.d.ts.map",
+        "size": 815,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js",
+        "size": 5761,
+        "mode": 420
+      },
+      {
+        "path": "dist/index.js.map",
+        "size": 853,
+        "mode": 420
+      },
+      {
+        "path": "dist/ingress.d.ts",
+        "size": 4199,
+        "mode": 420
+      },
+      {
+        "path": "dist/ingress.d.ts.map",
+        "size": 757,
+        "mode": 420
+      },
+      {
+        "path": "dist/ingress.js",
+        "size": 3670,
+        "mode": 420
+      },
+      {
+        "path": "dist/ingress.js.map",
+        "size": 1348,
+        "mode": 420
+      },
+      {
+        "path": "dist/media-type.d.ts",
+        "size": 1880,
+        "mode": 420
+      },
+      {
+        "path": "dist/media-type.d.ts.map",
+        "size": 324,
+        "mode": 420
+      },
+      {
+        "path": "dist/media-type.js",
+        "size": 3591,
+        "mode": 420
+      },
+      {
+        "path": "dist/media-type.js.map",
+        "size": 1222,
+        "mode": 420
+      },
+      {
+        "path": "dist/node.d.ts",
+        "size": 1229,
+        "mode": 420
+      },
+      {
+        "path": "dist/node.d.ts.map",
+        "size": 653,
+        "mode": 420
+      },
+      {
+        "path": "dist/node.js",
+        "size": 4279,
+        "mode": 420
+      },
+      {
+        "path": "dist/node.js.map",
+        "size": 681,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf-layout.d.ts",
+        "size": 3790,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf-layout.d.ts.map",
+        "size": 2523,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf-layout.js",
+        "size": 22991,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf-layout.js.map",
+        "size": 23990,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf.d.ts",
+        "size": 3440,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf.d.ts.map",
+        "size": 1476,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf.js",
+        "size": 38927,
+        "mode": 420
+      },
+      {
+        "path": "dist/pdf.js.map",
+        "size": 31973,
+        "mode": 420
+      },
+      {
+        "path": "dist/store.d.ts",
+        "size": 6045,
+        "mode": 420
+      },
+      {
+        "path": "dist/store.d.ts.map",
+        "size": 1162,
+        "mode": 420
+      },
+      {
+        "path": "dist/store.js",
+        "size": 2582,
+        "mode": 420
+      },
+      {
+        "path": "dist/store.js.map",
+        "size": 570,
+        "mode": 420
+      },
+      {
+        "path": "package.json",
+        "size": 1493,
+        "mode": 420
+      }
+    ],
+    "entryCount": 60,
+    "bundled": []
+  }
+]

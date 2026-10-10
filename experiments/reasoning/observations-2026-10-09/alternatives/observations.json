@@ -1,0 +1,369 @@
+{
+  "baseDataSha256": "16fe3db8205113968366bc9e61587036f7ff77053f26039d231393d746764d42",
+  "sourceAuditSha256": "ec23d5466d9aa8e90c6f5c92630dcf56570938afff1308008e19c5731181161a",
+  "pairs": [
+    {
+      "label": "A",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 2,
+          "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+          "journalSha256": "515c5792b0354f258a97354a414a94fb11cf26cb78982c9e188b2544e7cbc90c",
+          "reasoningTokens": 718,
+          "answerTokens": 1301,
+          "visibleWordsApprox": 665,
+          "firstFindingSeconds": 100.54056383300002,
+          "synthesisSeconds": 97.06788445800008,
+          "researchSeconds": 343.604845875,
+          "queryToSavedSeconds": 512.494163167,
+          "preflightSeconds": null,
+          "receipts": {
+            "researchStartSeq": 6918,
+            "researchStartMs": 362400.747667,
+            "firstFindingSeq": 10341,
+            "firstFindingMs": 462941.3115,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "0e11fde093348fd102c6290e488f30deebb7ab1360101422813c833efa374908",
+            "synthesisStartSeq": 18243,
+            "synthesisDoneSeq": 24575,
+            "reportedSynthesisMs": 97067.88445800007
+          },
+          "findings": [
+            {
+              "seconds": 100.54056383300002,
+              "agentId": 131077,
+              "seq": 10341,
+              "type": "agent:return",
+              "resultSha256": "0e11fde093348fd102c6290e488f30deebb7ab1360101422813c833efa374908"
+            },
+            {
+              "seconds": 240.10264270800008,
+              "agentId": 196611,
+              "seq": 15301,
+              "type": "agent:return",
+              "resultSha256": "32dda56e3db8083801387c00a6427ea165eea14d9d58d1926f7894c2cc49b19d"
+            },
+            {
+              "seconds": 280.78616050000005,
+              "agentId": 65542,
+              "seq": 16419,
+              "type": "agent:return",
+              "resultSha256": "49ea67bade40fe931e8c4c9ae1735a4bf9674cfe5b4b7bef10bdb5c32d014782"
+            },
+            {
+              "seconds": 343.608753958,
+              "agentId": 131076,
+              "seq": 18236,
+              "type": "agent:recovered",
+              "resultSha256": "ca31244931b22c83e36329ae5f28fcfc27e1cf9f1704117bb2b1a16dfeccd819"
+            }
+          ],
+          "researchDoneSeconds": 343.6104145,
+          "inquiryGeneratedTokens": 5814,
+          "synthesisGeneratedTokens": 2021
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+          "journalSha256": "2870199e7e8337cec5abbd1c4501840948ee0a688aee7e28e7371d1b13afcce5",
+          "reasoningTokens": 4532,
+          "answerTokens": 1159,
+          "visibleWordsApprox": 732,
+          "firstFindingSeconds": 129.09880220899998,
+          "synthesisSeconds": 188.16227141700003,
+          "researchSeconds": 278.666525125,
+          "queryToSavedSeconds": 606.926555542,
+          "preflightSeconds": 99.395495375,
+          "receipts": {
+            "researchStartSeq": 2584,
+            "researchStartMs": 195924.56325,
+            "firstFindingSeq": 5311,
+            "firstFindingMs": 325023.365459,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "9806ff3456892c53526f60ea3a85f52bbbb60f6fa386de86d91e99fbe9a3f602",
+            "synthesisStartSeq": 7800,
+            "synthesisDoneSeq": 13763,
+            "reportedSynthesisMs": 188162.27141700004
+          },
+          "findings": [
+            {
+              "seconds": 129.09880220899998,
+              "agentId": 7,
+              "seq": 5311,
+              "type": "agent:return",
+              "resultSha256": "9806ff3456892c53526f60ea3a85f52bbbb60f6fa386de86d91e99fbe9a3f602"
+            },
+            {
+              "seconds": 203.12550066699995,
+              "agentId": 6,
+              "seq": 6607,
+              "type": "agent:return",
+              "resultSha256": "73f94f4224b7d38bfdf7ac217c4535e0eb7c53f99622d2a5ff8471d629840d8c"
+            },
+            {
+              "seconds": 266.0995349589999,
+              "agentId": 5,
+              "seq": 7539,
+              "type": "agent:recovered",
+              "resultSha256": "df164d8c32ecd911a990194202fbd68791e7942354a4b3b5169375471632aa13"
+            },
+            {
+              "seconds": 278.65862945899994,
+              "agentId": 4,
+              "seq": 7795,
+              "type": "agent:recovered",
+              "resultSha256": "6010203c1264fcdd85a23d069afe06a87a12ccf2b1aaae550b3b1b00c865239a"
+            }
+          ],
+          "researchDoneSeconds": 278.66647558399995,
+          "inquiryGeneratedTokens": 5900,
+          "synthesisGeneratedTokens": 5694
+        }
+      ]
+    },
+    {
+      "label": "B",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 2,
+          "session": "sessions/fieldnote-2026-10-08T14-41-28.149Z",
+          "journalSha256": "b21933270c3720499072e3830b1fccd1eded6fb2a02f99a0d47c93fda47f6f8e",
+          "reasoningTokens": 792,
+          "answerTokens": 1610,
+          "visibleWordsApprox": 707,
+          "firstFindingSeconds": 84.61817220799998,
+          "synthesisSeconds": 110.07713570799993,
+          "researchSeconds": 258.1573155,
+          "queryToSavedSeconds": 428.98793920799994,
+          "preflightSeconds": null,
+          "receipts": {
+            "researchStartSeq": 9724,
+            "researchStartMs": 518309.899417,
+            "firstFindingSeq": 12895,
+            "firstFindingMs": 602928.071625,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "ba7825b5ce8c6cbe06f240426a92469163d30d7aabcc0180143258307c068ad2",
+            "synthesisStartSeq": 18807,
+            "synthesisDoneSeq": 26334,
+            "reportedSynthesisMs": 110077.13570799993
+          },
+          "findings": [
+            {
+              "seconds": 84.61817220799998,
+              "agentId": 131077,
+              "seq": 12895,
+              "type": "agent:return",
+              "resultSha256": "ba7825b5ce8c6cbe06f240426a92469163d30d7aabcc0180143258307c068ad2"
+            },
+            {
+              "seconds": 213.33024525000005,
+              "agentId": 196611,
+              "seq": 17417,
+              "type": "agent:return",
+              "resultSha256": "57a11c702687a79b61e6f6cdef9adfed3049212207bd1128e4f1803c4d4aed4d"
+            },
+            {
+              "seconds": 219.51332166699996,
+              "agentId": 65542,
+              "seq": 17631,
+              "type": "agent:return",
+              "resultSha256": "0e2a0beb117da53afb23a317195243ccebb61ded30374e14b9456417074d02a4"
+            },
+            {
+              "seconds": 258.160086333,
+              "agentId": 131076,
+              "seq": 18800,
+              "type": "agent:return",
+              "resultSha256": "e34aeb37c7474fd797f1f897de79f96608553589cae9e6d6a0b5219e4a1c61f9"
+            }
+          ],
+          "researchDoneSeconds": 258.16418983299997,
+          "inquiryGeneratedTokens": 4816,
+          "synthesisGeneratedTokens": 2404
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T15-19-50.896Z",
+          "journalSha256": "e390bfe6fe674c481251fdbc5a1ad85eb48a545eeb5e0a65e1092b0891fbaf9a",
+          "reasoningTokens": 7379,
+          "answerTokens": 1324,
+          "visibleWordsApprox": 809,
+          "firstFindingSeconds": 218.9267015,
+          "synthesisSeconds": 372.7890069580001,
+          "researchSeconds": 330.66169466599996,
+          "queryToSavedSeconds": 861.851275583,
+          "preflightSeconds": 108.106720792,
+          "receipts": {
+            "researchStartSeq": 2425,
+            "researchStartMs": 189851.337125,
+            "firstFindingSeq": 6053,
+            "firstFindingMs": 408778.038625,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "6ef2cfa719b0d6e6e19a06bcef85921de5f70f58e882f87b45e62344508d9974",
+            "synthesisStartSeq": 8581,
+            "synthesisDoneSeq": 17785,
+            "reportedSynthesisMs": 372789.00695800007
+          },
+          "findings": [
+            {
+              "seconds": 218.9267015,
+              "agentId": 7,
+              "seq": 6053,
+              "type": "agent:return",
+              "resultSha256": "6ef2cfa719b0d6e6e19a06bcef85921de5f70f58e882f87b45e62344508d9974"
+            },
+            {
+              "seconds": 286.052549791,
+              "agentId": 6,
+              "seq": 7490,
+              "type": "agent:recovered",
+              "resultSha256": "797f2d4c7081b0a3f751776e07924ff4fbfde65a6c23ea4c2c419fbecc2deed2"
+            },
+            {
+              "seconds": 318.78291791600003,
+              "agentId": 4,
+              "seq": 8360,
+              "type": "agent:recovered",
+              "resultSha256": "85bf5bd3177aec22449c0a04b125dda6074b44d1ec44a9ddd94bcf9f4d3ba672"
+            },
+            {
+              "seconds": 330.64360945800007,
+              "agentId": 5,
+              "seq": 8576,
+              "type": "agent:recovered",
+              "resultSha256": "fd8c6161895d0407903d0c6c50fe129917f358fbad2ebed489ae5604782f9557"
+            }
+          ],
+          "researchDoneSeconds": 330.66169149999996,
+          "inquiryGeneratedTokens": 5809,
+          "synthesisGeneratedTokens": 8706
+        }
+      ]
+    },
+    {
+      "label": "C",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 1,
+          "session": "sessions/fieldnote-2026-10-08T23-20-42.648Z",
+          "journalSha256": "54a8c9da887bfcc1c5e3f6c2df00b69b3a5d4bd661dada00e8d8fc9c35d68fd9",
+          "reasoningTokens": 698,
+          "answerTokens": 1855,
+          "visibleWordsApprox": 964,
+          "firstFindingSeconds": 142.46014095799998,
+          "synthesisSeconds": 132.01727379200003,
+          "researchSeconds": 251.24479987499998,
+          "queryToSavedSeconds": 523.297818625,
+          "preflightSeconds": 109.65334358300001,
+          "receipts": {
+            "researchStartSeq": 4876,
+            "researchStartMs": 207808.260625,
+            "firstFindingSeq": 10574,
+            "firstFindingMs": 350268.40158299997,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "11c6f8bd8e65dcc5b2e9cc102f31d99ce76e6e55e4662ccb470cef184bb6755f",
+            "synthesisStartSeq": 13620,
+            "synthesisDoneSeq": 21689,
+            "reportedSynthesisMs": 132017.27379200002
+          },
+          "findings": [
+            {
+              "seconds": 142.46014095799998,
+              "agentId": 65540,
+              "seq": 10574,
+              "type": "agent:return",
+              "resultSha256": "11c6f8bd8e65dcc5b2e9cc102f31d99ce76e6e55e4662ccb470cef184bb6755f"
+            },
+            {
+              "seconds": 162.35444287500002,
+              "agentId": 6,
+              "seq": 11148,
+              "type": "agent:return",
+              "resultSha256": "f872fc0a363e21f00039fc8fc0d881b26839a8418100420dd47d25890b7536e3"
+            },
+            {
+              "seconds": 218.84849383300002,
+              "agentId": 7,
+              "seq": 12699,
+              "type": "agent:return",
+              "resultSha256": "de73ccdecf31870e226c378d777c65b95f825e9bfa66ea457d3a2febb5e3a81b"
+            },
+            {
+              "seconds": 251.24423625000003,
+              "agentId": 65541,
+              "seq": 13613,
+              "type": "agent:return",
+              "resultSha256": "d0373f698e5808b654c631ebf2f85050733de5751bb8a11f8c9e30eef3664b8d"
+            }
+          ],
+          "researchDoneSeconds": 251.24707558300003,
+          "inquiryGeneratedTokens": 4732,
+          "synthesisGeneratedTokens": 2555
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T23-31-57.527Z",
+          "journalSha256": "1b48e93bb61165d69472a169d579fe725e66cf7cb8afea2a9dad668535869359",
+          "reasoningTokens": 2994,
+          "answerTokens": 1811,
+          "visibleWordsApprox": 942,
+          "firstFindingSeconds": 173.57937283300006,
+          "synthesisSeconds": 193.87727745900006,
+          "researchSeconds": 288.091107167,
+          "queryToSavedSeconds": 580.4055232919999,
+          "preflightSeconds": 79.884564709,
+          "receipts": {
+            "researchStartSeq": 2004,
+            "researchStartMs": 155861.72912499998,
+            "firstFindingSeq": 5364,
+            "firstFindingMs": 329441.10195800004,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "a73ee1d2b9ca274ea6b040d2382d89b7d2d57b15cbba3de76b0ef7b1d9f66bdd",
+            "synthesisStartSeq": 7828,
+            "synthesisDoneSeq": 12976,
+            "reportedSynthesisMs": 193877.27745900006
+          },
+          "findings": [
+            {
+              "seconds": 173.57937283300006,
+              "agentId": 7,
+              "seq": 5364,
+              "type": "agent:return",
+              "resultSha256": "a73ee1d2b9ca274ea6b040d2382d89b7d2d57b15cbba3de76b0ef7b1d9f66bdd"
+            },
+            {
+              "seconds": 282.623732708,
+              "agentId": 6,
+              "seq": 7718,
+              "type": "agent:recovered",
+              "resultSha256": "225e1f5f873810d7785380b2200f456d45293ff4f45c6546933428f582a3094f"
+            },
+            {
+              "seconds": 283.25255375000006,
+              "agentId": 5,
+              "seq": 7734,
+              "type": "agent:recovered",
+              "resultSha256": "dbbbc40e5453d8cd58cdbb9b401bb4dcc3f7ee31be75749070fbadb52b02fcd0"
+            },
+            {
+              "seconds": 288.071356166,
+              "agentId": 4,
+              "seq": 7823,
+              "type": "agent:recovered",
+              "resultSha256": "81ed67f2403f8c57ca090668bb30f2a535c86d6e87dcb0d41f37f9725fa6203a"
+            }
+          ],
+          "researchDoneSeconds": 288.09109358300003,
+          "inquiryGeneratedTokens": 6355,
+          "synthesisGeneratedTokens": 4808
+        }
+      ]
+    }
+  ]
+}

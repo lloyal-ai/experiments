@@ -1,0 +1,275 @@
+{
+  "date": "2026-10-09",
+  "status": "Exploratory selected observations; not a causal or quality-equivalence result.",
+  "sourceAuditSha256": "ec23d5466d9aa8e90c6f5c92630dcf56570938afff1308008e19c5731181161a",
+  "extractionCodeSha256": "b4cb2a1dc9731d5c90612af367eea73598e33c6b5e430962394b433ce9f7322d",
+  "setup": {
+    "machine": "Apple M2 Pro, 16 GB",
+    "accelerator": "Metal on both backends",
+    "model": "qwen3.5-4b.gguf",
+    "projector": "qwen3.5-4b-mmproj.gguf",
+    "reranker": "qwen3-reranker-0.6b-q8.gguf",
+    "nativeDevTracing": true,
+    "sharedFrontend": true,
+    "sameSynthesisSystemWithinPairs": true,
+    "samplerParityEstablished": false,
+    "fileSha256": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48"
+    }
+  },
+  "plannedControl": {
+    "name": "LangGraph + HTTP + prefix caching + shared prefix",
+    "status": "Not measured",
+    "values": null
+  },
+  "pairs": [
+    {
+      "label": "A",
+      "condition": "Original",
+      "comparison": "comparisons/composed-survey/comparison.json",
+      "comparisonSha256": "010c3d181657b985ff334d6086c5974243afa8651d9dc04921c981f0294d70dd",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 2,
+          "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+          "journalSha256": "515c5792b0354f258a97354a414a94fb11cf26cb78982c9e188b2544e7cbc90c",
+          "reasoningTokens": 718,
+          "answerTokens": 1301,
+          "visibleWordsApprox": 665,
+          "firstFindingSeconds": 100.54056383300002,
+          "synthesisSeconds": 97.06788445800008,
+          "researchSeconds": 343.604845875,
+          "queryToSavedSeconds": 512.494163167,
+          "preflightSeconds": null,
+          "receipts": {
+            "researchStartSeq": 6918,
+            "researchStartMs": 362400.747667,
+            "firstFindingSeq": 10341,
+            "firstFindingMs": 462941.3115,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "0e11fde093348fd102c6290e488f30deebb7ab1360101422813c833efa374908",
+            "synthesisStartSeq": 18243,
+            "synthesisDoneSeq": 24575,
+            "reportedSynthesisMs": 97067.88445800007
+          }
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+          "journalSha256": "2870199e7e8337cec5abbd1c4501840948ee0a688aee7e28e7371d1b13afcce5",
+          "reasoningTokens": 4532,
+          "answerTokens": 1159,
+          "visibleWordsApprox": 732,
+          "firstFindingSeconds": 129.09880220899998,
+          "synthesisSeconds": 188.16227141700003,
+          "researchSeconds": 278.666525125,
+          "queryToSavedSeconds": 606.926555542,
+          "preflightSeconds": 99.395495375,
+          "receipts": {
+            "researchStartSeq": 2584,
+            "researchStartMs": 195924.56325,
+            "firstFindingSeq": 5311,
+            "firstFindingMs": 325023.365459,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "9806ff3456892c53526f60ea3a85f52bbbb60f6fa386de86d91e99fbe9a3f602",
+            "synthesisStartSeq": 7800,
+            "synthesisDoneSeq": 13763,
+            "reportedSynthesisMs": 188162.27141700004
+          }
+        }
+      ],
+      "httpCache": {
+        "cacheN": 88477,
+        "promptN": 63327,
+        "cacheFraction": 0.5828370793918474,
+        "requests": 34,
+        "responsesWithTiming": 34,
+        "allRequestsCachePromptTrue": true,
+        "synthesisCachedTokens": 0
+      },
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "reductionsPct": {
+        "reasoningTokens": 84.15710503089144,
+        "firstFindingSeconds": 22.121226446211793,
+        "synthesisSeconds": 48.41267395051747
+      }
+    },
+    {
+      "label": "B",
+      "condition": "Repeat",
+      "comparison": "comparisons/deliberation-repeat-2026-10-09/comparison.json",
+      "comparisonSha256": "1537ff11e0b7c973091083f225f6608c10c2cef5f6e9663bb8c114739ae794fc",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 2,
+          "session": "sessions/fieldnote-2026-10-08T14-41-28.149Z",
+          "journalSha256": "b21933270c3720499072e3830b1fccd1eded6fb2a02f99a0d47c93fda47f6f8e",
+          "reasoningTokens": 792,
+          "answerTokens": 1610,
+          "visibleWordsApprox": 707,
+          "firstFindingSeconds": 84.61817220799998,
+          "synthesisSeconds": 110.07713570799993,
+          "researchSeconds": 258.1573155,
+          "queryToSavedSeconds": 428.98793920799994,
+          "preflightSeconds": null,
+          "receipts": {
+            "researchStartSeq": 9724,
+            "researchStartMs": 518309.899417,
+            "firstFindingSeq": 12895,
+            "firstFindingMs": 602928.071625,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "ba7825b5ce8c6cbe06f240426a92469163d30d7aabcc0180143258307c068ad2",
+            "synthesisStartSeq": 18807,
+            "synthesisDoneSeq": 26334,
+            "reportedSynthesisMs": 110077.13570799993
+          }
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T15-19-50.896Z",
+          "journalSha256": "e390bfe6fe674c481251fdbc5a1ad85eb48a545eeb5e0a65e1092b0891fbaf9a",
+          "reasoningTokens": 7379,
+          "answerTokens": 1324,
+          "visibleWordsApprox": 809,
+          "firstFindingSeconds": 218.9267015,
+          "synthesisSeconds": 372.7890069580001,
+          "researchSeconds": 330.66169466599996,
+          "queryToSavedSeconds": 861.851275583,
+          "preflightSeconds": 108.106720792,
+          "receipts": {
+            "researchStartSeq": 2425,
+            "researchStartMs": 189851.337125,
+            "firstFindingSeq": 6053,
+            "firstFindingMs": 408778.038625,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "6ef2cfa719b0d6e6e19a06bcef85921de5f70f58e882f87b45e62344508d9974",
+            "synthesisStartSeq": 8581,
+            "synthesisDoneSeq": 17785,
+            "reportedSynthesisMs": 372789.00695800007
+          }
+        }
+      ],
+      "httpCache": {
+        "cacheN": 40985,
+        "promptN": 51769,
+        "cacheFraction": 0.44186773616232183,
+        "requests": 25,
+        "responsesWithTiming": 24,
+        "allRequestsCachePromptTrue": true,
+        "synthesisCachedTokens": 0
+      },
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "reductionsPct": {
+        "reasoningTokens": 89.26683832497628,
+        "firstFindingSeconds": 61.34862872905433,
+        "synthesisSeconds": 70.47200060800031
+      }
+    },
+    {
+      "label": "C",
+      "condition": "Revised",
+      "comparison": "comparisons/coverage-routing-2026-10-09/comparison.json",
+      "comparisonSha256": "abd366b2e062e2b4f463fd3c84bd8c556dd27284ced372c9aad6827fb684cfb4",
+      "runs": [
+        {
+          "backend": "fieldnote",
+          "attempt": 1,
+          "session": "sessions/fieldnote-2026-10-08T23-20-42.648Z",
+          "journalSha256": "54a8c9da887bfcc1c5e3f6c2df00b69b3a5d4bd661dada00e8d8fc9c35d68fd9",
+          "reasoningTokens": 698,
+          "answerTokens": 1855,
+          "visibleWordsApprox": 964,
+          "firstFindingSeconds": 142.46014095799998,
+          "synthesisSeconds": 132.01727379200003,
+          "researchSeconds": 251.24479987499998,
+          "queryToSavedSeconds": 523.297818625,
+          "preflightSeconds": 109.65334358300001,
+          "receipts": {
+            "researchStartSeq": 4876,
+            "researchStartMs": 207808.260625,
+            "firstFindingSeq": 10574,
+            "firstFindingMs": 350268.40158299997,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "11c6f8bd8e65dcc5b2e9cc102f31d99ce76e6e55e4662ccb470cef184bb6755f",
+            "synthesisStartSeq": 13620,
+            "synthesisDoneSeq": 21689,
+            "reportedSynthesisMs": 132017.27379200002
+          }
+        },
+        {
+          "backend": "langgraph",
+          "attempt": 1,
+          "session": "sessions/langgraph-2026-10-08T23-31-57.527Z",
+          "journalSha256": "1b48e93bb61165d69472a169d579fe725e66cf7cb8afea2a9dad668535869359",
+          "reasoningTokens": 2994,
+          "answerTokens": 1811,
+          "visibleWordsApprox": 942,
+          "firstFindingSeconds": 173.57937283300006,
+          "synthesisSeconds": 193.87727745900006,
+          "researchSeconds": 288.091107167,
+          "queryToSavedSeconds": 580.4055232919999,
+          "preflightSeconds": 79.884564709,
+          "receipts": {
+            "researchStartSeq": 2004,
+            "researchStartMs": 155861.72912499998,
+            "firstFindingSeq": 5364,
+            "firstFindingMs": 329441.10195800004,
+            "firstFindingType": "agent:return",
+            "firstFindingResultSha256": "a73ee1d2b9ca274ea6b040d2382d89b7d2d57b15cbba3de76b0ef7b1d9f66bdd",
+            "synthesisStartSeq": 7828,
+            "synthesisDoneSeq": 12976,
+            "reportedSynthesisMs": 193877.27745900006
+          }
+        }
+      ],
+      "httpCache": {
+        "cacheN": 76661,
+        "promptN": 53494,
+        "cacheFraction": 0.58899773347163,
+        "requests": 32,
+        "responsesWithTiming": 32,
+        "allRequestsCachePromptTrue": true,
+        "synthesisCachedTokens": 0
+      },
+      "synthesisSystemSha256": "caa24b5188280f3ba8a4d36ab03b89947c1a832f1c521522e47dcc841075f77a",
+      "reductionsPct": {
+        "reasoningTokens": 76.68670674682699,
+        "firstFindingSeconds": 17.92795501395189,
+        "synthesisSeconds": 31.90678375400737
+      }
+    }
+  ],
+  "separateHoldDiagnostic": {
+    "source": "sessions/fieldnote-2026-10-08T10-14-37.954Z/control-observations.json",
+    "sha256": "3566846191768371731427821e6e77565e3bfa972514b872b3d3514caa55fff8",
+    "observation": {
+      "comparisonEligible": false,
+      "backend": "fieldnote",
+      "pauseCommandSeq": 12992,
+      "pauseAcknowledgementSeq": 12996,
+      "pauseAcknowledgementMs": 39.38108399999328,
+      "acknowledgedHoldMs": 38945.91391599993,
+      "whileHeld": {
+        "nativeProduceEvents": 0,
+        "reasoningDeltaEvents": 0,
+        "textDeltaEvents": 0,
+        "httpResponses": 0
+      },
+      "cancel": {
+        "commandSeq": 13050,
+        "agentId": 65541,
+        "failureSeq": 13052,
+        "acknowledgementMs": 4.6741669999901205,
+        "lateOutputEvents": 0
+      },
+      "note": "Different plans, intervention points and Hold lengths; diagnostic observations, not a controlled latency/energy comparison. Delta-event counts are not token counts; the old HTTP run duplicated reasoning presentation."
+    },
+    "use": "Feature-demonstration candidate only; not included in comparative README charts."
+  }
+}

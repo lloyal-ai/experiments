@@ -1,0 +1,51 @@
+{
+  "synthetic": true,
+  "facts": [
+    {
+      "id": "cedar-capacity",
+      "patterns": [
+        "cedar[\\s\\S]{0,160}1[,]?200",
+        "1[,]?200[\\s\\S]{0,100}cedar"
+      ],
+      "journeys": [
+        "J1",
+        "J1-investigate"
+      ]
+    },
+    {
+      "id": "birch-corrected",
+      "patterns": [
+        "birch[\\s\\S]{0,160}900",
+        "900[\\s\\S]{0,100}birch"
+      ],
+      "journeys": [
+        "J1",
+        "J1-investigate"
+      ]
+    },
+    {
+      "id": "cedar-cost",
+      "patterns": [
+        "cedar[\\s\\S]{0,160}18",
+        "18[\\s\\S]{0,100}cedar"
+      ],
+      "journeys": [
+        "J1",
+        "J1-investigate"
+      ]
+    },
+    {
+      "id": "bypass",
+      "patterns": [
+        "(?:orange|bypass)[\\s\\S]{0,220}(?:bypasses|bypass|skip|avoid|without|not pass)[\\s\\S]{0,100}UV",
+        "UV[\\s\\S]{0,120}(?:bypass|skip|avoid)"
+      ],
+      "journeys": [
+        "J1",
+        "J1-investigate",
+        "J2"
+      ]
+    }
+  ],
+  "note": "Pattern coverage is a smoke signal only. Blind claim/citation review is required for quality-equivalent performance claims; raw answers and source receipts are retained."
+}

@@ -1,0 +1,15 @@
+import { readFileSync, mkdirSync, createWriteStream, writeFileSync } from 'node:fs';
+import { spawn, spawnSync } from 'node:child_process';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const root=fileURLToPath(new URL('..',import.meta.url));
+const config=JSON.parse(readFileSync(resolve(root,'bench.config.json'),'utf8'));
+const build=resolve(root,'.cache/llama-build'),binary=resolve(build,'bin/llama-bench');
+const made=spawnSync('cmake',['--build',build,'--target','llama-bench','-j4'],{stdio:'inherit'});
+if(made.status!==0)throw new Error('Build llama-server first with npm run server:build');
+const dir=resolve(root,'calibration',new Date().toISOString().replace(/[:.]/g,'-'));mkdirSync(dir,{recursive:true});
+const args=['-m',config.model,'-p','512,2048','-n','128','-d','0,8192','-ctk','q4_0','-ctv','q4_0','-ngl','99','-r','5','-o','json'];
+writeFileSync(resolve(dir,'manifest.json'),JSON.stringify({engine:'stock llama.cpp only',revision:config.serverRevision,args,model:config.model,purpose:'Inference calibration; excludes tokenization, sampling, HTTP and application UX. Does not establish parity with the installed native engine.'},null,2));
+const out=createWriteStream(resolve(dir,'samples.json')),err=createWriteStream(resolve(dir,'stderr.log'));
+const child=spawn(binary,args,{stdio:['ignore','pipe','pipe']});child.stdout.pipe(out);child.stderr.pipe(err);
+child.on('error',error=>{console.error(error);process.exitCode=1;});child.on('close',code=>{out.end();err.end();process.exitCode=code??1;console.log(`Calibration: ${dir}`);});

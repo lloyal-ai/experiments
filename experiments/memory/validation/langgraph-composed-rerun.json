@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "status": "uninterrupted Survey and follow-up completed; controller attempt 3 retained; control attempt 4 failed at initial-request timeouts",
+  "comparisonEligible": false,
+  "purpose": "Complete corrected HTTP composed workload and compare observed phases against recorded native runs, separately from quality judgments.",
+  "backend": "LangGraph JS + stock llama-server HTTP",
+  "baseline": {
+    "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+    "attempt": 2,
+    "branches": 8,
+    "context": 32768
+  },
+  "common": {
+    "mode": "Survey",
+    "effort": "Standard",
+    "sources": [
+      "corpus",
+      "documents"
+    ],
+    "web": false,
+    "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.",
+    "attachments": [
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf",
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png"
+    ],
+    "objectives": [
+      {
+        "id": "task:0",
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit."
+      },
+      {
+        "id": "task:1",
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option."
+      },
+      {
+        "id": "task:2",
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2."
+      },
+      {
+        "id": "task:3",
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources."
+      }
+    ],
+    "followup": "Using the brief and the routing figure: which system meets the daily council requirement, what is its daily operating cost, and which component does the orange route bypass?",
+    "planning": "Real preflight and planner; apply all four descriptions through plan review and verify before acceptance. Preserve generated ability routing and any resulting differences."
+  },
+  "runs": [
+    {
+      "name": "J1-uninterrupted",
+      "steps": [
+        "Submit question with original PDF and image; corpus active.",
+        "Review/edit the four objectives and allow all inquiries and synthesis to complete without Hold, cancellation or Close.",
+        "Inspect final brief, figure citation and saved library.",
+        "Submit the declared follow-up without reattaching; verify transcript-resend receipts and library reopening."
+      ]
+    },
+    {
+      "name": "J1-controlled",
+      "hold": {
+        "trigger": "First completed cited inquiry visible in the real UI while at least two other inquiries are still active.",
+        "durationMs": 20000,
+        "cancel": "During Hold cancel task:3 if active, otherwise the highest-index active sibling. Record actual target and acknowledgement."
+      },
+      "close": {
+        "trigger": "After Resume, while at least one uncanceled inquiry remains active and has at least two completed source-tool calls, choose Close the brief.",
+        "absent": "Record control unexercised if all inquiries already completed; never count a click after synthesis starts as inquiry recovery."
+      },
+      "steps": [
+        "Run the same question and reviewed objectives again; record coverage-cache status.",
+        "At the declared predicate, Hold, inspect submitted image/ranking evidence, cancel the active sibling, then Resume after at least 20 seconds acknowledged Hold.",
+        "Close while an eligible uncanceled inquiry is active; allow recovery and synthesis to finish.",
+        "Verify saved report, canceled-result exclusion, actual HTTP cancellation/continuing work, and library reopening."
+      ]
+    }
+  ],
+  "measurement": [
+    "Keep every attempt, controller miss and model/application error.",
+    "Record preflight, planner, research, synthesis, follow-up and total host-observed timings separately.",
+    "Report review dwell and Hold dwell independently. Native baseline reused source coverage; fresh HTTP preflight is not silently compared with that cached path.",
+    "Record main and reranker HTTP requests, body bytes, reported prompt/output/cache counters, per-process resource samples and UI receipts.",
+    "Use architecture conclusions only to the extent supported; one completed pair provides observations, not repeated estimates."
+  ],
+  "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+  "uninterruptedDocId": "2026-10-08T11-45-14.526Z-d71607ec-b438-4050-b400-202ef80bc4c9",
+  "controlledDocId": "2026-10-08T12-04-15.952Z-ea1cf91f-bda3-4c78-946a-94b573a25b9d",
+  "results": {
+    "uninterrupted": {
+      "attempt": 1,
+      "review": "sessions/langgraph-2026-10-08T11-44-18.678Z/J1-uninterrupted-review.json"
+    },
+    "followup": {
+      "attempt": 2,
+      "status": "complete"
+    },
+    "controllerAborted": {
+      "attempt": 3,
+      "review": "sessions/langgraph-2026-10-08T11-44-18.678Z/J1-controller-failure.json"
+    },
+    "controlled": {
+      "attempt": 4,
+      "review": "sessions/langgraph-2026-10-08T11-44-18.678Z/J1-controlled-review.json"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+<!doctype html>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lloyal · README benchmark preview</title>
+<style>
+body{margin:0;background:white;color:#171717;font:16px/1.65 system-ui,sans-serif}
+main{max-width:1000px;margin:auto;padding:40px 24px}h1{font-size:32px}h2{margin-top:42px}
+.plots{display:flex;gap:12px;margin:24px 0}.plots img{width:calc(50% - 6px);height:auto;object-fit:contain}
+small{display:block;color:#555;line-height:1.65}a{color:#4361ee}summary{cursor:pointer;font-weight:600}details{margin:24px 0}
+</style>
+<main>
+<h1>Less deliberation in agent workflows</h1>
+<p>The comparison starts at <b>4B parameters</b>, with the model, vision projector and reranker running on <b>16 GB of unified memory</b>.</p>
+<p>Fieldnote, one of the included templates, provides the workload: document and image understanding, neural reranking, parallel tool use and synthesis. Both implementations use the <b>same model files and infrastructure</b>. Lloyal exposes live attention branches to the application; the idiomatic LangGraph implementation sends messages to llama-server over HTTP, with <b>prefix caching enabled</b>.</p>
+<div class="plots"><img src="assets/execution-lloyal.png" alt="Lloyal application and embedded runtime"><img src="assets/execution-langgraph.png" alt="LangGraph over HTTP to llama-server with prefix caching"></div>
+<p>Lloyal’s runtime lets agents fork shared attention and continue on independent branches. LangGraph retains messages and graph checkpoints in the application, while llama-server manages active inference state and reuses cached prefixes when they match. In the measured Survey workflow, native synthesis inherits the shared spine and receives inquiry findings as text.</p>
+<p>Across three selected comparisons, Lloyal emitted <b>76.7–89.3% fewer synthesis reasoning tokens</b>. In the revised pair, it used <b>698 reasoning tokens versus 2,994</b>, while the completed outputs were similar in length at approximately <b>964 and 942 words</b>, respectively.</p>
+<div class="plots"><img src="assets/thinking-fast-and-slow.png" alt="Synthesis reasoning tokens with percentage reductions"><img src="assets/time-to-findings-C.png" alt="Time to each returned finding in comparison C"></div>
+<p>Parallel inquiries also deliver findings progressively. In revised comparison C, the second finding arrived at <b>162.4 seconds versus 282.6 seconds</b>, about <b>two minutes earlier</b>. All four had arrived at <b>251.2 seconds versus 288.1 seconds</b>. The curve records each distinct agent’s first nonempty return, including recoveries, from the start of research; it measures host receipt, with quality assessed separately.</p>
+<p>The HTTP backend reused <b>44–59% of prompt positions across the workload</b>, with zero cache hits during synthesis. A, B and C identify the original, repeat and revised comparisons.</p>
+<small>These exploratory results cover one workload on an M2 Pro (16 GB), using Qwen3.5-4B, its projector and the same reranker weights. Counts use the same GGUF tokenizer, and synthesis system instructions were byte-identical within pairs. Conditions evolved across comparisons, while differences in full inputs and effective sampling remain confounds. “Deliberation” refers to emitted reasoning text; its relationship to resident KV and equivalent answer quality remain open questions. <a href="METHODS.md">Methods and receipts.</a></small>
+<p>The <b>LG + HTTP + prefix caching + shared prefix</b> control is the next arm. Its result bar will be added after actual synthesis reuse has been verified and all three arms rerun under one protocol.</p>
+<details><summary>Stage timings and measurement boundaries</summary>
+<p>The first research finding arrived <b>17.9–61.3% sooner</b> with Lloyal in the selected pairs, measured from the start of research. In the revised pair, it arrived at <b>142.5 seconds versus 173.6 seconds</b>, giving the user a returned finding about <b>31 seconds earlier</b>.</p>
+<p>After the findings were collected, synthesis took <b>31.9–70.5% less time</b>. That stage lasted <b>132.0 seconds versus 193.9 seconds</b> in the revised pair, reducing the final wait for the brief by about <b>a minute</b>.</p>
+<div class="plots"><img src="assets/first-finding.png" alt="First-finding latency"><img src="assets/synthesis-time.png" alt="Synthesis duration"></div>
+<small>The left plot measures host receipt of a returned finding after research starts; browser rendering and finding quality require separate measurements. Preflight and review fall outside this interval, and overall research duration was mixed. The right plot covers synthesis, showing the latency associated with the reasoning observation. In C, total query-to-saved time was 523.3 versus 580.4 seconds, with native preflight taking longer. Causal attribution and equivalent output quality still require controlled evaluation.</small>
+<p>The featured milestone curve shows the latest comparison C. A returned its first native finding sooner but its remaining findings later than HTTP; B returned all four native findings sooner. <a href="alternatives/README.md#findings-over-time">All-pair return times.</a></p>
+</details>
+<h2>Related work</h2>
+<p><a href="https://arxiv.org/html/2601.20326v1#S6.SS2">Xing et al., Beyond Speedup (2026), §6.2</a> use pooled KV features and a learned difficulty estimator to switch reasoning modes. This comparison observes the reasoning generated by two execution architectures without adding a switching controller. Whether resident state reduces re-derivation remains a hypothesis to test.</p>
+<p><a href="README.md">README copy</a> · <a href="METHODS.md">Methods and provenance</a> · <a href="data.json">Measurements</a> · <a href="alternatives/preview.html">Featured figures</a></p>
+</main>

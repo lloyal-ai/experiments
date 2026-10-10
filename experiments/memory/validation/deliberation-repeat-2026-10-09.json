@@ -1,0 +1,204 @@
+{
+  "version": 1,
+  "status": "completed; both selected runs finished; model stacks stopped",
+  "purpose": "Repeat the uninterrupted composed Survey to test whether reduced synthesis deliberation recurs.",
+  "baseline": {
+    "native": {
+      "session": "sessions/fieldnote-2026-10-08T11-17-51.047Z",
+      "attempt": 2
+    },
+    "http": {
+      "session": "sessions/langgraph-2026-10-08T11-44-18.678Z",
+      "attempt": 1
+    }
+  },
+  "procedure": {
+    "mode": "Survey",
+    "effort": "Standard",
+    "sources": [
+      "documents",
+      "corpus"
+    ],
+    "web": false,
+    "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.",
+    "attachments": [
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf",
+      "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png"
+    ],
+    "reviewedObjectives": [
+      {
+        "id": "task:0",
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit."
+      },
+      {
+        "id": "task:1",
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option."
+      },
+      {
+        "id": "task:2",
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2."
+      },
+      {
+        "id": "task:3",
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources."
+      }
+    ],
+    "controls": "Uninterrupted after accepting the four reviewed objectives; no Hold/cancellation/early Close",
+    "acceptance": "All four inquiry results followed by successful synthesis, saved brief and reviewed evidence coverage/citations"
+  },
+  "unchangedVerified": [
+    "model SHA256",
+    "projector SHA256",
+    "reranker SHA256",
+    "stock server SHA256",
+    "native entry SHA256",
+    "native addon SHA256",
+    "native llama library SHA256",
+    "dependency lockfile",
+    "all recorded host source files",
+    "all recorded built frontend files",
+    "all fixture SHA256s"
+  ],
+  "effectiveSettings": {
+    "nativeBranches": 8,
+    "httpParallel": 4,
+    "context": 32768,
+    "mode": "flat",
+    "effort": "medium",
+    "outputCap": null,
+    "inquirySeeds": [
+      1000,
+      1001,
+      1002,
+      1003
+    ],
+    "sampling": "preserve each backend implementation exactly"
+  },
+  "coverageState": "Preserve original per-backend condition: native coverage primed by an aborted setup attempt, HTTP measurement from fresh process/session. Exact prior sampled inference state cannot be reproduced.",
+  "measurement": [
+    "total synthesis generated tokens including reasoning",
+    "reasoning text character count using the same extraction as baseline",
+    "visible answer words and characters",
+    "synthesis duration",
+    "research and query phase durations",
+    "input findings and plan routing",
+    "coverage status",
+    "quality of facts, visual explanation and citations",
+    "all failures and controller deviations"
+  ],
+  "interpretation": "Lower synthesis reasoning volume recurred in the selected complete repeat, but generated evidence and answer coverage differ. Two completed synthesis samples per backend do not establish statistical repeatability or causality from KV state. One additional HTTP run returned clarification, four HTTP starts were excluded for controller errors; all raw logs retained.",
+  "preRunPowerObservation": {
+    "source": "pmset -g batt",
+    "acPower": true,
+    "batteryPercent": 8,
+    "charging": true
+  },
+  "runs": [
+    {
+      "backend": "fieldnote",
+      "session": "sessions/fieldnote-2026-10-08T14-41-28.149Z",
+      "primerAttempt": 1,
+      "measuredAttempt": 2,
+      "status": "complete",
+      "setupDeviation": "Coverage primer auto-accepted its generated plan and was aborted later in research than the original primer; generated planner/source content is stochastic. Measured attempt uses all four original reviewed descriptions.",
+      "generation": {
+        "preflightTokens": null,
+        "inquiryTokens": 4816,
+        "synthesisTokensIncludingReasoning": 2404,
+        "answerChars": 6246,
+        "visibleWordsApprox": 707,
+        "reasoningChars": 3661,
+        "reasoningTokenCount": null,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "timing": {
+        "preflightMs": null,
+        "plannerMs": 19290.03237500001,
+        "reviewMs": 35550.54420800001,
+        "researchMs": 258157.31549999997,
+        "synthesisMs": 110077.13570799993,
+        "researchToCompleteMs": 371580.87112499995,
+        "firstGenerationAfterResearchMs": 9022.270082999952,
+        "firstFindingAfterResearchMs": 84618.17220799997,
+        "queryToCompleteMs": 428987.93920799997,
+        "preflightStatus": "not executed in this attempt; possible coverage reuse"
+      }
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T14-57-43.428Z",
+      "measuredAttempt": 1,
+      "status": "excluded-controller-error",
+      "reason": "UI auto-accepted generated plan before original reviewed inquiry descriptions could be applied; interrupted and replaced with fresh process. Not a backend failure."
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T15-01-22.314Z",
+      "measuredAttempt": 1,
+      "status": "excluded-controller-error",
+      "reason": "Review auto-accepted in gap between browser watcher and journal status call; original task descriptions not applied. Not a backend failure."
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T15-05-35.548Z",
+      "measuredAttempt": 1,
+      "status": "excluded-controller-error",
+      "reason": "Playwright visible wait never detected review; generated inquiry descriptions were auto-accepted. At least one agent failure occurred after uncontrolled start; retained in raw logs."
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T15-10-24.865Z",
+      "measuredAttempt": 1,
+      "status": "clarification-instead-of-research",
+      "reason": "Planner requested clarification about fictional evidence. No answer supplied, to preserve exact input. This is an observed backend/workload outcome, not a controller error; no synthesis sample."
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T15-15-48.113Z",
+      "measuredAttempt": 1,
+      "status": "excluded-controller-error",
+      "reason": "Planner generated only three inquiries. Controller edited the first three but did not add fourth before countdown resumed; three-inquiry run interrupted, not used as comparison."
+    },
+    {
+      "backend": "langgraph",
+      "session": "sessions/langgraph-2026-10-08T15-19-50.896Z",
+      "measuredAttempt": 1,
+      "status": "complete",
+      "inputVerification": "Exact submit_query incl admitted attachment descriptors, and all four edited inquiry descriptions match original HTTP attempt. Native repeat separately matches original native attempt.",
+      "generation": {
+        "preflightTokens": 2331,
+        "inquiryTokens": 5809,
+        "synthesisTokensIncludingReasoning": 8706,
+        "answerChars": 6071,
+        "visibleWordsApprox": 809,
+        "reasoningChars": 26409,
+        "reasoningTokenCount": null,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "timing": {
+        "preflightMs": 108106.72079200001,
+        "plannerMs": 17105.89158299999,
+        "reviewMs": 33122.413834000006,
+        "researchMs": 330661.69466599997,
+        "synthesisMs": 372789.00695800007,
+        "researchToCompleteMs": 703472.389708,
+        "firstGenerationAfterResearchMs": 27637.729208000004,
+        "firstFindingAfterResearchMs": 218926.7015,
+        "queryToCompleteMs": 861851.2755829999,
+        "preflightStatus": "executed"
+      }
+    }
+  ],
+  "serverManagement": "User explicitly authorized starting and stopping benchmark servers; elevated launch succeeded with unchanged binaries.",
+  "shutdownVerification": {
+    "native": "Ctrl-C exited; original native PIDs absent and model ports closed before HTTP startup",
+    "http": "Ctrl-C exited; raw backend.stopped event seq 18279; ports 8095/8096/8097/8100 closed after shutdown",
+    "permissionReviewTimeouts": "One shutdown write_stdin timed out in automatic review, retry succeeded. Subsequent elevated ps check timed out; shutdown verified instead through journal and local port probes."
+  },
+  "artifacts": {
+    "fullPair": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/comparisons/deliberation-repeat-2026-10-09/comparison.json",
+    "repeats": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/comparisons/deliberation-repeat-2026-10-09/deliberation-repeats.json",
+    "charts": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/comparisons/deliberation-repeat-2026-10-09/index.html",
+    "report": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/comparisons/deliberation-repeat-2026-10-09/repeat-report.html"
+  }
+}

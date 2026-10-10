@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "purpose": "First real GPU/UI validation pair; not a repeated performance batch",
+  "journey": "J2",
+  "fixtureManifest": "fixtures/generated/manifest.json",
+  "fixtureHashes": {
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf": "sha256:3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png": "sha256:916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/flow-diagram.png": "sha256:c281631acb2b8d9f43a9b512cad7c95159e13676ebb97ccf599b72b01cbbf473",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/trial.md": "sha256:79e2f62f70daa4d5d4a51716e57f818ec004dca11b8a039af31458133c4744e6",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/cost.md": "sha256:a6ea3c534e42f9d06af4d073038b57e3445a6bb7eec57fbffa225cd5a0a9141d",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/audit.md": "sha256:734aace42ded8bca6d3310f2f7f0cefbc5281c31f2ce64d196f31e345c572ef9",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/maintenance.md": "sha256:f093c92c2d01039b64308b43aab6d38f3a81e89375086a29b8affa94ead96d6e",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/distractor.md": "sha256:721bf509d4a6296dacb8b680f744b7dbb3effd0bdf9794beebac5ca9dbee2e98"
+  },
+  "question": "Explain Figure 1 in the attached Harbor Water Pilot PDF visually. Describe the blue and orange paths, arrow direction and the component bypassed. Cite its page. Include one short factual sentence about the pilot from page 1.",
+  "followup": "In Figure 1, does the orange route pass through the UV chamber? How does that compare with the blue route? Refer to the previous answer and cite the page.",
+  "preconditions": [
+    "Exactly one backend stack is resident; record its fresh session directory and fingerprints.",
+    "Use the same shared Fieldnote frontend build, model, projector, PDF bytes and low effort.",
+    "First submitted model question after service startup; record any deviation or earlier model requests. Backend startup warmup is separate.",
+    "Ask selected; documents participating; corpus and web participation off. Set through normal UI controls.",
+    "No prepared text, diagram crop or answer supplied by the controller. Upload only harbor-pilot.pdf."
+  ],
+  "steps": [
+    {
+      "action": "Attach original PDF through the Attach file chooser",
+      "observe": [
+        "upload result",
+        "original PDF provenance"
+      ]
+    },
+    {
+      "action": "Submit the declared question in Ask",
+      "observe": [
+        "real document discovery/read tools",
+        "actual page/figure derivation",
+        "image submitted over HTTP or admitted natively",
+        "live answer and cited report"
+      ]
+    },
+    {
+      "action": "Wait for settlement without Hold, Close or cancellation",
+      "observe": [
+        "answer",
+        "complete",
+        "tool/source receipts",
+        "failure if any; never silently retry"
+      ]
+    },
+    {
+      "action": "Open the original PDF and the submitted/admitted representation through the UI",
+      "observe": [
+        "original PDF has 2 pages",
+        "displayed figure matches stored representation digest",
+        "citation opens the cited page"
+      ]
+    },
+    {
+      "action": "Submit the declared follow-up without reattaching the file",
+      "observe": [
+        "continuation answer",
+        "HTTP transcript bytes and reported cache counters or native KV evidence",
+        "retained image/source provenance"
+      ]
+    },
+    {
+      "action": "Open the saved brief from the library",
+      "observe": [
+        "initial answer",
+        "follow-up exchange",
+        "retained sources and media"
+      ]
+    }
+  ],
+  "qualityReview": {
+    "status": "unreviewed",
+    "checks": [
+      "Blue route goes from intake through UV chamber to storage.",
+      "Orange route leaves intake, bypasses UV chamber and reaches storage.",
+      "Arrow direction and component names are correct.",
+      "At least one correct measured pilot fact from page 1, with no annual/winter inference.",
+      "Visual claims cite page 2 and factual sentence cites page 1; links resolve.",
+      "Follow-up answers the UV comparison consistently and cites the page.",
+      "Submitted/admitted visual evidence supports the claims; original PDF text alone does not expose route geometry."
+    ]
+  },
+  "comparisonRules": [
+    "Keep every failed or stopped attempt and its reason.",
+    "An implementation defect blocks architecture attribution until corrected and revalidated.",
+    "No successful-latency comparison until both outputs and workload receipts pass review.",
+    "A new successful validation pair precedes three alternating pairs; this file does not authorize automatic promotion.",
+    "Do not call HTTP continuation warm. Report server-observed cached tokens separately."
+  ],
+  "next": [
+    "J1 Survey, corpus + original PDF + site-map image, including multi-source preflight and four reviewed objectives.",
+    "Separate uninterrupted and controlled Survey variants; record absent intervention predicates as unexercised.",
+    "Investigate after Ask/Survey pair validation."
+  ]
+}

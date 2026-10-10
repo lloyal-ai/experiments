@@ -1,0 +1,18 @@
+{
+  "fieldnoteRoot": "reference/fieldnote-app",
+  "serverBinary": ".cache/llama-build/bin/llama-server",
+  "serverRevision": "d6d0ce8215a1c324e8de04b52f9dd65c5edc129f",
+  "model": "models/qwen3.5-4b.gguf",
+  "projector": "models/qwen3.5-4b-mmproj.gguf",
+  "reranker": "models/qwen3-reranker-0.6b-q8.gguf",
+  "context": 32768,
+  "parallel": 4,
+  "port": 8097,
+  "maxOutputTokens": 1536,
+  "maxToolTurns": 10,
+  "timeoutMs": 1200000,
+  "holdMs": 2000,
+  "toolLatencyMs": 0,
+  "maxProcessRssBytes": 12884901888,
+  "fieldnotePort": 8096
+}

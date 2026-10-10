@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "root": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated",
+  "pdf": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf",
+  "image": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png",
+  "diagram": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/flow-diagram.png",
+  "sources": [
+    {
+      "id": "trial",
+      "title": "Trial results",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/trial.md",
+      "text": "The fictional Harbor water pilot compared the Cedar and Birch treatment systems over 30 days. Cedar delivered 1200 liters per day; Birch delivered 900 liters per day. Both met the drinking-water quality target. Cedar used 6 kWh per day and Birch used 3 kWh per day. Figures refer to the same operating conditions, not annual forecasts."
+    },
+    {
+      "id": "cost",
+      "title": "Operating costs",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/cost.md",
+      "text": "The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation. Cedar needs a 400-credit inlet upgrade. Birch needs no inlet upgrade. A grant covers installation but does not cover recurring operating costs."
+    },
+    {
+      "id": "audit",
+      "title": "Independent correction",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/audit.md",
+      "text": "An early brochure said Birch delivered 1400 liters per day. The independent 30-day audit corrected that number to 900 liters per day. The brochure used a short clean-water test that is not representative. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement."
+    },
+    {
+      "id": "maintenance",
+      "title": "Maintenance and limitations",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/maintenance.md",
+      "text": "Cedar requires filter inspection every 7 days; Birch requires it every 14 days. The pilot measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee."
+    },
+    {
+      "id": "distractor",
+      "title": "Unrelated Harbor lighting pilot",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/distractor.md",
+      "text": "A different Harbor street-lighting pilot measured Cedar lamps at 1400 lumens and Birch lamps at 1200 lumens. These are lamps, not water systems. Lighting quantities must not be used as water production or energy figures."
+    },
+    {
+      "id": "pdf-page-1",
+      "title": "Harbor Water Pilot, page 1",
+      "path": "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf",
+      "page": 1,
+      "text": "The fictional Harbor water pilot compared the Cedar and Birch treatment systems over 30 days. Cedar delivered 1200 liters per day; Birch delivered 900 liters per day. Both met the drinking-water quality target. Cedar used 6 kWh per day and Birch used 3 kWh per day. Figures refer to the same operating conditions, not annual forecasts.\n\nCedar requires filter inspection every 7 days; Birch requires it every 14 days. The pilot measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee."
+    }
+  ],
+  "journeys": {
+    "J1": {
+      "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.",
+      "followup": "Using the brief and the routing figure: which system meets the daily council requirement, what is its daily operating cost, and which component does the orange route bypass?",
+      "tasks": [
+        {
+          "id": "task:0",
+          "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit."
+        },
+        {
+          "id": "task:1",
+          "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option."
+        },
+        {
+          "id": "task:2",
+          "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2."
+        },
+        {
+          "id": "task:3",
+          "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources."
+        }
+      ]
+    },
+    "J1-investigate": {
+      "question": "Investigate the Harbor water pilot decision in sequence: establish the audited constraints, evaluate feasible systems using those findings, then reconcile cost and operational risks including the PDF routing figure. Cite evidence.",
+      "followup": "Which system is feasible, what does it cost per day, and which component does the orange route bypass?",
+      "tasks": [
+        {
+          "id": "task:0",
+          "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit."
+        },
+        {
+          "id": "task:1",
+          "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option."
+        },
+        {
+          "id": "task:2",
+          "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. Also state the limits of the evidence."
+        }
+      ]
+    },
+    "J2": {
+      "question": "Explain Figure 1 in the attached Harbor Water Pilot PDF visually. Describe the blue and orange paths, arrow direction and the component bypassed. Cite its page. Include one short factual sentence about the pilot from page 1.",
+      "followup": "In Figure 1, does the orange route pass through the UV chamber? How does that compare with the blue route? Refer to the previous answer and cite the page.",
+      "tasks": [
+        {
+          "id": "task:0",
+          "description": "Explain the PDF figure visually with a page reference and one measured pilot fact."
+        }
+      ]
+    }
+  },
+  "hashes": {
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/harbor-pilot.pdf": "sha256:3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/site-map.png": "sha256:916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/flow-diagram.png": "sha256:c281631acb2b8d9f43a9b512cad7c95159e13676ebb97ccf599b72b01cbbf473",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/trial.md": "sha256:79e2f62f70daa4d5d4a51716e57f818ec004dca11b8a039af31458133c4744e6",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/cost.md": "sha256:a6ea3c534e42f9d06af4d073038b57e3445a6bb7eec57fbffa225cd5a0a9141d",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/audit.md": "sha256:734aace42ded8bca6d3310f2f7f0cefbc5281c31f2ce64d196f31e345c572ef9",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/maintenance.md": "sha256:f093c92c2d01039b64308b43aab6d38f3a81e89375086a29b8affa94ead96d6e",
+    "/Users/zuhairnaqvi/dev/apps/lloyal-bench/fixtures/generated/corpus/distractor.md": "sha256:721bf509d4a6296dacb8b680f744b7dbb3effd0bdf9794beebac5ca9dbee2e98"
+  }
+}

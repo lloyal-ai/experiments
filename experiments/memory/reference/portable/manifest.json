@@ -1,0 +1,123 @@
+{
+  "source": "pinned Fieldnote installed packages",
+  "records": [
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/dist/content-routes.js",
+      "to": "reference/portable/content-routes.cjs",
+      "sha256": "576b0e0c1bdb321ffa37aff1ce32121493414adf53c2ae5113d185abef5f4de2"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/dist/content-routes.d.ts",
+      "to": "reference/portable/content-routes.d.cts",
+      "sha256": "f92f56b961d68622533a59d30be88da0d2967059c479ad41dafcb6e81c0a79c0"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/dist/tools/weave-sources.js",
+      "to": "reference/portable/weave-sources.cjs",
+      "sha256": "096585faf3eafeea743b7f260adc36fc28ec178b63080c1f82224fb44c388930"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/dist/tools/weave-sources.d.ts",
+      "to": "reference/portable/weave-sources.d.cts",
+      "sha256": "cecea44fc3f33f8ff1bd95a9db680cdb416bedf43eb444af49dfc13dad538c16"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/ability.json",
+      "to": "reference/abilities/corpus/ability.json",
+      "sha256": "f45e4b57998927b304c1640bbfab1ecbc4a026e9f1e234fa2d6cf6f41efee9e3"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/skill.eta",
+      "to": "reference/abilities/corpus/skill.eta",
+      "sha256": "a399ce4581124c93916bcbc23d5758d8706bf72ceb3370a8bf274572b9333ac5"
+    },
+    {
+      "package": "@lloyal-labs/corpus-ability",
+      "version": "2.1.0"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/ability.json",
+      "to": "reference/abilities/documents/ability.json",
+      "sha256": "82c397c6afb4f5eba8853567f485be366f63bb1c1d8dc7d562666e2f132f105e"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/skill.eta",
+      "to": "reference/abilities/documents/skill.eta",
+      "sha256": "68c4dde4aafb5ac706a96f16011022b7783f1229b0cb79322eb091a714121230"
+    },
+    {
+      "package": "@lloyal-labs/documents-ability",
+      "version": "0.2.0"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/dist/tools/grep.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "ffb3ddb10c31ebeabe00d03e8f3490ef049e2fc0e484b7193aed9ba4f06db976"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/dist/tools/read-file.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "72afebd9407d0dd64d4d30166dd276ea4493582390ca880c25d47fada3488e04"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/dist/tools/search.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "6b967688cf99e720ed5892cf01085a3bf785656dd54fedb6635000296c537d78"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/dist/tools/search-documents.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "a5a8b369e703344b99a696c8f6c7cfdf9e39ada80cacdc745ef7fcb29ef2abb9"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/dist/tools/read-document.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "e60071aa47205fe3585f64b4986eda52739ccaef5052cdc0d37f613da249bcdb"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/dist/tools/view-page.js",
+      "extracted": "declarative name/description/parameters only",
+      "sha256": "62910aee5ed85168f6b1f5acedcf7ab99de507c938903edfa7528ac5cd082174"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/LICENSE",
+      "to": "reference/licenses/rig/LICENSE",
+      "sha256": "cb5e716fd394125c7068fa0ca02417b1b3de055dbefd06da474a75d5d3e7789c"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/rig/LICENSE-FAQ.md",
+      "to": "reference/licenses/rig/LICENSE-FAQ.md",
+      "sha256": "952dad1e6a6148e2d9ac973330c56c5971209b7c31cf64d71c257b3663a3c414"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/LICENSE",
+      "to": "reference/licenses/corpus-ability/LICENSE",
+      "sha256": "cb5e716fd394125c7068fa0ca02417b1b3de055dbefd06da474a75d5d3e7789c"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/corpus-ability/LICENSE-FAQ.md",
+      "to": "reference/licenses/corpus-ability/LICENSE-FAQ.md",
+      "sha256": "952dad1e6a6148e2d9ac973330c56c5971209b7c31cf64d71c257b3663a3c414"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/LICENSE",
+      "to": "reference/licenses/documents-ability/LICENSE",
+      "sha256": "cb5e716fd394125c7068fa0ca02417b1b3de055dbefd06da474a75d5d3e7789c"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/documents-ability/LICENSE-FAQ.md",
+      "to": "reference/licenses/documents-ability/LICENSE-FAQ.md",
+      "sha256": "952dad1e6a6148e2d9ac973330c56c5971209b7c31cf64d71c257b3663a3c414"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/media/LICENSE",
+      "to": "reference/licenses/media/LICENSE",
+      "sha256": "cb5e716fd394125c7068fa0ca02417b1b3de055dbefd06da474a75d5d3e7789c"
+    },
+    {
+      "from": "reference/fieldnote-app/node_modules/@lloyal-labs/media/LICENSE-FAQ.md",
+      "to": "reference/licenses/media/LICENSE-FAQ.md",
+      "sha256": "952dad1e6a6148e2d9ac973330c56c5971209b7c31cf64d71c257b3663a3c414"
+    }
+  ]
+}
