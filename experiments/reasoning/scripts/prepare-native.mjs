@@ -1,5 +1,5 @@
 import { cpSync, readFileSync, writeFileSync, mkdirSync, existsSync, symlinkSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { resolve, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -7,7 +7,7 @@ const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
 const memory=resolve(root,'../memory');
 const source=resolve(memory,'work/fieldnote-instrumented'), target=resolve(root,'work/fieldnote');
 mkdirSync(target,{recursive:true});
-cpSync(source,target,{recursive:true,filter:path=>!/(^|\/)(node_modules|dist|dist-web|data|reports|media|\.git)(\/|$)/.test(path)});
+cpSync(source,target,{recursive:true,filter:path=>!/(^|\/)(node_modules|dist|dist-web|data|reports|media|\.git)(\/|$)/.test(relative(source,path))});
 const deps=resolve(source,'node_modules');
 const fallback=resolve(memory,'work/fieldnote-app/node_modules');
 if(!existsSync(resolve(target,'node_modules')))symlinkSync(existsSync(deps)?deps:fallback,resolve(target,'node_modules'),'dir');
