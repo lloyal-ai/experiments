@@ -1,0 +1,30 @@
+{
+  "answer-01": {
+    "run": "02-shared-prefix-r1",
+    "answerSha256": "34a264e41f5956f7e01a025c144c39a8d6397c5fa86bf5a8d9d84d86fc461418"
+  },
+  "answer-02": {
+    "run": "01-resident-r1",
+    "answerSha256": "696995394455c36d5607a155f8e23cb633d91dafc22497b185e3af8bca52385c"
+  },
+  "answer-03": {
+    "run": "04-shared-prefix-r2",
+    "answerSha256": "c98debb82b1365fcda4ad9183099636cd03c47b0b6c61c21c4d7b641af4d7253"
+  },
+  "answer-04": {
+    "run": "06-resident-r2",
+    "answerSha256": "5fd249129c761f7cdbdbcf4ba6a5a985d24b5a5f9076dd0b705a707b7eb4fe3a"
+  },
+  "answer-05": {
+    "run": "09-shared-prefix-r3",
+    "answerSha256": "16da2d98d66976250e381f13bfb7bd336d925aa9db44fb49a99229de8862da00"
+  },
+  "answer-06": {
+    "run": "08-resident-r3",
+    "answerSha256": "74cea75225e0eda9ee0cb4f9550682c5790137051b06eb7e987c53ed51a4314f"
+  },
+  "answer-07": {
+    "run": "03-http-r1",
+    "answerSha256": "d4fc8a099dc0d2da6866fe3d5373a5465323fe16c902c28cf867688cd90212f2"
+  }
+}

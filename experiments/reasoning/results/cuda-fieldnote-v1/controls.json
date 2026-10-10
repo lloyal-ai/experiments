@@ -1,0 +1,916 @@
+{
+  "identicalWeightsAndCandidateBinaries": true,
+  "identicalQuestion": true,
+  "identicalAttachmentBytes": true,
+  "identicalSynthesisInstructionText": true,
+  "explicitSamplingReceiptsPass": true,
+  "allSharedPrefixSynthesisHits": true,
+  "qualityEquivalenceEstablished": false,
+  "scope": "Instruction text parity does not mean full prompts, roles, tool headers, multimodal ancestry or generated findings are identical. Configured artifact hashes are supplemented by each native-loaded-identity.jsonl.",
+  "identities": {
+    "01-resident-r1": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "02-shared-prefix-r1": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "03-http-r1": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "04-shared-prefix-r2": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "05-http-r2": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "06-resident-r2": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "07-http-r3": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "08-resident-r3": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    },
+    "09-shared-prefix-r3": {
+      "model": "00fe7986ff5f6b463e62455821146049db6f9313603938a70800d1fb69ef11a4",
+      "projector": "cd88edcf8d031894960bb0c9c5b9b7e1fea6ebee02b9f7ce925a00d12891f864",
+      "reranker": "22c9979ce4fbcdc5acdc310c6641c32797eff1aa980b8f7a2db8a8ea23429a48",
+      "server": "3ed38b4e4fbbb18d419498f40de3c589cda266e7e570a6b5cf321e742e3e151e",
+      "lockfile": "ecdaab6d65dd51201f74f2de3a4fc3321ca13198e7b1eed7dc494f16b874caec",
+      "nativeAddon": "47446e4022f1a27543c7db9d26c61fc3d89b036db94e64005609af1c196fb66a",
+      "nativeLlama": "7dd3df153c13331bbb05917a5ea5cc4f16ec5a33230d092bf1764d6ed5385d8a"
+    }
+  },
+  "questions": {
+    "01-resident-r1": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "02-shared-prefix-r1": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "03-http-r1": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "04-shared-prefix-r2": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "05-http-r2": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "06-resident-r2": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "07-http-r3": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "08-resident-r3": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6",
+    "09-shared-prefix-r3": "82015b726680f9ffe2cfe378da55ebbadd9c02d5cf6df60e414396e629e601b6"
+  },
+  "attachments": {
+    "01-resident-r1": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "02-shared-prefix-r1": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "03-http-r1": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "04-shared-prefix-r2": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "05-http-r2": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "06-resident-r2": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "07-http-r3": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "08-resident-r3": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ],
+    "09-shared-prefix-r3": [
+      "3b50074b19837aeaaaa6f383afe2c6704aebfde4dd1115d98b8ef4b30a98c56e",
+      "916fe9a937d5facbf1a8c1b163160b5b93c522bf4f7b2b71eeabfabe8744b3eb"
+    ]
+  },
+  "synthesisInstructions": {
+    "01-resident-r1": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "02-shared-prefix-r1": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "03-http-r1": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "04-shared-prefix-r2": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "05-http-r2": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "06-resident-r2": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "07-http-r3": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "08-resident-r3": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+    "09-shared-prefix-r3": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9"
+  },
+  "samplers": {
+    "01-resident-r1": true,
+    "02-shared-prefix-r1": true,
+    "03-http-r1": true,
+    "04-shared-prefix-r2": true,
+    "05-http-r2": true,
+    "06-resident-r2": true,
+    "07-http-r3": true,
+    "08-resident-r3": true,
+    "09-shared-prefix-r3": true
+  },
+  "sharedPrefixHits": {
+    "02-shared-prefix-r1": true,
+    "04-shared-prefix-r2": true,
+    "09-shared-prefix-r3": true
+  },
+  "reviewedPlans": {
+    "01-resident-r1": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      }
+    ],
+    "02-shared-prefix-r1": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "03-http-r1": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "04-shared-prefix-r2": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "05-http-r2": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "06-resident-r2": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "07-http-r3": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "08-resident-r3": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ],
+    "09-shared-prefix-r3": [
+      {
+        "description": "Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option.",
+        "ability": "corpus_research"
+      },
+      {
+        "description": "Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2.",
+        "ability": "document_research"
+      },
+      {
+        "description": "Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "ability": "corpus_research"
+      }
+    ]
+  },
+  "extractionErrors": [],
+  "nativeLoadedArtifactsMatch": true,
+  "allHTTPRequestsPrefixCacheEnabled": true,
+  "identicalReviewedTasks": false,
+  "nativeLoadedArtifacts": {
+    "01-resident-r1": {
+      "addonMatches": true,
+      "llamaMatches": true,
+      "cudaBackendLoaded": true
+    },
+    "06-resident-r2": {
+      "addonMatches": true,
+      "llamaMatches": true,
+      "cudaBackendLoaded": true
+    },
+    "08-resident-r3": {
+      "addonMatches": true,
+      "llamaMatches": true,
+      "cudaBackendLoaded": true
+    }
+  },
+  "httpRequestControls": {
+    "02-shared-prefix-r1": {
+      "requests": 33,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": true
+    },
+    "03-http-r1": {
+      "requests": 32,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": null
+    },
+    "04-shared-prefix-r2": {
+      "requests": 32,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": true
+    },
+    "05-http-r2": {
+      "requests": 25,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": null
+    },
+    "07-http-r3": {
+      "requests": 32,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": null
+    },
+    "09-shared-prefix-r3": {
+      "requests": 37,
+      "allRequestsPrefixCacheEnabled": true,
+      "sharedSynthesisToolChoiceNone": true
+    }
+  },
+  "identicalReviewedTaskSet": true,
+  "taskOrderCaveat": "Task sets and ordered task arrays are checked separately. Inquiry seeds follow task index; a different planner order changes seed-to-objective assignment. No post-hoc order repair or replacement run.",
+  "identicalMainModelKVFormat": true,
+  "identicalRerankerKVFormat": false,
+  "runtimeContextReceipts": {
+    "01-resident-r1": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 8,
+        "nCtxPerSequence": 32768,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 710085216,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 2,
+        "nCtx": 16384,
+        "nSeqMax": 10,
+        "nCtxPerSequence": 16384,
+        "nBatch": 1638,
+        "nUbatch": 1638,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 703385344,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 998244352
+            }
+          ],
+          "typeK": "q8_0",
+          "typeV": "q8_0"
+        }
+      }
+    ],
+    "02-shared-prefix-r1": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94858254064288,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94238972720272,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ],
+    "03-http-r1": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94629618615504,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94608062001280,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ],
+    "04-shared-prefix-r2": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94365461207200,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94193586710016,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ],
+    "05-http-r2": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 93991419903008,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94064921123024,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ],
+    "06-resident-r2": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 8,
+        "nCtxPerSequence": 32768,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 359791568,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 2,
+        "nCtx": 16384,
+        "nSeqMax": 10,
+        "nCtxPerSequence": 16384,
+        "nBatch": 1638,
+        "nUbatch": 1638,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 350785984,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 998244352
+            }
+          ],
+          "typeK": "q8_0",
+          "typeV": "q8_0"
+        }
+      }
+    ],
+    "07-http-r3": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94606592905632,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94832477701232,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ],
+    "08-resident-r3": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 8,
+        "nCtxPerSequence": 32768,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 959462240,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 2,
+        "nCtx": 16384,
+        "nSeqMax": 10,
+        "nCtxPerSequence": 16384,
+        "nBatch": 1638,
+        "nUbatch": 1638,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 937361792,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 998244352
+            }
+          ],
+          "typeK": "q8_0",
+          "typeV": "q8_0"
+        }
+      }
+    ],
+    "09-shared-prefix-r3": [
+      {
+        "contextId": 1,
+        "nCtx": 32768,
+        "nSeqMax": 4,
+        "nCtxPerSequence": 32768,
+        "nBatch": 2048,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 32768,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94471424490528,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 301989888
+            }
+          ],
+          "typeK": "q4_0",
+          "typeV": "q4_0"
+        }
+      },
+      {
+        "contextId": 1,
+        "nCtx": 16384,
+        "nSeqMax": 1,
+        "nCtxPerSequence": 16384,
+        "nBatch": 512,
+        "nUbatch": 512,
+        "attention": {
+          "streams": [
+            {
+              "capacityCells": 16384,
+              "occupiedCells": 0,
+              "sharedCells": 0,
+              "sequenceReferences": 0,
+              "residentSequences": 0
+            }
+          ],
+          "poolIdentity": 94721043916752,
+          "allocation": [
+            {
+              "bufferType": "CUDA0",
+              "bytes": 1879048192
+            }
+          ],
+          "typeK": "f16",
+          "typeV": "f16"
+        }
+      }
+    ]
+  },
+  "runtimeContextCaveat": "Full application configurations retained: native/HTTP batching and reranker KV formats differ. Same reranker weights do not establish identical numerical ranking. Main-model KV formats are checked separately.",
+  "frozenExecutionSourceMatches": true
+}

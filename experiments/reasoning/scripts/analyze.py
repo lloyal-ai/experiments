@@ -40,6 +40,8 @@ def common(a,b):
 def extract(run,count):
  protocol=json.loads((run/'protocol.json').read_text());arm=protocol['reasoning']['arm'];backend='fieldnote' if arm=='resident' else 'langgraph';base=run/backend
  session=read_session(base);rows=session['attempts'][0];summary=summarize(session,1)
+ (run/'raw-log-metrics.json').write_text(json.dumps(summary,indent=2)+'\n')
+ if len(session['attempts'])>1:(run/'followup-metrics.json').write_text(json.dumps(summarize(session,2),indent=2)+'\n')
  events=event_rows(rows); stages={}; phase='preflight'
  for r in events:
   e=r['value'];kind=e.get('type')
@@ -101,8 +103,19 @@ def extract(run,count):
  native_sampling=[json.loads(l) for l in (base/'native-sampling.jsonl').read_text().splitlines()] if (base/'native-sampling.jsonl').exists() else None
  total_input=sum((r.get('serverTimings') or {}).get('prompt_n',0)+(r.get('serverTimings') or {}).get('cache_n',0) for r in cache_receipts)
  total_cached=sum((r.get('serverTimings') or {}).get('cache_n',0) for r in cache_receipts)
- result={'run':run.name,'arm':arm,'seed':protocol['reasoning']['seed'],'status':checks,'quality':'unreviewed','comparisonEligible':False,'timing':summary['timing'],'generation':{k:v for k,v in summary['generation'].items() if k!='synthesisStream'},'reasoningByStage':stage_counts,'answerTokens':count(answer),'answerWords':len(re.sub(r'\[([^\]]+)\]\([^)]*\)',r'\1',answer).split()),'answerSha256':sha(answer.encode()),'synthesisSystemSha256':sha(synthesis_system.encode()) if isinstance(synthesis_system,str) else None,'synthesisStageInstructionSha256':sha(synthesis_instruction.encode()) if isinstance(synthesis_instruction,str) else None,'synthesisCache':syn_cache,'httpWorkloadCache':{'inputTokens':total_input,'cachedTokens':total_cached,'fraction':total_cached/total_input if total_input else None},'nativeSampling':native_sampling,'nativeTurnsWithoutReasoningDelimiter':native_missing,'nativeRecoveryReasoningCaveat':bool(native_recovery),'rawJournal':session['snapshot'],'sourceProtocolSha256':sha((run/'protocol.json').read_bytes())}
+ result={'run':run.name,'arm':arm,'seed':protocol['reasoning']['seed'],'status':checks,'quality':'unreviewed','comparisonEligible':False,'timing':summary['timing'],'generation':{k:v for k,v in summary['generation'].items() if k!='synthesisStream'},'reasoningByStage':stage_counts,'savedAnswerAvailable':(base/'answer.md').exists(),'streamedSynthesisAnswerTokens':count(synthesis_answer),'answerTokens':count(answer) if (base/'answer.md').exists() else None,'answerWords':len(re.sub(r'\[([^\]]+)\]\([^)]*\)',r'\1',answer).split()),'answerSha256':sha(answer.encode()),'synthesisSystemSha256':sha(synthesis_system.encode()) if isinstance(synthesis_system,str) else None,'synthesisStageInstructionSha256':sha(synthesis_instruction.encode()) if isinstance(synthesis_instruction,str) else None,'synthesisCache':syn_cache,'httpWorkloadCache':{'inputTokens':total_input,'cachedTokens':total_cached,'fraction':total_cached/total_input if total_input else None},'nativeSampling':native_sampling,'nativeTurnsWithoutReasoningDelimiter':native_missing,'nativeRecoveryReasoningCaveat':bool(native_recovery),'rawJournal':session['snapshot'],'sourceProtocolSha256':sha((run/'protocol.json').read_bytes())}
  result['generation']['reasoningTokenCount']=stage_counts.get('synthesis',{}).get('reasoningTokens')
+ result['httpWorkloadCache']['available']=arm!='resident'
+ if arm=='resident':result['httpWorkloadCache'].update(inputTokens=None,cachedTokens=None)
+ result['scope']='Initial brief only; full-journey acceptance and separate quality review include follow-up.'
+ result['tools']={k:summary['tools'][k] for k in ['calls','researchCallsReported','byTool','researchByTool','errorResults']}
+ result['retrieval']={k:summary['retrieval'][k] for k in ['operations','candidatesScored','admittedTokens','selectedPassages','note']}
+ result['recoveredAgents']=summary['recoveredAgents'];result['errors']=summary['errors']
+ result['attempt']=summary['selection']
+ reported=syn.get('tokenCount') if arm=='resident' else (syn_cache or {}).get('serverTimings',{}).get('predicted_n')
+ reason_tokens=stage_counts.get('synthesis',{}).get('reasoningTokens')
+ result['synthesisReportedGenerationTokens']=reported
+ result['posthocBoundaryDelta']=reported-reason_tokens-result['answerTokens'] if all(isinstance(n,(int,float)) for n in [reported,reason_tokens,result['answerTokens']]) else None
  (run/'synthesis-text.json').write_text(json.dumps({'reasoning':'\n'.join(segments.get('synthesis',[])),'streamedAnswer':synthesis_answer,'savedAnswer':answer,'system':synthesis_system},indent=2,ensure_ascii=False)+'\n')
  (run/'metrics.json').write_text(json.dumps(result,indent=2)+'\n');return result
 
@@ -113,6 +126,6 @@ def main():
  for p in runs:
   try:results.append(extract(p,count))
   except Exception as e:results.append({'run':p.name,'extractionError':str(e)})
- (base/'summary.json').write_text(json.dumps({'tokenizer':{'url':a.tokenizer_url,'method':'Same GGUF /tokenize, add_special=false, parse_special=false; sum completed reasoning turns separately. Recovery reasoning unavailable on native traces is flagged, never treated as zero.'},'runs':results},indent=2)+'\n')
+ (base/'summary.json').write_text(json.dumps({'analysisSourceSha256':sha(Path(__file__).read_bytes()),'tokenizer':{'url':a.tokenizer_url,'method':'Same GGUF /tokenize, add_special=false, parse_special=false; sum completed reasoning turns separately. Recovery reasoning unavailable on native traces is flagged, never treated as zero.'},'runs':results},indent=2)+'\n')
  print(json.dumps([{'run':r['run'],'status':r.get('status'),'reasoningTokens':r.get('generation',{}).get('reasoningTokenCount'),'error':r.get('extractionError')} for r in results],indent=2))
 if __name__=='__main__':main()

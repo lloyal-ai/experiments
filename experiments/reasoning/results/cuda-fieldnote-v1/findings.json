@@ -1,0 +1,9 @@
+{
+  "paragraphs": [
+    "The original large reasoning gap does not persist against this shared-prefix HTTP variant: resident synthesis emitted 617 / 471 / 747 reasoning tokens, shared-prefix HTTP 470 / 723 / 815. The 470-token output was only a tool-call block, so it is not an equivalent-quality success.",
+    "Ordinary HTTP completed one brief with 2,689 reasoning tokens and exhausted its 32,768-position context in the other two attempts. The failed 29,061- and 28,857-token reasoning streams are retained, but excluded from successful-output reduction claims.",
+    "Lloyal produced three substantive initial reports; ordinary HTTP one; shared-prefix HTTP two. Lloyal scored 16 / 12 / 15 of 18 on the frozen rubric, compared with shared-prefix 0 / 8 / 12 and ordinary HTTP 13 for its completed brief. This implementing-assistant review found errors in every substantive report; it does not establish quality equivalence.",
+    "All shared-prefix syntheses recorded 1,788 actual prefix-cache tokens. Both HTTP arms had prefix-cache enabled throughout. Synthesis instruction text was identical, but shared-prefix HTTP placed it in a user message and retained tool schemas. This is a practical input-construction intervention, not a pure prefix-cache on/off ablation.",
+    "The first native planner changed inquiry order, affecting seed-to-objective assignment. Native and HTTP main-model KV formats both were q4_0; reranker KV formats were q8_0 versus f16, and batching differed. Generated evidence, full prompt ancestry and sampler-state continuity were not held identical. Causal attribution requires additional experiments."
+  ]
+}

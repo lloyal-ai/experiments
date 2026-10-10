@@ -1,0 +1,358 @@
+{
+  "method": "Manual answer-only review by the implementing assistant, using anonymous IDs before opening the arm mapping or token/timing summary. Not independent or double-blind; style and citation patterns can reveal implementation. Scores evaluate the frozen fixture rubric, not general model quality. Citation judgments here inspect syntax and source support; links were not opened. Initial answers and follow-ups scored separately.",
+  "reviewSha256": "9114c738ff59d158ad8d37b2b5066d6c06e1ddbbbb9457b50493b121b9555c41",
+  "qualityEquivalenceEstablished": false,
+  "runs": {
+    "02-shared-prefix-r1": {
+      "packet": "answer-01",
+      "score": 0,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "energy": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "cost_and_installation": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "requirement_and_selection": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "grant": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "maintenance": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "evidence_limits": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "visual_route": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        },
+        "grounding": {
+          "score": 0,
+          "evidence": "The entire saved answer is a <tool_call> requesting read_file with filename cost.md; it contains no report or factual answer."
+        }
+      },
+      "summary": "Invalid initial brief: a literal tool-call block, with no report. The later follow-up is substantive but cannot repair the initial score.",
+      "citations": "No citations or report in the initial answer.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": false
+    },
+    "01-resident-r1": {
+      "packet": "answer-02",
+      "score": 16,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"Cedar: 1200 liters per day\"; \"Birch: 900 liters per day\"; \"brochure claimed Birch delivered 1400 ... corrected ... to 900\"."
+        },
+        "energy": {
+          "score": 2,
+          "evidence": "\"Cedar uses 6 kWh per day and Birch uses 3 kWh per day\"."
+        },
+        "cost_and_installation": {
+          "score": 2,
+          "evidence": "\"Cedar at 18 credits per day and Birch at 12\"; \"Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade\"."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"council requires at least 1000 liters per day, so Cedar meets ... Birch alone fails\"."
+        },
+        "grant": {
+          "score": 1,
+          "evidence": "Initially says \"A grant covers installation but does not cover recurring operating costs\", then contradicts this: \"400-credit inlet upgrade ... is not covered by the grant\"."
+        },
+        "maintenance": {
+          "score": 2,
+          "evidence": "\"Cedar requires filter inspection every 7 days; Birch ... every 14 days\"."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"only 30 days of operation\"; \"Winter performance was explicitly NOT measured\"; \"Annual reliability cannot be established\"."
+        },
+        "visual_route": {
+          "score": 2,
+          "evidence": "Page 2: \"Intake → UV chamber → Storage\"; orange \"Intake → (directly to) Storage\" and \"bypasses the UV chamber entirely\"."
+        },
+        "grounding": {
+          "score": 1,
+          "evidence": "Core recommendation is supported, but the prescription incorrectly says the inlet upgrade is not grant-covered. The cost.md citation does not support that claim."
+        }
+      },
+      "summary": "Broadly complete report with a material contradiction about grant coverage.",
+      "citations": "Corpus citations use invented https://example.com/*.md URLs. The PDF uses an attachment page-2 reference; nearby routing claims match the fixture. Some capacity/requirement claims are cited to cost.md or trial.md rather than the audit.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": true
+    },
+    "04-shared-prefix-r2": {
+      "packet": "answer-03",
+      "score": 8,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"Cedar at 1200 liters per day and Birch at 900\"; brochure \"1400 ... to ... 900\"."
+        },
+        "energy": {
+          "score": 1,
+          "evidence": "Correct \"6 kWh ... Birch’s 3 kWh\", but falsely concludes \"Cedar delivers double the capacity but at double the energy cost\" (capacity is 1200 vs 900)."
+        },
+        "cost_and_installation": {
+          "score": 0,
+          "evidence": "The report has sections on capacity, energy, maintenance and reliability, but omits the daily operating ledger and 400-credit inlet upgrade."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"Cedar qualifies (1200 > 1000 ...), while Birch does not (900 < 1000 ...)\"."
+        },
+        "grant": {
+          "score": 0,
+          "evidence": "No installation-grant or recurring-cost coverage discussion."
+        },
+        "maintenance": {
+          "score": 1,
+          "evidence": "Correct 7-day/14-day inspections, but calls this a \"50% increase in maintenance frequency\" and shifts inspection to \"filter changes\" without evidence."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"30-day pilot measured no winter performance\"; \"Neither system has established annual reliability\"."
+        },
+        "visual_route": {
+          "score": 0,
+          "evidence": "The PDF appears in Sources, but there is no visual route explanation in the report."
+        },
+        "grounding": {
+          "score": 0,
+          "evidence": "False \"double the capacity\" and incorrect maintenance-frequency arithmetic; unsupported changes from inspections to filter changes and labeling capacity shortfall a system design flaw."
+        }
+      },
+      "summary": "Omitted the financial package and visual explanation; also introduced arithmetic and maintenance errors.",
+      "citations": "Corpus references are relative *.md links. A PDF page-2 reference appears only in the source list. These are not a substitute for the missing visual explanation.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": true
+    },
+    "06-resident-r2": {
+      "packet": "answer-04",
+      "score": 12,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"Cedar at 1200 ... Birch at 900\"; \"brochure claim of 1400 ... corrected to 900\"."
+        },
+        "energy": {
+          "score": 2,
+          "evidence": "\"Cedar uses 6 kWh ... Birch’s 3 kWh ... 100% more energy\"."
+        },
+        "cost_and_installation": {
+          "score": 2,
+          "evidence": "\"18 credits ... 12 credits\"; \"400-credit inlet upgrade while Birch needs no inlet upgrade\"."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"at least 1000 liters per day\"; \"Cedar alone meets ... only feasible single-system option\"."
+        },
+        "grant": {
+          "score": 1,
+          "evidence": "Correctly says the grant covers installation, not recurring costs, but also asserts second-system/infrastructure expansion costs are \"not covered by the grant\" without evidence."
+        },
+        "maintenance": {
+          "score": 1,
+          "evidence": "Correct \"every 7 days versus ... 14 days\", but concludes \"twice the maintenance labor\" and possible parts replacement without evidence about work per inspection."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"no winter performance\"; \"neither system has established annual reliability\"; \"30-day trial period is insufficient to guarantee\" seasonal performance."
+        },
+        "visual_route": {
+          "score": 0,
+          "evidence": "Only a PDF page-2 source-list entry; the initial report does not explain either route."
+        },
+        "grounding": {
+          "score": 0,
+          "evidence": "Unsupported grant exclusion for expansion, attribution of operating-cost difference to complexity, and doubled labor inference. Recommendation also assumes acceptable winter reliability despite unavailable measurements."
+        }
+      },
+      "summary": "Correct key selection facts, but omitted the visual explanation and added unsupported operational claims.",
+      "citations": "Corpus filenames are used as attachment IDs or invented file:///content paths. PDF page 2 appears only in Sources. No URL opening was attempted during this answer-only review.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": true
+    },
+    "09-shared-prefix-r3": {
+      "packet": "answer-05",
+      "score": 12,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"Cedar delivers 1200 ... Birch ... 900\"; audit corrected \"1400 ... down to 900\"."
+        },
+        "energy": {
+          "score": 2,
+          "evidence": "\"Cedar consumes 6 kWh ... Birch’s 3 kWh\" and correctly describes 33% more water."
+        },
+        "cost_and_installation": {
+          "score": 1,
+          "evidence": "Correct 18/12 operating costs, 400-credit upgrade and no Birch upgrade, but later says \"inlet upgrade cost (400 credits) ... remain unknown\", contradicting the stated ledger."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"1000-liter daily requirement ... Birch’s 900 ... falls short by 100 liters\"; selects Cedar."
+        },
+        "grant": {
+          "score": 2,
+          "evidence": "\"A grant covers installation but not recurring operating costs\"."
+        },
+        "maintenance": {
+          "score": 1,
+          "evidence": "Correct 7/14-day intervals, but reverses their meaning: \"50% reduction in maintenance frequency for Cedar\" and \"filters may be more robust\"."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"30-day trial measured no winter performance\"; \"neither system has established annual reliability\"."
+        },
+        "visual_route": {
+          "score": 0,
+          "evidence": "No blue/orange routing explanation in the initial report, despite a PDF page-2 source-list entry."
+        },
+        "grounding": {
+          "score": 0,
+          "evidence": "Claims a Cedar maintenance advantage from more frequent inspections, suggests greater filter robustness, and inconsistently treats a known 400-credit upgrade as unknown."
+        }
+      },
+      "summary": "Financial facts mostly present, but the maintenance comparison is reversed and the visual explanation is absent.",
+      "citations": "Corpus links mix fabricated file:///data/corpus and file:///content paths with attachment://cost.md. The PDF source entry does not supply the missing route discussion.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": true
+    },
+    "08-resident-r3": {
+      "packet": "answer-06",
+      "score": 15,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"1200 liters ... Birch’s 900\"; brochure \"1400 ... to 900\"."
+        },
+        "energy": {
+          "score": 1,
+          "evidence": "Correct 6/3 kWh values, but twice asserts \"Cedar outperforms Birch in both capacity and energy efficiency\". Cedar has worse liters per kWh for the supplied figures."
+        },
+        "cost_and_installation": {
+          "score": 2,
+          "evidence": "\"Cedar at 18 credits ... Birch at 12\"; \"400-credit for Cedar, none for Birch\"."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"1000-liter/day requirement ... Cedar alone meets ... Birch alone fails\"."
+        },
+        "grant": {
+          "score": 2,
+          "evidence": "\"grant covers installation but does not cover recurring operating costs\"; installation described as capital expenditure covered by grant."
+        },
+        "maintenance": {
+          "score": 2,
+          "evidence": "\"filter inspection every 7 days versus Birch’s every 14 days\"."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"30-day trial measured no winter performance\"; \"Neither system has established annual reliability\"."
+        },
+        "visual_route": {
+          "score": 2,
+          "evidence": "Identifies page 2; blue Intake → UV chamber → Storage; orange Intake directly to Storage, \"bypassing the UV chamber entirely\"."
+        },
+        "grounding": {
+          "score": 0,
+          "evidence": "Invents a relationship between the brochure error and the unrelated lighting distractor (\"likely confused\"), and falsely claims superior Cedar energy efficiency."
+        }
+      },
+      "summary": "Complete coverage, but includes a false energy-efficiency claim and invents a link to the lighting distractor.",
+      "citations": "Only a Sources list, with corpus filenames incorrectly styled as paginated attachment IDs. The PDF page-2 attachment citation matches the described visual topic.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Correct core answers: Cedar at 1200 L/day meets 1000 L/day, 18 credits/day, orange bypasses the UV chamber. Citation usability is separate."
+      },
+      "substantiveInitialReport": true
+    },
+    "03-http-r1": {
+      "packet": "answer-07",
+      "score": 13,
+      "maximum": 18,
+      "criteria": {
+        "capacity_and_correction": {
+          "score": 2,
+          "evidence": "\"Cedar delivers 1200\"; Birch brochure \"1400 ... true capacity at 900\"."
+        },
+        "energy": {
+          "score": 2,
+          "evidence": "\"Cedar consumes 6 kWh per day compared to Birch’s 3 kWh per day\"."
+        },
+        "cost_and_installation": {
+          "score": 1,
+          "evidence": "Correct Cedar 18/day, Birch 12/day and 400-credit upgrade, but no explicit Birch no-upgrade statement; falsely says \"operating ledger does not capture the 400-credit inlet upgrade\"."
+        },
+        "requirement_and_selection": {
+          "score": 2,
+          "evidence": "\"at least 1000 liters per day\"; Cedar meets it and Birch fails alone."
+        },
+        "grant": {
+          "score": 0,
+          "evidence": "No statement about the installation grant or its exclusion of recurring operating costs."
+        },
+        "maintenance": {
+          "score": 2,
+          "evidence": "\"filter inspection every 7 days versus Birch’s 14-day interval\"."
+        },
+        "evidence_limits": {
+          "score": 2,
+          "evidence": "\"winter performance was not tested\"; neither annual reliability established from the \"30-day trial\"."
+        },
+        "visual_route": {
+          "score": 1,
+          "evidence": "Identifies page 2, blue through UV and orange bypassing UV, but does not describe Intake and Storage endpoints in the initial answer."
+        },
+        "grounding": {
+          "score": 1,
+          "evidence": "Selection is supported. However, the ledger-omission claim is false and \"audit reconciled the ledger and trial data\" goes beyond the audit source."
+        }
+      },
+      "summary": "Concise and mostly correct selection rationale; grant omitted, routing only partial, and one ledger claim contradicted the source.",
+      "citations": "Corpus URLs use invented file:// locations; the PDF page-2 attachment link is cited in the route discussion.",
+      "followup": {
+        "coreFactsCorrect": true,
+        "assessment": "Core requested follow-up facts are correct. Its extra table marks UV chamber as required for both systems, a per-system claim not established by this schematic."
+      },
+      "substantiveInitialReport": true
+    }
+  },
+  "preUnmaskingAssessmentUnchanged": true
+}

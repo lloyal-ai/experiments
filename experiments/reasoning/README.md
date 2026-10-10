@@ -2,6 +2,8 @@
 
 The benchmark runs the full Fieldnote Survey workload through its web UI: original PDF and site map uploads, Markdown corpus retrieval, reranking, fresh source preflight, planning and review, four concurrent inquiries, recovery when triggered, synthesis, a saved brief and a follow-up. It tests whether the exploratory synthesis-reasoning difference recurs on CUDA.
 
+**Completed:** [NVIDIA L40S results, 10 October 2026](results/cuda-fieldnote-v1/README.md). Lloyal emitted 617 / 471 / 747 synthesis reasoning tokens. Shared-prefix HTTP reached a similar range, with one tool-call-only output and omissions in the other reports. Ordinary HTTP completed one report and exhausted its context in two attempts. All nine attempts, quality reviews and raw evidence are retained; these results do not establish a state-reuse mechanism or quality equivalence.
+
 | Arm | Implementation |
 |---|---|
 | `resident` | Pinned Fieldnote and native abilities; resident context. Explicit sampling applied through the public `Branch.setSamplerParams` API at stage boundaries. |
@@ -47,9 +49,13 @@ python3 ../reasoning/scripts/blind-review.py ../reasoning/runs/my-cuda-suite
 # Review answer-only packets before opening the mapping or performance results.
 python3 ../reasoning/scripts/analyze.py ../reasoning/runs/my-cuda-suite \
   --tokenizer-url http://127.0.0.1:8097
+python3 ../reasoning/scripts/verify.py ../reasoning/runs/my-cuda-suite
+python3 ../reasoning/scripts/join-review.py ../reasoning/runs/my-cuda-suite
 python3 ../reasoning/scripts/report.py ../reasoning/runs/my-cuda-suite
 ```
 
-Counting uses `add_special=false`, `parse_special=false`, retaining whitespace and removing explicit reasoning delimiters. Counts are post-hoc text tokens, not internal computation. Native recovery reasoning that cannot be reconstructed from the trace is marked unavailable. Completion, cache acceptance, and quality equivalence are separate judgments. Raw journals live under each suite run's `fieldnote/` or `langgraph/` directory; `summary.json` and `index.html` are derived artifacts.
+Save rubric assessments as `quality-review.json` before joining the mapping. The published review provides the expected format. On the prepared CUDA host, `bash ../reasoning/scripts/tokenize-and-analyze.sh /absolute/path/to/suite` starts and stops a standalone tokenizer server and runs analysis plus receipt verification, refusing to overlap existing model stacks. `report.py` requires Matplotlib and NumPy. To verify tokenizer counts afresh from an evidence archive, first move aside its `token-counts.json`; otherwise those saved post-hoc counts are reused. Primary reasoning metrics cover the initial brief; follow-up acceptance, quality and raw-log metrics are recorded separately.
+
+Counting uses `add_special=false`, `parse_special=false`, retaining whitespace and removing explicit reasoning delimiters. Counts are post-hoc text tokens, not internal computation. Native recovery reasoning that cannot be reconstructed from the trace is marked unavailable. Completion, cache acceptance, and quality equivalence are separate judgments. The legacy `maxOutputTokens` setting in the memory package configuration does not cap this full Fieldnote settling path: there is no explicit synthesis output cap, and the resolved context limit and termination reason are retained. Numeric seed settings do not imply the same random-number stream across a continuing native agent and separate HTTP requests. Raw journals live under each suite run's `fieldnote/` or `langgraph/` directory; `summary.json` and `index.html` are derived artifacts.
 
 The [9 October observations](observations-2026-10-09/README.md) remain historical evidence under different conditions. They are not pooled into the CUDA repetitions. A companion fixed-evidence causal diagnostic has not run; the current experiment preserves the full workload and its naturally differing generated findings.
