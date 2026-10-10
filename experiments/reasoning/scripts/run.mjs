@@ -1,0 +1,14 @@
+import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+import { composedCommand } from '../../memory/src/experiments/memory/composed.mjs';
+import { loadConfig } from '../../memory/src/util.ts';
+const root=resolve(dirname(fileURLToPath(import.meta.url)),'..');
+const args=process.argv.slice(2),get=(name,fallback)=>{const i=args.indexOf('--'+name);return i<0?fallback:args[i+1];};
+const arm=get('arm','shared-prefix');
+if(!['resident','http','shared-prefix'].includes(arm))throw new Error('Unknown arm');
+const output=resolve(get('output',resolve(root,'runs',Date.now()+'-'+arm)));
+const sampling={temperature:0.5,topK:40,topP:0.95,minP:0.05};
+const config={...await loadConfig(),reasoning:{arm,seed:Number(get('seed','4100')),sampling,nativeBranches:8},fieldnoteRoot:resolve(root,'work/fieldnote')};
+await composedCommand(['--output',output,'--backend',arm==='resident'?'fieldnote':'langgraph','--browser-channel','chromium','--port',get('port','8100')],config);

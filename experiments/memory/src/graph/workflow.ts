@@ -24,6 +24,7 @@ export class ResearchWorkflow {
  pending?:Plan;
  constructor(readonly ask:Ask,readonly evidence:Evidence,private model:Model,private wire:Wire,coverageCache=new Map<string,string>(),private allocateAgent=()=>this.nextId++) {
   this.coverageCache=coverageCache;
+  model.setRunContext?.(sharedCatalog(ask.sources)+'\n\n# Current brief\n'+ask.text);
   this.graph=new StateGraph(State)
    .addNode('discover',s=>this.discover(s.ask))
    .addNode('planning',s=>this.plan(s.ask))
@@ -74,7 +75,7 @@ export class ResearchWorkflow {
    const told=prompt(ask.mode==='flat'?'plan-flat':'plan',{query:ask.text,count:max,context:null,routingKey:'ability',date:new Date().toISOString().slice(0,10),sources:ask.sources.map(s=>({name:s.protocol,useWhen:s.useWhen,toc:s.toc})),coverage:this.coverageCache.get(this.evidence.coverageKey(ask.text))??''});
    this.wire({type:'agent:spawn',agentId:id,parentAgentId:0,key:'planner'});
    let aggregate:any;
-   const ai=await this.controlled(id,signal=>this.model.chat([new SystemMessage(told.system),...ask.history,new HumanMessage(told.user)],{signal,agentId:id,temperature:0.3,thinking:false,
+   const ai=await this.controlled(id,signal=>this.model.chat([new SystemMessage(told.system),...ask.history,new HumanMessage(told.user)],{signal,agentId:id,stage:'planning',temperature:0.3,thinking:false,
      responseSchema:{name:'plan',schema:z.toJSONSchema(schema)},
      onChunk:c=>{aggregate=aggregate?aggregate.concat(c):c;if(typeof aggregate.content==='string'&&!signal.aborted)this.wire({type:'agent:plan_delta',agentId:id,text:aggregate.content});}
    }));
@@ -98,7 +99,7 @@ export class ResearchWorkflow {
  }
  private async textAnswer(messages:BaseMessage[],key:string){
    const id=this.allocateAgent();this.wire({type:'agent:spawn',agentId:id,parentAgentId:0,key});
-   const ai=await this.controlled(id,signal=>this.model.chat(messages,{agentId:id,signal,onReasoning:text=>{if(!signal.aborted)this.wire({type:'agent:reasoning_delta',agentId:id,text});},onChunk:c=>{if(!signal.aborted&&typeof c.content==='string'&&c.content)this.wire({type:'agent:text_delta',agentId:id,text:c.content});}}));
+   const ai=await this.controlled(id,signal=>this.model.chat(messages,{agentId:id,signal,stage:key,onReasoning:text=>{if(!signal.aborted)this.wire({type:'agent:reasoning_delta',agentId:id,text});},onChunk:c=>{if(!signal.aborted&&typeof c.content==='string'&&c.content)this.wire({type:'agent:text_delta',agentId:id,text:c.content});}}));
    const text=typeof ai.content==='string'?ai.content:'';this.wire({type:'agent:usage',agentId:id,tokenCount:ai.usage_metadata?.output_tokens??0});this.wire({type:'agent:return',agentId:id,result:text});this.wire({type:'agent:done',agentId:id});return {id,text,tokens:ai.usage_metadata?.output_tokens??0};
  }
  private async settle(ask:Ask,plan:Plan,findings:Finding[]){

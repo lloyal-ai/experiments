@@ -6,17 +6,33 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import type { Config, Emit } from '../types.js';
 import type { Model, ModelCall } from './contracts.js';
+import { sharedPrefixMessages, reasoningSampling } from './reasoning-control.js';
 
 /** Standard LangChain Chat Completions client; logging observes bytes without altering prompts. */
 export class LocalChatModel implements Model {
+  private sharedHeader = '';
+  setRunContext(header: string) { this.sharedHeader = header; }
   constructor(private config: Config, private dir: string, private emit: Emit) {}
   async chat(messages: BaseMessage[], options: ModelCall): Promise<AIMessage> {
+    if (this.config.reasoning?.arm === 'shared-prefix') messages = sharedPrefixMessages(messages, this.sharedHeader);
+    const sampling = reasoningSampling(this.config, options);
     const requestId = randomUUID(), at = performance.now();
     const folder=resolve(this.dir,'http'); await mkdir(folder,{recursive:true});
     const observedFetch: typeof fetch = async (input, init) => {
       const body=typeof init?.body==='string'?init.body:'';
       await writeFile(resolve(folder,requestId+'.request.json'),body);
-      this.emit('http.request',{requestId,agentId:options.agentId,wireBytes:Buffer.byteLength(body),transport:'transcript-resent-over-HTTP'});
+      if (this.config.reasoning) {
+        const request = JSON.parse(body);
+        const base = `http://127.0.0.1:${this.config.port}`;
+        const formatted = await fetch(base+'/apply-template', {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(request),signal:options.signal});
+        if (!formatted.ok) throw new Error('Cannot record rendered HTTP prompt: '+await formatted.text());
+        const rendered = await formatted.json() as {prompt:string};
+        await writeFile(resolve(folder,requestId+'.prompt.json'),JSON.stringify(rendered));
+        const tokens = await fetch(base+'/tokenize', {method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({content:rendered.prompt,add_special:false,parse_special:true}),signal:options.signal});
+        if (!tokens.ok) throw new Error('Cannot record HTTP input tokens');
+        await writeFile(resolve(folder,requestId+'.tokens.json'),await tokens.text());
+      }
+      this.emit('http.request',{requestId,agentId:options.agentId,stage:options.stage,sampling,arm:this.config.reasoning?.arm,wireBytes:Buffer.byteLength(body),transport:'transcript-resent-over-HTTP'});
       options.onRequest?.(requestId);
       const response=await fetch(input,init);
       // Stream the exact response to disk in the same pull path; never an unbounded tee buffer.
@@ -33,10 +49,10 @@ export class LocalChatModel implements Model {
         async cancel(reason){try{await reader.cancel(reason);}finally{await close();}}
       }),{status:response.status,statusText:response.statusText,headers:response.headers});
     };
-    const model=new ChatOpenAI({model:'local',apiKey:'local',temperature:options.temperature??0.8,
+    const model=new ChatOpenAI({model:'local',apiKey:'local',temperature:sampling?.temperature??options.temperature??0.8,
       maxRetries:0,streamUsage:true,useResponsesApi:false,
       configuration:{baseURL:`http://127.0.0.1:${this.config.port}/v1`,fetch:observedFetch},
-      modelKwargs:{cache_prompt:true,chat_template_kwargs:{enable_thinking:options.thinking??true},...(options.seed!==undefined?{seed:options.seed}:{})}
+      modelKwargs:{cache_prompt:true,chat_template_kwargs:{enable_thinking:options.thinking??true},...(sampling??(options.seed!==undefined?{seed:options.seed}:{}))}
     });
     // This stock server revision accepts auto/none/required, not OpenAI's named-tool object.
     // A singleton tool list + required is its supported way to force planning/recovery.

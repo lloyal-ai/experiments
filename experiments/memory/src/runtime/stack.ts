@@ -50,14 +50,14 @@ export class ModelStack {
     const harnessSource=await readFile(harnessPath,'utf8');
     // Use the native app's pinned YAML parser only on the native launch path.
     const {parse}=createRequire(resolve(this.config.fieldnoteRoot,'package.json'))('yaml');
-    const branches=parse(harnessSource)?.model?.llm?.branches;
+    const branches=this.config.reasoning?.nativeBranches??parse(harnessSource)?.model?.llm?.branches;
     if(!Number.isSafeInteger(branches)||branches<1)throw new Error(harnessPath+': model.llm.branches must be a positive integer');
     const effective={model:{llm:{id:'qwen3.5-4b',path:this.config.model,context:this.config.context,branches},reranker:{id:'qwen3-reranker-0.6b-q8',path:this.config.reranker},vision:{path:this.config.projector}},sources:{outputDir:resolve(data,'reports')},defaults:{effort:'low',guards:{url_dedup:{scope:'cohort'},query_dedup:{scope:'cohort'}}},abilities:{corpus:corpusPath?{corpusPath}:{}}};
     await writeFile(resolve(this.dir,'native-harness.source.yml'),harnessSource);
     await writeFile(resolve(this.dir,'native-harness.resolved.json'),JSON.stringify(effective,null,2)+'\n');
     await writeFile(resolve(data,'harness.yml'),JSON.stringify(effective,null,2)+'\n');
     this.emit('backend.config',{name:this.name,source:harnessPath,sourceSha256:createHash('sha256').update(harnessSource).digest('hex'),context:this.config.context,branches});
-    await this.launch('fieldnote',[resolve(this.config.fieldnoteRoot,'bin/serve.js')],this.nativePort,signal,{binary:process.execPath,cwd:this.config.fieldnoteRoot,env:{...process.env,...(this.config.memoryInstrumentation?{LLOYAL_LOCAL:'1',LLOYAL_NO_FALLBACK:'1',LLOYAL_BENCH_IDENTITY_LOG:resolve(this.dir,'native-loaded-identity.jsonl')} : {}),LLOYAL_PROJECT_ROOT:data,LLOYAL_DEV:'1',HOST:'127.0.0.1',PORT:String(this.nativePort),MAX_SESSIONS:'1',ALLOWED_ORIGIN:origin}});
+    await this.launch('fieldnote',[resolve(this.config.fieldnoteRoot,'bin/serve.js')],this.nativePort,signal,{binary:process.execPath,cwd:this.config.fieldnoteRoot,env:{...process.env,...(this.config.memoryInstrumentation?{LLOYAL_LOCAL:'1',LLOYAL_NO_FALLBACK:'1',LLOYAL_BENCH_IDENTITY_LOG:resolve(this.dir,'native-loaded-identity.jsonl')} : {}),...(this.config.reasoning?{LLOYAL_REASONING_SAMPLING:JSON.stringify(this.config.reasoning),LLOYAL_REASONING_SAMPLER_LOG:resolve(this.dir,'native-sampling.jsonl')}:{}),LLOYAL_PROJECT_ROOT:data,LLOYAL_DEV:'1',HOST:'127.0.0.1',PORT:String(this.nativePort),MAX_SESSIONS:'1',ALLOWED_ORIGIN:origin}});
    }
   }catch(error){await this.stop();throw error;}
  }

@@ -20,14 +20,15 @@ export async function composedCommand(args,base){
  const fixture=await loadFixture();
  const prior=JSON.parse(await readFile(resolve(ROOT,'validation/deliberation-repeat-2026-10-09.json'),'utf8')).procedure;
  prior.attachments=prior.attachments.map(path=>fixturePath(path,originalFixture.root,fixture.root));
- const config={...base,memoryInstrumentation:true,fieldnoteRoot:resolve(ROOT,'work/fieldnote-instrumented'),serverBinary:resolve(ROOT,'instrumentation/llama-server-build/bin/llama-server')};
+ const config={...base,memoryInstrumentation:true,fieldnoteRoot:base.reasoning?base.fieldnoteRoot:resolve(ROOT,'work/fieldnote-instrumented'),serverBinary:resolve(ROOT,'instrumentation/llama-server-build/bin/llama-server')};
  const question=prior.question+'\n\nUse exactly these four independent inquiries. Assign the stated protocol to each inquiry:\n'+prior.reviewedObjectives.map((t,i)=>`${i+1}. ${i===2?'document_research':'corpus_research'}: ${t.description}`).join('\n');
- const protocol={kind:'composed-Fieldnote-UI',requestRevision:2,plannerTransport:'LangGraph response_format json_schema; native PlanTool schema',reviewTimeoutMs:config.timeoutMs,originalQuery:prior.question,reason:'Make the required three corpus and one document routes explicit through the ordinary user request; preserve failed earlier routing attempts.',createdAt:new Date().toISOString(),query:question,attachments:prior.attachments,objectives:prior.reviewedObjectives,effort:'medium',followup:fixture.journeys.J1.followup,config,freshCoverage:true,driver:'Playwright; ordinary UI actions only; one WebSocket client',quality:'unreviewed',comparisonEligible:false};
+ const protocol={reasoning:base.reasoning??null,kind:'composed-Fieldnote-UI',requestRevision:2,plannerTransport:'LangGraph response_format json_schema; native PlanTool schema',reviewTimeoutMs:config.timeoutMs,originalQuery:prior.question,reason:'Make the required three corpus and one document routes explicit through the ordinary user request; preserve failed earlier routing attempts.',createdAt:new Date().toISOString(),query:question,attachments:prior.attachments,objectives:prior.reviewedObjectives,effort:'medium',followup:fixture.journeys.J1.followup,config,freshCoverage:true,driver:'Playwright; ordinary UI actions only; one WebSocket client',quality:'unreviewed',comparisonEligible:false};
  protocol.attachmentHashes=Object.fromEntries(await Promise.all(protocol.attachments.map(async p=>[p,await fileHash(p)])));
  protocol.hostSourceHashes=Object.fromEntries(await Promise.all(['src/evidence.ts','src/graph/model.ts','src/graph/workflow.ts','src/runtime/stack.ts','src/experiments/memory/composed.mjs'].map(async p=>[p,await fileHash(resolve(ROOT,p))])));
  await writeFile(resolve(output,'protocol.json'),JSON.stringify(protocol,null,2));
  await cp(resolve(ROOT,'src'),resolve(output,'execution-source/src'),{recursive:true});
  await cp(resolve(ROOT,'package-lock.json'),resolve(output,'execution-source/package-lock.json'));
+ if(base.reasoning)await cp(resolve(config.fieldnoteRoot,'src/harness'),resolve(output,'execution-source/native-harness'),{recursive:true});
  const {chromium}=await playwright();
  const requested=get(args,'backend','both'),backends=requested==='both'?['fieldnote','langgraph']:[requested];
  if(backends.some(b=>!['fieldnote','langgraph'].includes(b)))throw new Error('Use --backend fieldnote|langgraph|both');
@@ -37,7 +38,7 @@ export async function composedCommand(args,base){
   const onSignal=()=>{void (async()=>{await browser?.close();await host?.close();await writeFile(resolve(dir,'driver-status.json'),JSON.stringify({status:'interrupted',unixMs:Date.now()}));process.exit(130);})();};
   process.once('SIGINT',onSignal);process.once('SIGTERM',onSignal);
   const observation=e=>appendFileSync(resolve(dir,'browser.jsonl'),JSON.stringify({unixMs:Date.now(),...e})+'\n');
-  const waitEvent=async(predicate,after=0,ms=1200000)=>{const deadline=Date.now()+ms;while(Date.now()<deadline){const found=frames.slice(after).find(x=>predicate(x.event));if(found)return found.event;await sleep(100);}throw new Error('Timed out waiting for application event');};
+  const waitEvent=async(predicate,after=0,ms=1200000)=>{const deadline=Date.now()+ms;while(Date.now()<deadline){const failed=frames.slice(after).find(x=>x.event.type==='ui:error'||x.event.type==='run:aborted');if(failed)throw new Error('Application failed: '+JSON.stringify(failed.event));const found=frames.slice(after).find(x=>predicate(x.event));if(found)return found.event;await sleep(100);}throw new Error('Timed out waiting for application event');};
   try{
    console.log('Starting composed '+backend);
    host=await serveFieldnote(config,{backend,port:Number(get(args,'port','8100')),corpusPath:resolve(fixture.root,'corpus'),dir});
