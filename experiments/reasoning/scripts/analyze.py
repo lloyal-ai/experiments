@@ -49,7 +49,7 @@ def extract(run,count):
   if kind=='agent:spawn':stages[e['agentId']]=phase
  syn=next((e['value'] for e in events if e['value'].get('type')=='synthesize:done'),{})
  if 'agentId' in syn:stages[syn['agentId']]='synthesis'
- segments=defaultdict(list);synthesis_answer='';synthesis_system=None;cache_receipts=[];native_missing=[]
+ segments=defaultdict(list);synthesis_answer='';synthesis_system=None;synthesis_instruction=None;cache_receipts=[];native_missing=[]
  traces=[r['value']['event'] for r in event_rows(rows,'agent:trace')]
  # Trace IDs are unique within the one session; the journal is the source, not UI mirrors.
  traces=list({e['traceId']:e for e in traces}.values())
@@ -57,11 +57,11 @@ def extract(run,count):
   for e in traces:
    stage=stages.get(e.get('agentId'))
    if e['type']=='prompt:format' and stage=='synthesis' and e.get('messages'):
-    ms=json.loads(e['messages']);synthesis_system=next((m['content'] for m in ms if m['role']=='system'),None)
+    ms=json.loads(e['messages']);synthesis_system=next((m['content'] for m in ms if m['role']=='system'),None);synthesis_instruction=synthesis_system
    if e['type']!='agent:turn' or not stage:continue
    raw=e['rawOutput']
    if '</think>' in raw:
-    reason,answer=raw.split('</think>',1);reason=reason.removeprefix('<think>').lstrip('\n');answer=answer.lstrip('\n')
+    reason,answer=raw.split('</think>',1);reason=reason.replace('<think>','')
    elif stage=='planning':reason='';answer=raw
    else:
     native_missing.append({'stage':stage,'agentId':e.get('agentId'),'turn':e.get('turn'),'chars':len(raw)})
@@ -82,21 +82,26 @@ def extract(run,count):
     synthesis_answer+=answer
     request=json.loads(path.with_suffix('.request.json').read_text())
     synthesis_system=request['messages'][0]['content']
+    synthesis_instruction=request['messages'][1]['content'][0]['text'].removeprefix('# Current stage instructions\n') if arm=='shared-prefix' else synthesis_system
     receipt.update({'renderedTextualPrefixTokens':max((common(ids,t) for t in prior),default=0),'renderedTextualTokens':len(ids)})
     cache_receipts[-1].update(receipt)
    prior.append(ids)
  answer=(base/'answer.md').read_text() if (base/'answer.md').exists() else ''
  stage_counts={stage:{'reasoningTokens':None if any((n:=count(t)) is None for t in texts) else sum(count(t) for t in texts),'reasoningChars':sum(map(len,texts)),'completedTurnsOrRequests':len(texts)} for stage,texts in segments.items()}
+ for missing in native_missing:
+  stage_counts.setdefault(missing['stage'],{})['reasoningTokens']=None
  native_recovery=[e for e in traces if e['type']=='pool:recoveryProduce']
  if native_recovery:
   for stage in set(stages.get(e.get('agentId'),'unknown') for e in native_recovery):
    stage_counts.setdefault(stage,{})['recoveryReasoningUnavailable']=True
+   stage_counts[stage]['completedTurnReasoningTokens']=stage_counts[stage].get('reasoningTokens')
+   stage_counts[stage]['reasoningTokens']=None
  syn_cache=next((r for r in cache_receipts if r['stage']=='synthesis'),None)
  checks={'driverComplete':json.loads((base/'driver-status.json').read_text())['status']=='complete','preflightExecuted':any(e['value']['type']=='preflight:done' for e in events),'synthesisCompleted':bool(syn),'sharedPrefixHit':None if arm!='shared-prefix' else bool(syn_cache and (syn_cache.get('serverTimings') or {}).get('cache_n',0)>0)}
  native_sampling=[json.loads(l) for l in (base/'native-sampling.jsonl').read_text().splitlines()] if (base/'native-sampling.jsonl').exists() else None
  total_input=sum((r.get('serverTimings') or {}).get('prompt_n',0)+(r.get('serverTimings') or {}).get('cache_n',0) for r in cache_receipts)
  total_cached=sum((r.get('serverTimings') or {}).get('cache_n',0) for r in cache_receipts)
- result={'run':run.name,'arm':arm,'seed':protocol['reasoning']['seed'],'status':checks,'quality':'unreviewed','comparisonEligible':False,'timing':summary['timing'],'generation':{k:v for k,v in summary['generation'].items() if k!='synthesisStream'},'reasoningByStage':stage_counts,'answerTokens':count(answer),'answerWords':len(re.sub(r'\[([^\]]+)\]\([^)]*\)',r'\1',answer).split()),'answerSha256':sha(answer.encode()),'synthesisSystemSha256':sha(synthesis_system.encode()) if isinstance(synthesis_system,str) else None,'synthesisCache':syn_cache,'httpWorkloadCache':{'inputTokens':total_input,'cachedTokens':total_cached,'fraction':total_cached/total_input if total_input else None},'nativeSampling':native_sampling,'nativeTurnsWithoutReasoningDelimiter':native_missing,'nativeRecoveryReasoningCaveat':bool(native_recovery),'rawJournal':session['snapshot'],'sourceProtocolSha256':sha((run/'protocol.json').read_bytes())}
+ result={'run':run.name,'arm':arm,'seed':protocol['reasoning']['seed'],'status':checks,'quality':'unreviewed','comparisonEligible':False,'timing':summary['timing'],'generation':{k:v for k,v in summary['generation'].items() if k!='synthesisStream'},'reasoningByStage':stage_counts,'answerTokens':count(answer),'answerWords':len(re.sub(r'\[([^\]]+)\]\([^)]*\)',r'\1',answer).split()),'answerSha256':sha(answer.encode()),'synthesisSystemSha256':sha(synthesis_system.encode()) if isinstance(synthesis_system,str) else None,'synthesisStageInstructionSha256':sha(synthesis_instruction.encode()) if isinstance(synthesis_instruction,str) else None,'synthesisCache':syn_cache,'httpWorkloadCache':{'inputTokens':total_input,'cachedTokens':total_cached,'fraction':total_cached/total_input if total_input else None},'nativeSampling':native_sampling,'nativeTurnsWithoutReasoningDelimiter':native_missing,'nativeRecoveryReasoningCaveat':bool(native_recovery),'rawJournal':session['snapshot'],'sourceProtocolSha256':sha((run/'protocol.json').read_bytes())}
  result['generation']['reasoningTokenCount']=stage_counts.get('synthesis',{}).get('reasoningTokens')
  (run/'synthesis-text.json').write_text(json.dumps({'reasoning':'\n'.join(segments.get('synthesis',[])),'streamedAnswer':synthesis_answer,'savedAnswer':answer,'system':synthesis_system},indent=2,ensure_ascii=False)+'\n')
  (run/'metrics.json').write_text(json.dumps(result,indent=2)+'\n');return result
