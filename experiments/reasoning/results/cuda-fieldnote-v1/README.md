@@ -2,7 +2,11 @@
 
 Nine planned attempts, three execution paths, one synthetic decision task. All attempts and pilots are retained. The runtime source was frozen before measured execution; no failed attempt was replaced.
 
-**The large synthesis-reasoning gap observed against ordinary HTTP did not persist against the shared-prefix HTTP variant.** Lloyal emitted 617 / 471 / 747 reasoning tokens; shared-prefix HTTP emitted 470 / 723 / 815. However, the 470-token run saved only a tool-call block, and the other shared-prefix reports omitted requested material. Low reasoning counts alone did not establish equivalent answer quality.
+**In both rounds where shared-prefix HTTP produced a substantive report, Lloyal used fewer synthesis reasoning tokens and scored higher on the frozen rubric.** Round 2 used 471 versus 723 reasoning tokens (34.9% fewer), with scores of 12 versus 8 out of 18. Round 3 used 747 versus 815 (8.3% fewer), with scores of 15 versus 12. In round 1, shared-prefix HTTP saved only a tool-call block after 470 reasoning tokens; Lloyal produced a report after 617 tokens, scoring 16/18.
+
+**Interpretation correction, 10 October 2026:** the earlier lead said the reasoning advantage “did not persist.” That conclusion was too broad: low counts on lower-quality outputs do not establish that an advantage disappeared at comparable quality. The smaller raw-count gaps and the quality differences must be reported together. The observations, scores and raw archive are unchanged.
+
+[Read the complete answers side by side](answers.html), including original Markdown, unchanged rubric evidence, the ordinary HTTP arm and separate follow-ups. [All original answer packets](review/) are also available directly.
 
 Ordinary HTTP completed one brief with 2,689 reasoning tokens. Its other two syntheses consumed the remaining context while reasoning and produced no saved brief. These failed generations are not used to inflate a reduction claim. Lloyal's sole completed comparison with ordinary HTTP had 77.1% fewer synthesis reasoning tokens, with task-order and generated-evidence differences still present.
 
@@ -93,7 +97,9 @@ The two failed ordinary HTTP syntheses have `finish_reason: length`: 3,707 input
 
 ## Interpretation
 
-This experiment supports a narrower finding than “resident state eliminates re-derivation.” Native synthesis stayed in the hundreds of reasoning tokens, and an HTTP shared-prefix layout also reached that range. In the two substantive shared-prefix comparisons, Lloyal emitted 34.9% and 8.3% fewer reasoning tokens, with unequal answers and generated evidence; they do not reproduce the earlier 76.7–89.3% gap as a general effect against this control.
+The joint observation favors Lloyal: in both substantive shared-prefix comparisons, it used fewer reasoning tokens and scored higher on the existing rubric. In round 2, Lloyal included the operating-cost ledger, installation requirements and grant discussion missing from shared-prefix HTTP; both reports omitted the visual explanation and contained other errors. In round 3, Lloyal included the requested visual route explanation and stated the maintenance intervals correctly, while shared-prefix HTTP omitted the route and reversed the maintenance comparison. Lloyal still made an energy-efficiency error and invented a connection to unrelated lighting data.
+
+Shared-prefix HTTP also reached reasoning counts in the hundreds. The observed token reductions of 34.9% and 8.3% are smaller than the historical 76.7–89.3% range, but unequal answer quality prevents interpreting this as the advantage disappearing at comparable quality. Nor do these runs establish how many tokens shared-prefix HTTP would need to reach Lloyal's rubric scores. No quality-matched efficiency estimate or general mechanism follows from these observations.
 
 Three repetitions of one synthetic task are exploratory. The native Survey spine receives inquiry findings as text; it does not merge every inquiry's private reasoning state. Different evidence, prompt roles, tool headers, planner order, sampling-state continuity and instrumentation remain relevant. A fixed-evidence synthesis experiment with controlled prompt roles and explicit cache-state interventions is still needed for causal attribution. Historical Metal observations are [kept separately](../../observations-2026-10-09/README.md).
 
@@ -103,4 +109,4 @@ The [experiment instructions](../../README.md) run the same full UI workload on 
 
 Each measured run includes exact HTTP request bodies, rendered prompt/token records and SSE where applicable; native traces and loaded-library identities; sampler receipts; source snapshots; original attachment receipts; browser WebSocket journals; answers/screenshots; driver status; and full raw-log-derived metrics. All three pilots are included, including the first shared-prefix layout that completed but recorded zero synthesis prefix-cache hits. No weights or installed dependencies are bundled in the evidence archive.
 
-[Machine-readable measurements](summary.json) · [HTML report](index.html) · [Chart source](../../scripts/report.py) · [Raw-log analysis](../../scripts/analyze.py)
+[Machine-readable measurements](summary.json) · [HTML report](index.html) · [Full answers side by side](answers.html) · [Comparison source](../../scripts/compare-answers.mjs) · [Chart source](../../scripts/report.py) · [Raw-log analysis](../../scripts/analyze.py)

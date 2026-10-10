@@ -1,34 +1,35 @@
 #!/usr/bin/env python3
 import argparse,json,html,statistics
 from pathlib import Path
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.patches import Patch
-import numpy as np
-ap=argparse.ArgumentParser();ap.add_argument('suite',type=Path);a=ap.parse_args();root=a.suite.resolve()
+ap=argparse.ArgumentParser();ap.add_argument('suite',type=Path);ap.add_argument('--html-only',action='store_true',help='Refresh interpretation without changing existing plots or needing plotting dependencies');a=ap.parse_args();root=a.suite.resolve()
 runs=json.loads((root/'summary.json').read_text())['runs'];arms=['resident','http','shared-prefix'];labels=['Lloyal','HTTP + prefix-cache','HTTP + shared prefix'];colors=['#ff5637','#5366ec','#18a999']
 reviews=json.loads((root/'quality-by-run.json').read_text())['runs'] if (root/'quality-by-run.json').exists() else {}
 valid=[r for r in runs if 'extractionError' not in r and r.get('generation',{}).get('reasoningTokenCount') is not None and r.get('status',{}).get('driverComplete') and r.get('status',{}).get('synthesisCompleted')]
-plt.rcParams.update({'font.family':'DejaVu Sans','font.size':11,'axes.spines.top':False,'axes.spines.right':False})
-for metric,ylabel,file in [('reasoning','Synthesis reasoning tokens ↓','reasoning'),('time','Query → saved brief (seconds) ↓','elapsed')]:
- fig,ax=plt.subplots(figsize=(5.2,5.2),layout='constrained')
- seeds=sorted(set(r['seed'] for r in valid));x=np.arange(len(seeds));width=.24
- for i,arm in enumerate(arms):
-  rs={r['seed']:r for r in valid if r['arm']==arm}
-  vals=[(rs[s]['generation']['reasoningTokenCount'] if metric=='reasoning' else rs[s]['timing']['queryToCompleteMs']/1000) if s in rs else np.nan for s in seeds]
-  bars=ax.bar(x+(i-1)*width,vals,width,color=colors[i],label=labels[i])
-  captions=[]
-  for j,s in enumerate(seeds):
-   invalid=s in rs and reviews.get(rs[s]['run'],{}).get('substantiveInitialReport') is False
-   if invalid:bars[j].set_hatch('///');bars[j].set_edgecolor('#18212e')
-   captions.append('' if np.isnan(vals[j]) else f'{vals[j]:.0f}'+('†' if invalid else ''))
-  ax.bar_label(bars,labels=captions,fontsize=9,padding=3)
-  for j,s in enumerate(seeds):
-   if s not in rs:ax.text(x[j]+(i-1)*width,.02,'failed',rotation=90,ha='center',va='bottom',transform=ax.get_xaxis_transform(),color=colors[i],fontsize=9)
- ax.set_xticks(x,[f'Run {i+1}' for i in range(len(seeds))]);ax.set_ylabel(ylabel);ax.set_ylim(bottom=0,top=max(v for r in valid for v in [(r['generation']['reasoningTokenCount'] if metric=='reasoning' else r['timing']['queryToCompleteMs']/1000)])*1.13)
- ax.legend(handles=[Patch(facecolor=c,label=l) for c,l in zip(colors,labels)],fontsize=9,loc='lower left',bbox_to_anchor=(0,1.01),frameon=False,borderaxespad=0);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
- fig.savefig(root/(file+'.png'),dpi=200);plt.close(fig)
+if not a.html_only:
+ import matplotlib
+ matplotlib.use('Agg')
+ import matplotlib.pyplot as plt
+ from matplotlib.patches import Patch
+ import numpy as np
+ plt.rcParams.update({'font.family':'DejaVu Sans','font.size':11,'axes.spines.top':False,'axes.spines.right':False})
+ for metric,ylabel,file in [('reasoning','Synthesis reasoning tokens ↓','reasoning'),('time','Query → saved brief (seconds) ↓','elapsed')]:
+  fig,ax=plt.subplots(figsize=(5.2,5.2),layout='constrained')
+  seeds=sorted(set(r['seed'] for r in valid));x=np.arange(len(seeds));width=.24
+  for i,arm in enumerate(arms):
+   rs={r['seed']:r for r in valid if r['arm']==arm}
+   vals=[(rs[s]['generation']['reasoningTokenCount'] if metric=='reasoning' else rs[s]['timing']['queryToCompleteMs']/1000) if s in rs else np.nan for s in seeds]
+   bars=ax.bar(x+(i-1)*width,vals,width,color=colors[i],label=labels[i])
+   captions=[]
+   for j,s in enumerate(seeds):
+    invalid=s in rs and reviews.get(rs[s]['run'],{}).get('substantiveInitialReport') is False
+    if invalid:bars[j].set_hatch('///');bars[j].set_edgecolor('#18212e')
+    captions.append('' if np.isnan(vals[j]) else f'{vals[j]:.0f}'+('†' if invalid else ''))
+   ax.bar_label(bars,labels=captions,fontsize=9,padding=3)
+   for j,s in enumerate(seeds):
+    if s not in rs:ax.text(x[j]+(i-1)*width,.02,'failed',rotation=90,ha='center',va='bottom',transform=ax.get_xaxis_transform(),color=colors[i],fontsize=9)
+  ax.set_xticks(x,[f'Run {i+1}' for i in range(len(seeds))]);ax.set_ylabel(ylabel);ax.set_ylim(bottom=0,top=max(v for r in valid for v in [(r['generation']['reasoningTokenCount'] if metric=='reasoning' else r['timing']['queryToCompleteMs']/1000)])*1.13)
+  ax.legend(handles=[Patch(facecolor=c,label=l) for c,l in zip(colors,labels)],fontsize=9,loc='lower left',bbox_to_anchor=(0,1.01),frameon=False,borderaxespad=0);ax.grid(axis='y',alpha=.15);ax.set_axisbelow(True)
+  fig.savefig(root/(file+'.png'),dpi=200);plt.close(fig)
 rows=[]
 for r in runs:
  if 'extractionError' in r:rows.append('<tr><td>'+html.escape(r['run'])+'</td><td colspan="7">'+html.escape(r['extractionError'])+'</td></tr>');continue
@@ -51,4 +52,5 @@ page=page.replace('<a href="summary.json">','<a href="controls.json">Control rec
 if (root/'findings.json').exists():
  findings=json.loads((root/'findings.json').read_text())
  page=page.replace('</h1>','</h1>'+''.join('<p>'+html.escape(t)+'</p>' for t in findings['paragraphs']),1)
+page=page.replace('</h1>','</h1><p><a href="answers.html"><strong>Read the complete answers side by side →</strong></a> · All rounds, unchanged rubric evidence, original Markdown and separate follow-ups.</p>',1)
 (root/'index.html').write_text(page)

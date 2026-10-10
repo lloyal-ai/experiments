@@ -1,0 +1,1147 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Fieldnote answers side by side — CUDA reasoning</title>
+<style>
+:root{color-scheme:light;--ink:#202632;--muted:#596374;--line:#dce1e8;--native:#eb5138;--http:#4059df;--paper:#fff;--surface:#f4f6f9}*{box-sizing:border-box}body{margin:0;background:var(--surface);font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}main{max-width:1520px;margin:auto;padding:28px 32px 64px}a{color:#354fb4}h1{font-size:clamp(27px,3vw,39px);letter-spacing:-.035em;line-height:1.2;margin:14px 0}h2,h3{line-height:1.3}p{margin:10px 0}.intro{max-width:1030px}.intro p{font-size:17px}.overline,.eyebrow{text-transform:uppercase;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted)}.method{font-size:13px;color:var(--muted);margin:14px 0 22px;max-width:1130px}.controls{display:flex;justify-content:space-between;align-items:end;gap:20px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:14px 18px;margin-top:20px}.round-tabs{display:flex;gap:8px;flex-wrap:wrap}button,select{font:inherit;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:7px;padding:8px 13px}button{cursor:pointer;text-align:left}button span{display:block;font-size:11px;color:var(--muted);font-weight:400}button[aria-pressed="true"]{background:#202632;border-color:#202632;color:#fff}button[aria-pressed="true"] span{color:#e1e6ee}label{display:flex;flex-direction:column;gap:4px;font-size:12px;font-weight:600}select{font-size:14px}.round-heading{margin:24px 0 14px}.round-heading h2{font-size:20px;margin:0 0 5px}.round-heading h2 span{font-size:13px;font-weight:400;color:var(--muted)}.round-heading p{font-size:15px;max-width:1050px}.columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}.card{border:1px solid var(--line);border-radius:12px;background:var(--paper);overflow:hidden}.card header{border-top:4px solid var(--http);padding:20px 24px 14px;border-bottom:1px solid var(--line)}.card.resident header{border-top-color:var(--native)}.card header h2{font-size:23px;margin:6px 0 14px;letter-spacing:-.025em}.metrics{display:flex;gap:24px;justify-content:space-between;margin-bottom:10px}.metrics strong{display:block;font-variant-numeric:tabular-nums;font-size:26px;line-height:1.1}.metrics span{display:block;font-size:11px;max-width:155px;color:var(--muted);margin-top:5px}small{font-size:11px;color:var(--muted)}.annotation{padding:14px 24px;background:#fafbfc;border-bottom:1px solid var(--line);font-size:13px}.annotation p{margin-bottom:0}.annotation summary{font-size:12px;font-weight:650}.answer{padding:24px;overflow-wrap:anywhere;font-size:15px;line-height:1.7}.answer>:first-child{margin-top:0}.answer>:last-child{margin-bottom:0}.answer h1{font-size:23px;letter-spacing:-.025em;margin:0 0 24px}.answer h2{font-size:19px;margin:25px 0 12px}.answer h3{font-size:17px;margin-top:22px}.answer p{margin:0 0 16px}.answer li{margin:4px 0}.answer table{font-size:13px}.citation{color:#475f8a;text-decoration:underline;text-decoration-style:dotted;cursor:help}.source,.followup{border-top:1px solid var(--line);padding:16px 24px;font-size:13px}.followup .answer{padding:20px 0}.source pre{white-space:pre-wrap;font-size:12px;line-height:1.6;background:var(--surface);padding:12px}.source code{font-size:10px;overflow-wrap:anywhere}summary{cursor:pointer}details.rubric{margin:0 0 18px;padding:12px 16px;background:var(--paper);border:1px solid var(--line);border-radius:8px;font-size:13px}table{border-collapse:collapse;width:100%;table-layout:fixed}td,th{padding:12px;border-bottom:1px solid var(--line);vertical-align:top;text-align:left}th small{display:block;font-weight:400;margin-top:4px}.failure{padding:24px;background:#fff8ef}.failure h3{margin-top:0}.footer{margin-top:32px;color:var(--muted);font-size:13px;max-width:1100px}[hidden]{display:none!important}button:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #608afa;outline-offset:3px}@media(max-width:800px){main{padding:20px 14px}.controls{align-items:stretch;flex-direction:column}.columns{gap:12px}.card header,.annotation,.answer,.source,.followup{padding-left:16px;padding-right:16px}.metrics{gap:8px}.metrics strong{font-size:23px}}@media(max-width:560px){.columns{grid-template-columns:1fr}.round-tabs{flex-wrap:nowrap}button{padding:8px 10px}.rubric{overflow-x:auto}.rubric table{min-width:700px}}@media print{.controls,.rubric,.source,.followup{display:none}.card{overflow:visible}body{background:#fff}main{padding:0}.answer{font-size:10pt}.card header{break-after:avoid}}
+</style></head><body><main>
+<a href="index.html">← Benchmark report</a>
+<div class="intro"><p class="overline">Full Fieldnote workload · NVIDIA L40S · all 3 rounds</p><h1>Read the answers alongside the reasoning counts</h1><p><strong>In both substantive shared-prefix comparisons, Lloyal used fewer reasoning tokens and scored higher on the frozen rubric.</strong> Low reasoning counts on lower-quality outputs do not establish that an advantage disappeared at comparable quality.</p></div>
+<p class="method">Complete initial answers appear below, with their original wording and citations. Reviewer annotations are separate. Scores come from the existing anonymous-packet review by the implementing assistant, not an independent evaluation. No scores, model outputs or token counts were changed. Opens at round 2, the first pair of substantive reports.</p>
+<div class="controls"><div class="round-tabs" aria-label="Choose round"><button type="button" data-select-round="1" aria-pressed="false">Round 1<span>Shared-prefix: tool-call only</span></button><button type="button" data-select-round="2" aria-pressed="false">Round 2<span>471 vs 723 reasoning tokens</span></button><button type="button" data-select-round="3" aria-pressed="false">Round 3<span>747 vs 815 reasoning tokens</span></button></div><label>Compare Lloyal with<select id="comparator"><option value="shared-prefix">HTTP + shared prefix · prefix-cache enabled</option><option value="http">Ordinary HTTP · prefix-cache enabled</option></select></label></div>
+<section class="round" data-round="1" data-arm="shared-prefix"><div class="round-heading"><h2>Round 1 <span>· seed offset 4100</span></h2><p>Shared-prefix HTTP saved only a literal tool-call block. Its lower reasoning count does not establish comparable-quality efficiency.</p></div><details class="rubric"><summary>Compare all nine rubric criteria and quoted evidence</summary><table><thead><tr><th>Criterion · 0–2 each</th><th>Lloyal</th><th>HTTP + shared prefix</th></tr></thead><tbody><tr><th>Capacity and brochure correction<small>Cedar 1200 L/day, Birch 900 L/day; Birch brochure 1400 corrected by audit.</small></th><td><strong>2/2</strong><p>&quot;Cedar: 1200 liters per day&quot;; &quot;Birch: 900 liters per day&quot;; &quot;brochure claimed Birch delivered 1400 ... corrected ... to 900&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Energy<small>Cedar 6 kWh/day, Birch 3 kWh/day.</small></th><td><strong>2/2</strong><p>&quot;Cedar uses 6 kWh per day and Birch uses 3 kWh per day&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Operating costs and installation<small>Cedar 18 credits/day and 400-credit inlet upgrade; Birch 12/day and no inlet upgrade.</small></th><td><strong>2/2</strong><p>&quot;Cedar at 18 credits per day and Birch at 12&quot;; &quot;Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Requirement and selection<small>Council minimum 1000 L/day; Cedar alone meets it, Birch alone does not.</small></th><td><strong>2/2</strong><p>&quot;council requires at least 1000 liters per day, so Cedar meets ... Birch alone fails&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Grant coverage<small>Installation grant does not cover recurring operating cost.</small></th><td><strong>1/2</strong><p>Initially says &quot;A grant covers installation but does not cover recurring operating costs&quot;, then contradicts this: &quot;400-credit inlet upgrade ... is not covered by the grant&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Maintenance<small>Cedar inspection every 7 days, Birch every 14 days.</small></th><td><strong>2/2</strong><p>&quot;Cedar requires filter inspection every 7 days; Birch ... every 14 days&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Evidence limits<small>30-day pilot; winter performance and annual reliability unmeasured; no asserted winter advantage.</small></th><td><strong>2/2</strong><p>&quot;only 30 days of operation&quot;; &quot;Winter performance was explicitly NOT measured&quot;; &quot;Annual reliability cannot be established&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Visual routing explanation<small>Blue: Intake to UV chamber to Storage. Orange: Intake to Storage, bypasses UV chamber; identify PDF page 2.</small></th><td><strong>2/2</strong><p>Page 2: &quot;Intake → UV chamber → Storage&quot;; orange &quot;Intake → (directly to) Storage&quot; and &quot;bypasses the UV chamber entirely&quot;.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr><tr><th>Grounding<small>Recommendation and factual claims supported; no lighting distractor, invented reliability/cost claims, or unsupported certainty.</small></th><td><strong>1/2</strong><p>Core recommendation is supported, but the prescription incorrectly says the inlet upgrade is not grant-covered. The cost.md citation does not support that claim.</p></td><td><strong>0/2</strong><p>The entire saved answer is a &lt;tool_call&gt; requesting read_file with filename cost.md; it contains no report or factual answer.</p></td></tr></tbody></table><p>Original scores are unchanged. Citation usability was reviewed separately: <strong>Lloyal:</strong> Corpus citations use invented https://example.com/*.md URLs. The PDF uses an attachment page-2 reference; nearby routing claims match the fixture. Some capacity/requirement claims are cited to cost.md or trial.md rather than the audit. <strong>HTTP + shared prefix:</strong> No citations or report in the initial answer.</p></details><div class="columns"><article class="card resident" data-run="01-resident-r1"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>617</strong><span>synthesis reasoning tokens</span></div><div><strong>16/18</strong><span>frozen rubric</span></div><div><strong>1,587</strong><span>saved answer tokens</span></div></div><small>01-resident-r1</small></header><details class="annotation" open><summary>Existing reviewer assessment · 16/18</summary><p>Broadly complete report with a material contradiction about grant coverage.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot Selection Analysis</h1>
+<h2>Thesis</h2>
+<p><strong>Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use.</strong> This conclusion rests on the hard constraint that the council&#39;s capacity requirement must be satisfied, which the 30-day independent audit definitively established <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<h2>Supporting Evidence: Capacity Constraint is Non-Negotiable</h2>
+<p>The independent 30-day trial and audit measured the following audited capacities <span class="citation" title="https://example.com/trial.md">trial</span>:</p>
+<ul>
+<li><strong>Cedar</strong>: 1200 liters per day</li>
+<li><strong>Birch</strong>: 900 liters per day</li>
+</ul>
+<p>The council requires at least 1000 liters per day, so Cedar meets the requirement while Birch alone fails <span class="citation" title="https://example.com/audit.md">audit</span>. An early brochure claimed Birch delivered 1400 liters per day, but the independent audit corrected that number to 900 liters per day <span class="citation" title="https://example.com/audit.md">audit</span>. The brochure used a short clean-water test that is not representative of real conditions.</p>
+<p>This capacity gap is the decisive factor: Cedar alone meets the requirement at 1200 liters per day, whereas Birch alone fails at 900 liters per day. The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, both meeting the drinking-water quality target <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<h2>Complicating Evidence: Cost and Operational Tradeoffs</h2>
+<p>The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation <span class="citation" title="https://example.com/cost.md">cost</span>. Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade <span class="citation" title="https://example.com/cost.md">cost</span>. A grant covers installation but does not cover recurring operating costs <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<p>Energy consumption under the same operating conditions shows Cedar uses 6 kWh per day and Birch uses 3 kWh per day <span class="citation" title="https://example.com/trial.md">trial</span>. The brochure&#39;s claim of 1400 liters per day for Birch was corrected to 900 liters per day, confirming the test was not representative <span class="citation" title="https://example.com/audit.md">audit</span>.</p>
+<h2>Resolution: Capacity Constraint Trumps Cost Considerations</h2>
+<p>The operating costs (18 credits/day for Cedar vs 12 credits/day for Birch) are from the ledger excluding installation. The installation costs are separate (400 credits for Cedar inlet upgrade vs none for Birch). The council requirement of 1000 liters/day is not met by Birch alone (900 liters/day per audit) <span class="citation" title="https://example.com/audit.md">audit</span>. Cedar alone meets the requirement at 1200 liters/day <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<p>Cedar alone is the feasible option because it meets the council&#39;s capacity requirement of 1000 liters per day (1200 liters/day audited), whereas Birch alone fails at 900 liters/day <span class="citation" title="https://example.com/cost.md">cost</span>. The council must decide whether the 400-credit inlet upgrade for Cedar is within budget, given that a grant covers installation but not recurring operating costs <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Visual Routing Analysis</h2>
+<p>The Harbor Water Pilot PDF page 2 contains Figure 1: Treatment routing, which visually displays two distinct water treatment pathways <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>.</p>
+<p><strong>Blue Route (Normal Treatment Route):</strong> A solid blue arrow shows the standard treatment flow: Intake → UV chamber → Storage. This represents the normal operational route where water passes through the UV chamber for treatment before reaching storage.</p>
+<p><strong>Orange Route (Maintenance Bypass):</strong> A dashed orange line labeled &quot;Orange: maintenance bypass&quot; shows the path: Intake → (directly to) Storage. This route bypasses the UV chamber entirely during maintenance periods.</p>
+<p>The orange route bypasses the <strong>UV chamber</strong> component. During maintenance, water can flow from the intake directly to storage without passing through the UV treatment chamber <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>. The figure includes the instruction: &quot;Read direction from the arrowheads. This is a schematic, not to scale.&quot;</p>
+<h2>Maintenance and Reliability Limitations</h2>
+<p>Cedar requires filter inspection every 7 days; Birch requires filter inspection every 14 days <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The pilot measured only 30 days of operation <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The pilot measured no winter performance <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Neither system has established annual reliability from this short pilot <span class="citation" title="https://example.com/maintenance.md">maintenance</span>.</p>
+<p>The pilot measured only 30 days of operation and the pilot measured no winter performance <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Winter performance was explicitly NOT measured by the pilot <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. No data exists on winter reliability for either Cedar or Birch systems <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Annual reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>.</p>
+<h2>Prescription: Select Cedar with Budget Caveat</h2>
+<p>Select Cedar because it is the only system that meets the council&#39;s capacity requirement of 1000 liters per day. The council must budget for the 400-credit inlet upgrade for Cedar, which is not covered by the grant <span class="citation" title="https://example.com/cost.md">cost</span>. If budget constraints are severe, Birch may be infeasible unless combined with another source, but the evidence does not support combining systems <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Conclusion</h2>
+<p>Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use <span class="citation" title="https://example.com/trial.md">trial</span>. The capacity constraint is the hard constraint that determines feasibility, with cost and maintenance being secondary considerations.</p>
+<h3>Limitations</h3>
+<p>The research has critical limitations: winter reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Annual reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. No data exists on winter reliability for either Cedar or Birch systems <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The evidence does not support combining systems if budget constraints are severe <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="https://example.com/trial.md">Trial results</span></li>
+<li><span class="citation" title="https://example.com/audit.md">Independent correction</span></li>
+<li><span class="citation" title="https://example.com/cost.md">Operating costs</span></li>
+<li><span class="citation" title="https://example.com/maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 696995394455…</summary><p><a href="review/answer-02.md">Open original answer packet</a></p><pre data-source="answer-02"># Harbor Water Pilot Selection Analysis
+
+## Thesis
+
+**Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use.** This conclusion rests on the hard constraint that the council&#39;s capacity requirement must be satisfied, which the 30-day independent audit definitively established [trial](https://example.com/trial.md).
+
+## Supporting Evidence: Capacity Constraint is Non-Negotiable
+
+The independent 30-day trial and audit measured the following audited capacities [trial](https://example.com/trial.md):
+
+- **Cedar**: 1200 liters per day
+- **Birch**: 900 liters per day
+
+The council requires at least 1000 liters per day, so Cedar meets the requirement while Birch alone fails [audit](https://example.com/audit.md). An early brochure claimed Birch delivered 1400 liters per day, but the independent audit corrected that number to 900 liters per day [audit](https://example.com/audit.md). The brochure used a short clean-water test that is not representative of real conditions.
+
+This capacity gap is the decisive factor: Cedar alone meets the requirement at 1200 liters per day, whereas Birch alone fails at 900 liters per day. The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, both meeting the drinking-water quality target [trial](https://example.com/trial.md).
+
+## Complicating Evidence: Cost and Operational Tradeoffs
+
+The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation [cost](https://example.com/cost.md). Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade [cost](https://example.com/cost.md). A grant covers installation but does not cover recurring operating costs [cost](https://example.com/cost.md).
+
+Energy consumption under the same operating conditions shows Cedar uses 6 kWh per day and Birch uses 3 kWh per day [trial](https://example.com/trial.md). The brochure&#39;s claim of 1400 liters per day for Birch was corrected to 900 liters per day, confirming the test was not representative [audit](https://example.com/audit.md).
+
+## Resolution: Capacity Constraint Trumps Cost Considerations
+
+The operating costs (18 credits/day for Cedar vs 12 credits/day for Birch) are from the ledger excluding installation. The installation costs are separate (400 credits for Cedar inlet upgrade vs none for Birch). The council requirement of 1000 liters/day is not met by Birch alone (900 liters/day per audit) [audit](https://example.com/audit.md). Cedar alone meets the requirement at 1200 liters/day [trial](https://example.com/trial.md).
+
+Cedar alone is the feasible option because it meets the council&#39;s capacity requirement of 1000 liters per day (1200 liters/day audited), whereas Birch alone fails at 900 liters/day [cost](https://example.com/cost.md). The council must decide whether the 400-credit inlet upgrade for Cedar is within budget, given that a grant covers installation but not recurring operating costs [cost](https://example.com/cost.md).
+
+## Visual Routing Analysis
+
+The Harbor Water Pilot PDF page 2 contains Figure 1: Treatment routing, which visually displays two distinct water treatment pathways [Harbor Water Pilot](attachment://3b32f5401dfe/page/2).
+
+**Blue Route (Normal Treatment Route):** A solid blue arrow shows the standard treatment flow: Intake → UV chamber → Storage. This represents the normal operational route where water passes through the UV chamber for treatment before reaching storage.
+
+**Orange Route (Maintenance Bypass):** A dashed orange line labeled &quot;Orange: maintenance bypass&quot; shows the path: Intake → (directly to) Storage. This route bypasses the UV chamber entirely during maintenance periods.
+
+The orange route bypasses the **UV chamber** component. During maintenance, water can flow from the intake directly to storage without passing through the UV treatment chamber [Harbor Water Pilot](attachment://3b32f5401dfe/page/2). The figure includes the instruction: &quot;Read direction from the arrowheads. This is a schematic, not to scale.&quot;
+
+## Maintenance and Reliability Limitations
+
+Cedar requires filter inspection every 7 days; Birch requires filter inspection every 14 days [maintenance](https://example.com/maintenance.md). The pilot measured only 30 days of operation [maintenance](https://example.com/maintenance.md). The pilot measured no winter performance [maintenance](https://example.com/maintenance.md). Neither system has established annual reliability from this short pilot [maintenance](https://example.com/maintenance.md).
+
+The pilot measured only 30 days of operation and the pilot measured no winter performance [maintenance](https://example.com/maintenance.md). Winter performance was explicitly NOT measured by the pilot [maintenance](https://example.com/maintenance.md). No data exists on winter reliability for either Cedar or Birch systems [maintenance](https://example.com/maintenance.md). The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions [maintenance](https://example.com/maintenance.md). Annual reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md).
+
+## Prescription: Select Cedar with Budget Caveat
+
+Select Cedar because it is the only system that meets the council&#39;s capacity requirement of 1000 liters per day. The council must budget for the 400-credit inlet upgrade for Cedar, which is not covered by the grant [cost](https://example.com/cost.md). If budget constraints are severe, Birch may be infeasible unless combined with another source, but the evidence does not support combining systems [cost](https://example.com/cost.md).
+
+## Conclusion
+
+Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use [trial](https://example.com/trial.md). The capacity constraint is the hard constraint that determines feasibility, with cost and maintenance being secondary considerations.
+
+### Limitations
+
+The research has critical limitations: winter reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md). Annual reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md). No data exists on winter reliability for either Cedar or Birch systems [maintenance](https://example.com/maintenance.md). The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions [maintenance](https://example.com/maintenance.md). The evidence does not support combining systems if budget constraints are severe [cost](https://example.com/cost.md).
+
+## Sources
+
+- [Trial results](https://example.com/trial.md)
+- [Independent correction](https://example.com/audit.md)
+- [Operating costs](https://example.com/cost.md)
+- [Maintenance and limitations](https://example.com/maintenance.md)
+- [Harbor Water Pilot](attachment://3b32f5401dfe/page/2)</pre><code>696995394455c36d5607a155f8e23cb633d91dafc22497b185e3af8bca52385c</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on my research, here are the answers to your questions:</p>
+<p><strong>Which system meets the daily council requirement?</strong>
+<strong>Cedar</strong> meets the requirement. The trial results show Cedar delivered <strong>1200 liters per day</strong>, while Birch delivered only 900 liters per day. The council requires at least 1000 liters per day, so Cedar alone satisfies this requirement, whereas Birch alone does not.</p>
+<p><strong>What is its daily operating cost?</strong>
+Cedar&#39;s daily operating cost is <strong>18 credits per day</strong> (excluding installation).</p>
+<p><strong>Which component does the orange route bypass?</strong>
+The orange route bypasses the <strong>UV chamber</strong>. According to Figure 1: Treatment routing on page 2, the orange dashed line shows the maintenance bypass route that goes from Intake directly to Storage, skipping the UV chamber entirely. The blue solid line represents the normal treatment route that passes through the UV chamber.</p>
+<p><strong>Source:</strong> Harbor Water Pilot - Figure 1: Treatment routing, page 2</p>
+</div><a href="review/answer-02-followup.md">Original follow-up packet</a></details></article><article class="card shared-prefix" data-run="02-shared-prefix-r1"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + shared prefix</h2><div class="metrics"><div><strong>470</strong><span>synthesis reasoning tokens</span></div><div><strong>0/18</strong><span>frozen rubric</span></div><div><strong>26</strong><span>saved answer tokens · tool markup</span></div></div><small>02-shared-prefix-r1</small></header><details class="annotation" open><summary>Existing reviewer assessment · 0/18</summary><p>Invalid initial brief: a literal tool-call block, with no report. The later follow-up is substantive but cannot repair the initial score.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><p>&lt;tool_call&gt;
+&lt;function=read_file&gt;
+&lt;parameter=filename&gt;
+cost.md
+&lt;/parameter&gt;
+&lt;/function&gt;
+&lt;/tool_call&gt;</p>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 34a264e41f59…</summary><p><a href="review/answer-01.md">Open original answer packet</a></p><pre data-source="answer-01">&lt;tool_call&gt;
+&lt;function=read_file&gt;
+&lt;parameter=filename&gt;
+cost.md
+&lt;/parameter&gt;
+&lt;/function&gt;
+&lt;/tool_call&gt;</pre><code>34a264e41f5956f7e01a025c144c39a8d6397c5fa86bf5a8d9d84d86fc461418</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><h2>Harbor Water Pilot Selection Brief</h2>
+<h3>Inquiry 1: Capacity and Energy Comparison (corpus_research)</h3>
+<p><strong>Cedar vs. Birch Performance:</strong></p>
+<ul>
+<li><strong>Cedar</strong>: 1200 liters/day capacity, 6 kWh/day energy use (trial.md)</li>
+<li><strong>Birch</strong>: 900 liters/day capacity, 3 kWh/day energy use (trial.md)</li>
+</ul>
+<p><strong>Corrected brochure claim:</strong> The brochure claimed Birch delivered 1400 liters/day, but the independent audit corrected this to 900 liters/day, noting the brochure used a &quot;short clean-water test that is not representative&quot; (audit.md).</p>
+<p><strong>Council requirement:</strong> At least 1000 liters/day (audit.md)</p>
+<p><strong>Conclusion:</strong> Only <strong>Cedar meets the capacity requirement</strong> at 1200 liters/day. Birch alone fails at 900 liters/day.</p>
+<hr>
+<h3>Inquiry 2: Operating Cost and Feasibility (corpus_research)</h3>
+<p><strong>Operating costs (cost.md):</strong></p>
+<ul>
+<li><strong>Cedar</strong>: 18 credits/day + 400-credit inlet upgrade required</li>
+<li><strong>Birch</strong>: 12 credits/day + no inlet upgrade required</li>
+</ul>
+<p><strong>Installation constraints:</strong> Cedar requires a 400-credit inlet upgrade; Birch needs none. A grant covers installation but not recurring operating costs.</p>
+<p><strong>Reconciliation:</strong> While Birch has lower operating costs (12 vs 18 credits/day), it fails the capacity requirement. Cedar&#39;s additional 400-credit installation cost is offset by the grant, but the daily 18-credit operating cost remains.</p>
+<p><strong>Feasible option:</strong> <strong>Cedar</strong> is the only system meeting the 1000-liter/day requirement at 18 credits/day operating cost.</p>
+<hr>
+<h3>Inquiry 3: Treatment Routing Figure Analysis (document_research)</h3>
+<p><strong>Visual explanation of Figure 1 (page 2):</strong></p>
+<ul>
+<li><strong>Blue solid line</strong> = normal treatment route: Intake → UV chamber → Storage</li>
+<li><strong>Orange dashed line</strong> = maintenance bypass: Intake → Storage (skipping UV chamber)</li>
+</ul>
+<p><strong>Component bypassed:</strong> The orange maintenance route bypasses the <strong>UV chamber</strong>. During maintenance of the UV chamber, water flows directly from Intake to Storage without UV treatment.</p>
+<hr>
+<h3>Inquiry 4: Maintenance and Unknowns (corpus_research)</h3>
+<p><strong>Maintenance intervals (maintenance.md):</strong></p>
+<ul>
+<li><strong>Cedar</strong>: Filter inspection every 7 days</li>
+<li><strong>Birch</strong>: Filter inspection every 14 days</li>
+</ul>
+<p><strong>Limitations and unknowns:</strong></p>
+<ul>
+<li>Pilot measured <strong>no winter performance</strong> data</li>
+<li>Neither system has established annual reliability from this 30-day pilot</li>
+<li>Do not treat a 30-day result as an annual guarantee</li>
+</ul>
+<p><strong>What is unknown:</strong> Winter reliability for both systems remains unmeasured.</p>
+<hr>
+<h2>Final Recommendation</h2>
+<p><strong>Select Cedar system</strong> because it is the only one meeting the 1000-liter/day council requirement at 18 credits/day operating cost. The orange maintenance route bypasses the UV chamber during servicing. Winter reliability remains unknown for both systems.</p>
+</div><a href="review/answer-01-followup.md">Original follow-up packet</a></details></article></div></section>
+<section class="round" data-round="1" data-arm="http"><div class="round-heading"><h2>Round 1 <span>· seed offset 4100</span></h2><p>Lloyal emitted 77.1% fewer synthesis reasoning tokens and scored 16/18, versus 13/18. This is a joint observation of token count and rubric quality, not a quality-matched causal estimate.</p></div><details class="rubric"><summary>Compare all nine rubric criteria and quoted evidence</summary><table><thead><tr><th>Criterion · 0–2 each</th><th>Lloyal</th><th>HTTP + prefix-cache</th></tr></thead><tbody><tr><th>Capacity and brochure correction<small>Cedar 1200 L/day, Birch 900 L/day; Birch brochure 1400 corrected by audit.</small></th><td><strong>2/2</strong><p>&quot;Cedar: 1200 liters per day&quot;; &quot;Birch: 900 liters per day&quot;; &quot;brochure claimed Birch delivered 1400 ... corrected ... to 900&quot;.</p></td><td><strong>2/2</strong><p>&quot;Cedar delivers 1200&quot;; Birch brochure &quot;1400 ... true capacity at 900&quot;.</p></td></tr><tr><th>Energy<small>Cedar 6 kWh/day, Birch 3 kWh/day.</small></th><td><strong>2/2</strong><p>&quot;Cedar uses 6 kWh per day and Birch uses 3 kWh per day&quot;.</p></td><td><strong>2/2</strong><p>&quot;Cedar consumes 6 kWh per day compared to Birch’s 3 kWh per day&quot;.</p></td></tr><tr><th>Operating costs and installation<small>Cedar 18 credits/day and 400-credit inlet upgrade; Birch 12/day and no inlet upgrade.</small></th><td><strong>2/2</strong><p>&quot;Cedar at 18 credits per day and Birch at 12&quot;; &quot;Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade&quot;.</p></td><td><strong>1/2</strong><p>Correct Cedar 18/day, Birch 12/day and 400-credit upgrade, but no explicit Birch no-upgrade statement; falsely says &quot;operating ledger does not capture the 400-credit inlet upgrade&quot;.</p></td></tr><tr><th>Requirement and selection<small>Council minimum 1000 L/day; Cedar alone meets it, Birch alone does not.</small></th><td><strong>2/2</strong><p>&quot;council requires at least 1000 liters per day, so Cedar meets ... Birch alone fails&quot;.</p></td><td><strong>2/2</strong><p>&quot;at least 1000 liters per day&quot;; Cedar meets it and Birch fails alone.</p></td></tr><tr><th>Grant coverage<small>Installation grant does not cover recurring operating cost.</small></th><td><strong>1/2</strong><p>Initially says &quot;A grant covers installation but does not cover recurring operating costs&quot;, then contradicts this: &quot;400-credit inlet upgrade ... is not covered by the grant&quot;.</p></td><td><strong>0/2</strong><p>No statement about the installation grant or its exclusion of recurring operating costs.</p></td></tr><tr><th>Maintenance<small>Cedar inspection every 7 days, Birch every 14 days.</small></th><td><strong>2/2</strong><p>&quot;Cedar requires filter inspection every 7 days; Birch ... every 14 days&quot;.</p></td><td><strong>2/2</strong><p>&quot;filter inspection every 7 days versus Birch’s 14-day interval&quot;.</p></td></tr><tr><th>Evidence limits<small>30-day pilot; winter performance and annual reliability unmeasured; no asserted winter advantage.</small></th><td><strong>2/2</strong><p>&quot;only 30 days of operation&quot;; &quot;Winter performance was explicitly NOT measured&quot;; &quot;Annual reliability cannot be established&quot;.</p></td><td><strong>2/2</strong><p>&quot;winter performance was not tested&quot;; neither annual reliability established from the &quot;30-day trial&quot;.</p></td></tr><tr><th>Visual routing explanation<small>Blue: Intake to UV chamber to Storage. Orange: Intake to Storage, bypasses UV chamber; identify PDF page 2.</small></th><td><strong>2/2</strong><p>Page 2: &quot;Intake → UV chamber → Storage&quot;; orange &quot;Intake → (directly to) Storage&quot; and &quot;bypasses the UV chamber entirely&quot;.</p></td><td><strong>1/2</strong><p>Identifies page 2, blue through UV and orange bypassing UV, but does not describe Intake and Storage endpoints in the initial answer.</p></td></tr><tr><th>Grounding<small>Recommendation and factual claims supported; no lighting distractor, invented reliability/cost claims, or unsupported certainty.</small></th><td><strong>1/2</strong><p>Core recommendation is supported, but the prescription incorrectly says the inlet upgrade is not grant-covered. The cost.md citation does not support that claim.</p></td><td><strong>1/2</strong><p>Selection is supported. However, the ledger-omission claim is false and &quot;audit reconciled the ledger and trial data&quot; goes beyond the audit source.</p></td></tr></tbody></table><p>Original scores are unchanged. Citation usability was reviewed separately: <strong>Lloyal:</strong> Corpus citations use invented https://example.com/*.md URLs. The PDF uses an attachment page-2 reference; nearby routing claims match the fixture. Some capacity/requirement claims are cited to cost.md or trial.md rather than the audit. <strong>HTTP + prefix-cache:</strong> Corpus URLs use invented file:// locations; the PDF page-2 attachment link is cited in the route discussion.</p></details><div class="columns"><article class="card resident" data-run="01-resident-r1"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>617</strong><span>synthesis reasoning tokens</span></div><div><strong>16/18</strong><span>frozen rubric</span></div><div><strong>1,587</strong><span>saved answer tokens</span></div></div><small>01-resident-r1</small></header><details class="annotation" open><summary>Existing reviewer assessment · 16/18</summary><p>Broadly complete report with a material contradiction about grant coverage.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot Selection Analysis</h1>
+<h2>Thesis</h2>
+<p><strong>Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use.</strong> This conclusion rests on the hard constraint that the council&#39;s capacity requirement must be satisfied, which the 30-day independent audit definitively established <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<h2>Supporting Evidence: Capacity Constraint is Non-Negotiable</h2>
+<p>The independent 30-day trial and audit measured the following audited capacities <span class="citation" title="https://example.com/trial.md">trial</span>:</p>
+<ul>
+<li><strong>Cedar</strong>: 1200 liters per day</li>
+<li><strong>Birch</strong>: 900 liters per day</li>
+</ul>
+<p>The council requires at least 1000 liters per day, so Cedar meets the requirement while Birch alone fails <span class="citation" title="https://example.com/audit.md">audit</span>. An early brochure claimed Birch delivered 1400 liters per day, but the independent audit corrected that number to 900 liters per day <span class="citation" title="https://example.com/audit.md">audit</span>. The brochure used a short clean-water test that is not representative of real conditions.</p>
+<p>This capacity gap is the decisive factor: Cedar alone meets the requirement at 1200 liters per day, whereas Birch alone fails at 900 liters per day. The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, both meeting the drinking-water quality target <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<h2>Complicating Evidence: Cost and Operational Tradeoffs</h2>
+<p>The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation <span class="citation" title="https://example.com/cost.md">cost</span>. Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade <span class="citation" title="https://example.com/cost.md">cost</span>. A grant covers installation but does not cover recurring operating costs <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<p>Energy consumption under the same operating conditions shows Cedar uses 6 kWh per day and Birch uses 3 kWh per day <span class="citation" title="https://example.com/trial.md">trial</span>. The brochure&#39;s claim of 1400 liters per day for Birch was corrected to 900 liters per day, confirming the test was not representative <span class="citation" title="https://example.com/audit.md">audit</span>.</p>
+<h2>Resolution: Capacity Constraint Trumps Cost Considerations</h2>
+<p>The operating costs (18 credits/day for Cedar vs 12 credits/day for Birch) are from the ledger excluding installation. The installation costs are separate (400 credits for Cedar inlet upgrade vs none for Birch). The council requirement of 1000 liters/day is not met by Birch alone (900 liters/day per audit) <span class="citation" title="https://example.com/audit.md">audit</span>. Cedar alone meets the requirement at 1200 liters/day <span class="citation" title="https://example.com/trial.md">trial</span>.</p>
+<p>Cedar alone is the feasible option because it meets the council&#39;s capacity requirement of 1000 liters per day (1200 liters/day audited), whereas Birch alone fails at 900 liters/day <span class="citation" title="https://example.com/cost.md">cost</span>. The council must decide whether the 400-credit inlet upgrade for Cedar is within budget, given that a grant covers installation but not recurring operating costs <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Visual Routing Analysis</h2>
+<p>The Harbor Water Pilot PDF page 2 contains Figure 1: Treatment routing, which visually displays two distinct water treatment pathways <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>.</p>
+<p><strong>Blue Route (Normal Treatment Route):</strong> A solid blue arrow shows the standard treatment flow: Intake → UV chamber → Storage. This represents the normal operational route where water passes through the UV chamber for treatment before reaching storage.</p>
+<p><strong>Orange Route (Maintenance Bypass):</strong> A dashed orange line labeled &quot;Orange: maintenance bypass&quot; shows the path: Intake → (directly to) Storage. This route bypasses the UV chamber entirely during maintenance periods.</p>
+<p>The orange route bypasses the <strong>UV chamber</strong> component. During maintenance, water can flow from the intake directly to storage without passing through the UV treatment chamber <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>. The figure includes the instruction: &quot;Read direction from the arrowheads. This is a schematic, not to scale.&quot;</p>
+<h2>Maintenance and Reliability Limitations</h2>
+<p>Cedar requires filter inspection every 7 days; Birch requires filter inspection every 14 days <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The pilot measured only 30 days of operation <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The pilot measured no winter performance <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Neither system has established annual reliability from this short pilot <span class="citation" title="https://example.com/maintenance.md">maintenance</span>.</p>
+<p>The pilot measured only 30 days of operation and the pilot measured no winter performance <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Winter performance was explicitly NOT measured by the pilot <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. No data exists on winter reliability for either Cedar or Birch systems <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Annual reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>.</p>
+<h2>Prescription: Select Cedar with Budget Caveat</h2>
+<p>Select Cedar because it is the only system that meets the council&#39;s capacity requirement of 1000 liters per day. The council must budget for the 400-credit inlet upgrade for Cedar, which is not covered by the grant <span class="citation" title="https://example.com/cost.md">cost</span>. If budget constraints are severe, Birch may be infeasible unless combined with another source, but the evidence does not support combining systems <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Conclusion</h2>
+<p>Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use <span class="citation" title="https://example.com/trial.md">trial</span>. The capacity constraint is the hard constraint that determines feasibility, with cost and maintenance being secondary considerations.</p>
+<h3>Limitations</h3>
+<p>The research has critical limitations: winter reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. Annual reliability cannot be established from this short pilot duration <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. No data exists on winter reliability for either Cedar or Birch systems <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions <span class="citation" title="https://example.com/maintenance.md">maintenance</span>. The evidence does not support combining systems if budget constraints are severe <span class="citation" title="https://example.com/cost.md">cost</span>.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="https://example.com/trial.md">Trial results</span></li>
+<li><span class="citation" title="https://example.com/audit.md">Independent correction</span></li>
+<li><span class="citation" title="https://example.com/cost.md">Operating costs</span></li>
+<li><span class="citation" title="https://example.com/maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 696995394455…</summary><p><a href="review/answer-02.md">Open original answer packet</a></p><pre data-source="answer-02"># Harbor Water Pilot Selection Analysis
+
+## Thesis
+
+**Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use.** This conclusion rests on the hard constraint that the council&#39;s capacity requirement must be satisfied, which the 30-day independent audit definitively established [trial](https://example.com/trial.md).
+
+## Supporting Evidence: Capacity Constraint is Non-Negotiable
+
+The independent 30-day trial and audit measured the following audited capacities [trial](https://example.com/trial.md):
+
+- **Cedar**: 1200 liters per day
+- **Birch**: 900 liters per day
+
+The council requires at least 1000 liters per day, so Cedar meets the requirement while Birch alone fails [audit](https://example.com/audit.md). An early brochure claimed Birch delivered 1400 liters per day, but the independent audit corrected that number to 900 liters per day [audit](https://example.com/audit.md). The brochure used a short clean-water test that is not representative of real conditions.
+
+This capacity gap is the decisive factor: Cedar alone meets the requirement at 1200 liters per day, whereas Birch alone fails at 900 liters per day. The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, both meeting the drinking-water quality target [trial](https://example.com/trial.md).
+
+## Complicating Evidence: Cost and Operational Tradeoffs
+
+The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation [cost](https://example.com/cost.md). Cedar needs a 400-credit inlet upgrade; Birch requires no inlet upgrade [cost](https://example.com/cost.md). A grant covers installation but does not cover recurring operating costs [cost](https://example.com/cost.md).
+
+Energy consumption under the same operating conditions shows Cedar uses 6 kWh per day and Birch uses 3 kWh per day [trial](https://example.com/trial.md). The brochure&#39;s claim of 1400 liters per day for Birch was corrected to 900 liters per day, confirming the test was not representative [audit](https://example.com/audit.md).
+
+## Resolution: Capacity Constraint Trumps Cost Considerations
+
+The operating costs (18 credits/day for Cedar vs 12 credits/day for Birch) are from the ledger excluding installation. The installation costs are separate (400 credits for Cedar inlet upgrade vs none for Birch). The council requirement of 1000 liters/day is not met by Birch alone (900 liters/day per audit) [audit](https://example.com/audit.md). Cedar alone meets the requirement at 1200 liters/day [trial](https://example.com/trial.md).
+
+Cedar alone is the feasible option because it meets the council&#39;s capacity requirement of 1000 liters per day (1200 liters/day audited), whereas Birch alone fails at 900 liters/day [cost](https://example.com/cost.md). The council must decide whether the 400-credit inlet upgrade for Cedar is within budget, given that a grant covers installation but not recurring operating costs [cost](https://example.com/cost.md).
+
+## Visual Routing Analysis
+
+The Harbor Water Pilot PDF page 2 contains Figure 1: Treatment routing, which visually displays two distinct water treatment pathways [Harbor Water Pilot](attachment://3b32f5401dfe/page/2).
+
+**Blue Route (Normal Treatment Route):** A solid blue arrow shows the standard treatment flow: Intake → UV chamber → Storage. This represents the normal operational route where water passes through the UV chamber for treatment before reaching storage.
+
+**Orange Route (Maintenance Bypass):** A dashed orange line labeled &quot;Orange: maintenance bypass&quot; shows the path: Intake → (directly to) Storage. This route bypasses the UV chamber entirely during maintenance periods.
+
+The orange route bypasses the **UV chamber** component. During maintenance, water can flow from the intake directly to storage without passing through the UV treatment chamber [Harbor Water Pilot](attachment://3b32f5401dfe/page/2). The figure includes the instruction: &quot;Read direction from the arrowheads. This is a schematic, not to scale.&quot;
+
+## Maintenance and Reliability Limitations
+
+Cedar requires filter inspection every 7 days; Birch requires filter inspection every 14 days [maintenance](https://example.com/maintenance.md). The pilot measured only 30 days of operation [maintenance](https://example.com/maintenance.md). The pilot measured no winter performance [maintenance](https://example.com/maintenance.md). Neither system has established annual reliability from this short pilot [maintenance](https://example.com/maintenance.md).
+
+The pilot measured only 30 days of operation and the pilot measured no winter performance [maintenance](https://example.com/maintenance.md). Winter performance was explicitly NOT measured by the pilot [maintenance](https://example.com/maintenance.md). No data exists on winter reliability for either Cedar or Birch systems [maintenance](https://example.com/maintenance.md). The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions [maintenance](https://example.com/maintenance.md). Annual reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md).
+
+## Prescription: Select Cedar with Budget Caveat
+
+Select Cedar because it is the only system that meets the council&#39;s capacity requirement of 1000 liters per day. The council must budget for the 400-credit inlet upgrade for Cedar, which is not covered by the grant [cost](https://example.com/cost.md). If budget constraints are severe, Birch may be infeasible unless combined with another source, but the evidence does not support combining systems [cost](https://example.com/cost.md).
+
+## Conclusion
+
+Cedar is the only feasible option for the council because it is the only system that meets the capacity requirement of 1000 liters per day; Birch alone fails at 900 liters per day despite its lower operating cost and energy use [trial](https://example.com/trial.md). The capacity constraint is the hard constraint that determines feasibility, with cost and maintenance being secondary considerations.
+
+### Limitations
+
+The research has critical limitations: winter reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md). Annual reliability cannot be established from this short pilot duration [maintenance](https://example.com/maintenance.md). No data exists on winter reliability for either Cedar or Birch systems [maintenance](https://example.com/maintenance.md). The 30-day trial conducted under unspecified &quot;same operating conditions&quot; does not represent winter conditions [maintenance](https://example.com/maintenance.md). The evidence does not support combining systems if budget constraints are severe [cost](https://example.com/cost.md).
+
+## Sources
+
+- [Trial results](https://example.com/trial.md)
+- [Independent correction](https://example.com/audit.md)
+- [Operating costs](https://example.com/cost.md)
+- [Maintenance and limitations](https://example.com/maintenance.md)
+- [Harbor Water Pilot](attachment://3b32f5401dfe/page/2)</pre><code>696995394455c36d5607a155f8e23cb633d91dafc22497b185e3af8bca52385c</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on my research, here are the answers to your questions:</p>
+<p><strong>Which system meets the daily council requirement?</strong>
+<strong>Cedar</strong> meets the requirement. The trial results show Cedar delivered <strong>1200 liters per day</strong>, while Birch delivered only 900 liters per day. The council requires at least 1000 liters per day, so Cedar alone satisfies this requirement, whereas Birch alone does not.</p>
+<p><strong>What is its daily operating cost?</strong>
+Cedar&#39;s daily operating cost is <strong>18 credits per day</strong> (excluding installation).</p>
+<p><strong>Which component does the orange route bypass?</strong>
+The orange route bypasses the <strong>UV chamber</strong>. According to Figure 1: Treatment routing on page 2, the orange dashed line shows the maintenance bypass route that goes from Intake directly to Storage, skipping the UV chamber entirely. The blue solid line represents the normal treatment route that passes through the UV chamber.</p>
+<p><strong>Source:</strong> Harbor Water Pilot - Figure 1: Treatment routing, page 2</p>
+</div><a href="review/answer-02-followup.md">Original follow-up packet</a></details></article><article class="card http" data-run="03-http-r1"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + prefix-cache</h2><div class="metrics"><div><strong>2,689</strong><span>synthesis reasoning tokens</span></div><div><strong>13/18</strong><span>frozen rubric</span></div><div><strong>800</strong><span>saved answer tokens</span></div></div><small>03-http-r1</small></header><details class="annotation" open><summary>Existing reviewer assessment · 13/18</summary><p>Concise and mostly correct selection rationale; grant omitted, routing only partial, and one ledger claim contradicted the source.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><p>The Council should select the Cedar system because it is the only pilot configuration that meets the audited minimum capacity requirement, despite the higher operating costs, the mandatory inlet upgrade, and the significant uncertainty regarding winter reliability.</p>
+<h3>Supporting Evidence: Capacity Constraints</h3>
+<p>The primary decision driver is the audited daily capacity, which creates a binary threshold for selection. The trial data confirms that Cedar delivers 1200 liters per day, satisfying the council requirement of at least 1000 liters per day <span class="citation" title="file:///data/trial.md">trial.md</span>. In contrast, the independent 30-day audit corrected an early brochure claim that Birch delivered 1400 liters per day, establishing the true capacity at 900 liters per day <span class="citation" title="file:///data/audit.md">audit.md</span>. Since the Birch system operates below the 1000-liter threshold, it fails the capacity requirement on its own <span class="citation" title="file:///data/trial.md">trial.md</span>.</p>
+<h3>Complicating Evidence: Cost, Energy, and Maintenance</h3>
+<p>Selecting Cedar introduces significant financial and operational trade-offs. While Birch operates at 12 credits per day, Cedar requires a 18 credits per day operating cost and necessitates a 400-credit inlet upgrade <span class="citation" title="file:///data/cost.md">cost.md</span>. Additionally, Cedar consumes 6 kWh per day compared to Birch&#39;s 3 kWh per day <span class="citation" title="file:///data/trial.md">trial.md</span>. Maintenance frequency also diverges, with Cedar requiring filter inspection every 7 days versus Birch&#39;s 14-day interval <span class="citation" title="file://maintenance.md">maintenance.md</span>.</p>
+<p>The routing diagram on page 2 of the pilot document visually distinguishes these operational paths. The blue route represents the normal treatment path through the UV chamber, while the orange route is explicitly labeled as a maintenance bypass that skips the UV chamber entirely <span class="citation" title="attachment://9a503717ac5a/page/2">attachment://9a503717ac5a/page/2</span>. This bypass capability is a structural feature of the system design but does not alter the capacity requirements for the standard operating mode.</p>
+<h3>Resolution: Reconciling Constraints</h3>
+<p>The evidence reveals a clear hierarchy of constraints where capacity is the hard limit. The audit reconciled the ledger and trial data, showing that Cedar alone is the only system meeting the 1000-liter/day requirement <span class="citation" title="file://audit.md">audit.md</span>. The trade-off is between Cedar&#39;s higher cost and reliable capacity versus Birch&#39;s lower cost but insufficient capacity. The operating ledger does not capture the 400-credit inlet upgrade needed for Cedar, which must be factored into the budget <span class="citation" title="file://cost.md">cost.md</span>.</p>
+<h3>Prescription</h3>
+<p>The Council must select the Cedar system to ensure the minimum capacity is met, but must budget for the 400-credit inlet upgrade and accept the higher energy and maintenance costs. The alternative of using Birch alone is infeasible due to the 900-liter capacity shortfall.</p>
+<h3>Conclusion</h3>
+<p>The Cedar system is the only viable option given the capacity constraint, though the decision carries financial and reliability risks. The Council must proceed with Cedar but must explicitly account for the inlet upgrade cost and the lack of long-term reliability data.</p>
+<h3>Limitations</h3>
+<p>The pilot evidence explicitly states that winter performance was not tested <span class="citation" title="file://content/maintenance.md">maintenance.md</span>. Neither system has established annual reliability from the 30-day trial, meaning winter reliability remains unknown <span class="citation" title="file://content/maintenance.md">maintenance.md</span>.</p>
+<h3>Sources</h3>
+<ul>
+<li><span class="citation" title="file:///data/trial.md">Trial results</span></li>
+<li><span class="citation" title="file:///data/audit.md">Independent correction</span></li>
+<li><span class="citation" title="file:///data/cost.md">Operating costs</span></li>
+<li><span class="citation" title="file://maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 d4fc8a099dc0…</summary><p><a href="review/answer-07.md">Open original answer packet</a></p><pre data-source="answer-07">The Council should select the Cedar system because it is the only pilot configuration that meets the audited minimum capacity requirement, despite the higher operating costs, the mandatory inlet upgrade, and the significant uncertainty regarding winter reliability.
+
+### Supporting Evidence: Capacity Constraints
+
+The primary decision driver is the audited daily capacity, which creates a binary threshold for selection. The trial data confirms that Cedar delivers 1200 liters per day, satisfying the council requirement of at least 1000 liters per day [trial.md](file:///data/trial.md). In contrast, the independent 30-day audit corrected an early brochure claim that Birch delivered 1400 liters per day, establishing the true capacity at 900 liters per day [audit.md](file:///data/audit.md). Since the Birch system operates below the 1000-liter threshold, it fails the capacity requirement on its own [trial.md](file:///data/trial.md).
+
+### Complicating Evidence: Cost, Energy, and Maintenance
+
+Selecting Cedar introduces significant financial and operational trade-offs. While Birch operates at 12 credits per day, Cedar requires a 18 credits per day operating cost and necessitates a 400-credit inlet upgrade [cost.md](file:///data/cost.md). Additionally, Cedar consumes 6 kWh per day compared to Birch&#39;s 3 kWh per day [trial.md](file:///data/trial.md). Maintenance frequency also diverges, with Cedar requiring filter inspection every 7 days versus Birch&#39;s 14-day interval [maintenance.md](file://maintenance.md).
+
+The routing diagram on page 2 of the pilot document visually distinguishes these operational paths. The blue route represents the normal treatment path through the UV chamber, while the orange route is explicitly labeled as a maintenance bypass that skips the UV chamber entirely [attachment://9a503717ac5a/page/2](attachment://9a503717ac5a/page/2). This bypass capability is a structural feature of the system design but does not alter the capacity requirements for the standard operating mode.
+
+### Resolution: Reconciling Constraints
+
+The evidence reveals a clear hierarchy of constraints where capacity is the hard limit. The audit reconciled the ledger and trial data, showing that Cedar alone is the only system meeting the 1000-liter/day requirement [audit.md](file://audit.md). The trade-off is between Cedar&#39;s higher cost and reliable capacity versus Birch&#39;s lower cost but insufficient capacity. The operating ledger does not capture the 400-credit inlet upgrade needed for Cedar, which must be factored into the budget [cost.md](file://cost.md).
+
+### Prescription
+
+The Council must select the Cedar system to ensure the minimum capacity is met, but must budget for the 400-credit inlet upgrade and accept the higher energy and maintenance costs. The alternative of using Birch alone is infeasible due to the 900-liter capacity shortfall.
+
+### Conclusion
+
+The Cedar system is the only viable option given the capacity constraint, though the decision carries financial and reliability risks. The Council must proceed with Cedar but must explicitly account for the inlet upgrade cost and the lack of long-term reliability data.
+
+### Limitations
+
+The pilot evidence explicitly states that winter performance was not tested [maintenance.md](file://content/maintenance.md). Neither system has established annual reliability from the 30-day trial, meaning winter reliability remains unknown [maintenance.md](file://content/maintenance.md).
+
+### Sources
+
+- [Trial results](file:///data/trial.md)
+- [Independent correction](file:///data/audit.md)
+- [Operating costs](file:///data/cost.md)
+- [Maintenance and limitations](file://maintenance.md)
+- [Harbor Water Pilot](attachment://9a503717ac5a/page/2)</pre><code>d4fc8a099dc0d2da6866fe3d5373a5465323fe16c902c28cf867688cd90212f2</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on the evidence:</p>
+<p><strong>1. Which system meets the daily council requirement?</strong>
+<strong>Cedar</strong> delivers 1,200 liters per day, exceeding the 1,000-liter requirement. Birch only delivers 900 liters per day after the audit corrected the brochure&#39;s inflated claim of 1,400 liters <span class="citation" title="file:///data/trial.md">trial.md</span>.</p>
+<p><strong>2. What is its daily operating cost?</strong>
+Cedar&#39;s operating cost is <strong>18 credits per day</strong>, plus a mandatory 400-credit inlet upgrade <span class="citation" title="file:///data/cost.md">cost.md</span>.</p>
+<p><strong>3. Which component does the orange route bypass?</strong>
+The orange maintenance bypass route skips the <strong>UV chamber</strong>, flowing directly from Intake to Storage <span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot</span>.</p>
+<hr>
+<h3>Summary</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Cedar</th>
+<th>Birch</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Daily capacity</td>
+<td>1,200 L</td>
+<td>900 L</td>
+</tr>
+<tr>
+<td>Daily operating cost</td>
+<td>18 credits</td>
+<td>12 credits</td>
+</tr>
+<tr>
+<td>Inlet upgrade</td>
+<td>400 credits required</td>
+<td>None required</td>
+</tr>
+<tr>
+<td>UV chamber</td>
+<td>Required</td>
+<td>Required</td>
+</tr>
+</tbody></table>
+<p><strong>Decision</strong>: Cedar is the only system meeting the 1,000-liter capacity requirement, despite the higher operating cost and mandatory inlet upgrade.</p>
+</div><a href="review/answer-07-followup.md">Original follow-up packet</a></details></article></div></section>
+<section class="round" data-round="2" data-arm="shared-prefix"><div class="round-heading"><h2>Round 2 <span>· seed offset 4200</span></h2><p>Lloyal emitted 34.9% fewer synthesis reasoning tokens and scored 12/18, versus 8/18. This is a joint observation of token count and rubric quality, not a quality-matched causal estimate.</p></div><details class="rubric"><summary>Compare all nine rubric criteria and quoted evidence</summary><table><thead><tr><th>Criterion · 0–2 each</th><th>Lloyal</th><th>HTTP + shared prefix</th></tr></thead><tbody><tr><th>Capacity and brochure correction<small>Cedar 1200 L/day, Birch 900 L/day; Birch brochure 1400 corrected by audit.</small></th><td><strong>2/2</strong><p>&quot;Cedar at 1200 ... Birch at 900&quot;; &quot;brochure claim of 1400 ... corrected to 900&quot;.</p></td><td><strong>2/2</strong><p>&quot;Cedar at 1200 liters per day and Birch at 900&quot;; brochure &quot;1400 ... to ... 900&quot;.</p></td></tr><tr><th>Energy<small>Cedar 6 kWh/day, Birch 3 kWh/day.</small></th><td><strong>2/2</strong><p>&quot;Cedar uses 6 kWh ... Birch’s 3 kWh ... 100% more energy&quot;.</p></td><td><strong>1/2</strong><p>Correct &quot;6 kWh ... Birch’s 3 kWh&quot;, but falsely concludes &quot;Cedar delivers double the capacity but at double the energy cost&quot; (capacity is 1200 vs 900).</p></td></tr><tr><th>Operating costs and installation<small>Cedar 18 credits/day and 400-credit inlet upgrade; Birch 12/day and no inlet upgrade.</small></th><td><strong>2/2</strong><p>&quot;18 credits ... 12 credits&quot;; &quot;400-credit inlet upgrade while Birch needs no inlet upgrade&quot;.</p></td><td><strong>0/2</strong><p>The report has sections on capacity, energy, maintenance and reliability, but omits the daily operating ledger and 400-credit inlet upgrade.</p></td></tr><tr><th>Requirement and selection<small>Council minimum 1000 L/day; Cedar alone meets it, Birch alone does not.</small></th><td><strong>2/2</strong><p>&quot;at least 1000 liters per day&quot;; &quot;Cedar alone meets ... only feasible single-system option&quot;.</p></td><td><strong>2/2</strong><p>&quot;Cedar qualifies (1200 &gt; 1000 ...), while Birch does not (900 &lt; 1000 ...)&quot;.</p></td></tr><tr><th>Grant coverage<small>Installation grant does not cover recurring operating cost.</small></th><td><strong>1/2</strong><p>Correctly says the grant covers installation, not recurring costs, but also asserts second-system/infrastructure expansion costs are &quot;not covered by the grant&quot; without evidence.</p></td><td><strong>0/2</strong><p>No installation-grant or recurring-cost coverage discussion.</p></td></tr><tr><th>Maintenance<small>Cedar inspection every 7 days, Birch every 14 days.</small></th><td><strong>1/2</strong><p>Correct &quot;every 7 days versus ... 14 days&quot;, but concludes &quot;twice the maintenance labor&quot; and possible parts replacement without evidence about work per inspection.</p></td><td><strong>1/2</strong><p>Correct 7-day/14-day inspections, but calls this a &quot;50% increase in maintenance frequency&quot; and shifts inspection to &quot;filter changes&quot; without evidence.</p></td></tr><tr><th>Evidence limits<small>30-day pilot; winter performance and annual reliability unmeasured; no asserted winter advantage.</small></th><td><strong>2/2</strong><p>&quot;no winter performance&quot;; &quot;neither system has established annual reliability&quot;; &quot;30-day trial period is insufficient to guarantee&quot; seasonal performance.</p></td><td><strong>2/2</strong><p>&quot;30-day pilot measured no winter performance&quot;; &quot;Neither system has established annual reliability&quot;.</p></td></tr><tr><th>Visual routing explanation<small>Blue: Intake to UV chamber to Storage. Orange: Intake to Storage, bypasses UV chamber; identify PDF page 2.</small></th><td><strong>0/2</strong><p>Only a PDF page-2 source-list entry; the initial report does not explain either route.</p></td><td><strong>0/2</strong><p>The PDF appears in Sources, but there is no visual route explanation in the report.</p></td></tr><tr><th>Grounding<small>Recommendation and factual claims supported; no lighting distractor, invented reliability/cost claims, or unsupported certainty.</small></th><td><strong>0/2</strong><p>Unsupported grant exclusion for expansion, attribution of operating-cost difference to complexity, and doubled labor inference. Recommendation also assumes acceptable winter reliability despite unavailable measurements.</p></td><td><strong>0/2</strong><p>False &quot;double the capacity&quot; and incorrect maintenance-frequency arithmetic; unsupported changes from inspections to filter changes and labeling capacity shortfall a system design flaw.</p></td></tr></tbody></table><p>Original scores are unchanged. Citation usability was reviewed separately: <strong>Lloyal:</strong> Corpus filenames are used as attachment IDs or invented file:///content paths. PDF page 2 appears only in Sources. No URL opening was attempted during this answer-only review. <strong>HTTP + shared prefix:</strong> Corpus references are relative *.md links. A PDF page-2 reference appears only in the source list. These are not a substitute for the missing visual explanation.</p></details><div class="columns"><article class="card resident" data-run="06-resident-r2"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>471</strong><span>synthesis reasoning tokens</span></div><div><strong>12/18</strong><span>frozen rubric</span></div><div><strong>1,391</strong><span>saved answer tokens</span></div></div><small>06-resident-r2</small></header><details class="annotation" open><summary>Existing reviewer assessment · 12/18</summary><p>Correct key selection facts, but omitted the visual explanation and added unsupported operational claims.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot Selection Report</h1>
+<h2>Thesis</h2>
+<p>The council should select the <strong>Cedar pilot system</strong> as the only option meeting the 1000 liters/day capacity requirement, despite its higher energy consumption and operating costs. While Birch offers lower operating expenses (12 credits/day vs. 18 credits/day for Cedar), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement) and requires council intervention to meet demand. Both systems remain untested in winter conditions, representing a significant reliability gap regardless of selection.</p>
+<h2>Supporting Evidence: Capacity Requirements Dictate Selection</h2>
+<p>The decisive factor is audited daily capacity, which directly determines feasibility. The 30-day independent audit measured Cedar at <strong>1200 liters per day</strong> and Birch at <strong>900 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>. This represents a 33% capacity difference (1200 vs. 900 liters/day) that is material to the council&#39;s requirement of <strong>at least 1000 liters per day</strong> <span class="citation" title="attachment://audit.md">audit.md</span>.</p>
+<p>Birch alone fails this requirement (900 &lt; 1000), necessitating either a second system installation or infrastructure expansion—costs not covered by the grant. Cedar alone meets the requirement (1200 &gt; 1000), making it the only feasible single-system option.</p>
+<p>The Birch brochure claim of 1400 liters/day was inflated and corrected to 900 liters/day following the audit <span class="citation" title="attachment://audit.md">audit.md</span>. The brochure used a short clean-water test that is not representative of actual conditions, suggesting the council should reject marketing claims in favor of audited performance data.</p>
+<h2>Complicating Evidence: Energy, Cost, and Maintenance Tradeoffs</h2>
+<p><strong>Energy Consumption:</strong> Cedar uses <strong>6 kWh per day</strong> versus Birch&#39;s <strong>3 kWh per day</strong>, meaning Cedar consumes 100% more energy <span class="citation" title="attachment://trial.md">trial.md</span>. This represents a significant operational tradeoff that the council must weigh against capacity needs.</p>
+<p><strong>Operating Costs:</strong> Cedar costs <strong>18 credits per day</strong> to operate versus Birch&#39;s <strong>12 credits per day</strong>, excluding installation <span class="citation" title="attachment://cost.md/page/1">cost.md</span>. Cedar&#39;s 6 credits/day higher operating cost reflects its greater energy consumption and likely more complex operation.</p>
+<p><strong>Installation Requirements:</strong> Cedar requires a <strong>400-credit inlet upgrade</strong> while Birch needs no inlet upgrade <span class="citation" title="attachment://cost.md/page/1">cost.md</span>. The grant covers installation costs but does not cover recurring operating costs, meaning the council will bear the long-term operating expense difference.</p>
+<p><strong>Maintenance Intervals:</strong> Cedar requires filter inspection every <strong>7 days</strong> versus Birch&#39;s <strong>14 days</strong> <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. This means Cedar requires twice the maintenance labor and potentially more frequent parts replacement.</p>
+<h2>Resolution: Capacity Requirement Trumps All Other Factors</h2>
+<p>The resolution is that capacity requirements are a hard constraint that cannot be compromised. While Cedar&#39;s higher energy use, operating costs, and maintenance frequency create financial and operational burdens, these are secondary to the fundamental requirement that the system must deliver 1000+ liters/day.</p>
+<p>The council faces three options:</p>
+<ol>
+<li><strong>Select Cedar alone</strong> (1200 liters/day) — meets requirement, higher costs</li>
+<li><strong>Select Birch + additional infrastructure</strong> (900 liters/day + expansion) — fails requirement unless expanded</li>
+<li><strong>Select both systems</strong> (2100 liters/day) — exceeds requirement, potentially wasteful</li>
+</ol>
+<p>Option 1 is the only straightforward path to meeting the council&#39;s requirement without additional capital expenditure. The 400-credit inlet upgrade for Cedar is covered by the grant, reducing the initial barrier to deployment.</p>
+<h2>Prescription: Select Cedar with Winter Reliability Caveat</h2>
+<p>The council should proceed with the <strong>Cedar pilot system</strong> as the sole water treatment option. This selection is predicated on the assumption that winter reliability is acceptable given the current evidence limitations.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>Cedar requires only a 400-credit inlet upgrade (grant-covered)</li>
+<li>Operating costs of 18 credits/day are sustainable if the council can absorb the energy premium</li>
+<li>7-day filter inspection intervals require established maintenance procedures</li>
+</ul>
+<p><strong>Critical Caveat:</strong> Both systems lack winter performance data. The pilot measured <strong>no winter performance</strong> and neither system has established annual reliability <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions, particularly cold weather operations.</p>
+<p>The council should:</p>
+<ol>
+<li>Monitor Cedar&#39;s performance over multiple seasons before full deployment</li>
+<li>Require winter reliability testing before scaling the pilot to full capacity</li>
+<li>Budget for potential maintenance cost increases during winter months</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The council must select the <strong>Cedar water pilot system</strong> because it is the only option that meets the 1000 liters/day capacity requirement on its own. While Birch offers lower operating costs (12 credits/day vs. 18 credits/day) and lower energy use (3 kWh/day vs. 6 kWh/day), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement).</p>
+<p>The selection of Cedar is justified despite higher energy consumption, operating costs, and more frequent maintenance intervals. The 400-credit inlet upgrade is grant-covered, and the system&#39;s 1200 liters/day capacity provides a 200-liter/day buffer above the requirement.</p>
+<h3>Limitations</h3>
+<p><strong>Winter Reliability:</strong> Neither system has winter performance data. The pilot measured no winter performance and neither system has established annual reliability <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. This represents the most significant unknown in the selection decision.</p>
+<p><strong>Annual Performance Guarantees:</strong> The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. Long-term maintenance cost projections remain unverified.</p>
+<p><strong>Annual Reliability Data:</strong> No annual performance guarantees are available from this short-term pilot <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>.</p>
+<p><strong>Winter Reliability Data:</strong> No winter reliability data exists in the pilot evidence <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="attachment://trial.md">trial.md</span></li>
+<li><span class="citation" title="attachment://audit.md">audit.md</span></li>
+<li><span class="citation" title="attachment://cost.md/page/1">cost.md</span></li>
+<li><span class="citation" title="file:///content/maintenance.md">maintenance.md</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot - Figure 1: Treatment routing</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 5fd249129c76…</summary><p><a href="review/answer-04.md">Open original answer packet</a></p><pre data-source="answer-04"># Harbor Water Pilot Selection Report
+
+## Thesis
+
+The council should select the **Cedar pilot system** as the only option meeting the 1000 liters/day capacity requirement, despite its higher energy consumption and operating costs. While Birch offers lower operating expenses (12 credits/day vs. 18 credits/day for Cedar), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement) and requires council intervention to meet demand. Both systems remain untested in winter conditions, representing a significant reliability gap regardless of selection.
+
+## Supporting Evidence: Capacity Requirements Dictate Selection
+
+The decisive factor is audited daily capacity, which directly determines feasibility. The 30-day independent audit measured Cedar at **1200 liters per day** and Birch at **900 liters per day** [trial.md](attachment://trial.md). This represents a 33% capacity difference (1200 vs. 900 liters/day) that is material to the council&#39;s requirement of **at least 1000 liters per day** [audit.md](attachment://audit.md).
+
+Birch alone fails this requirement (900 &lt; 1000), necessitating either a second system installation or infrastructure expansion—costs not covered by the grant. Cedar alone meets the requirement (1200 &gt; 1000), making it the only feasible single-system option.
+
+The Birch brochure claim of 1400 liters/day was inflated and corrected to 900 liters/day following the audit [audit.md](attachment://audit.md). The brochure used a short clean-water test that is not representative of actual conditions, suggesting the council should reject marketing claims in favor of audited performance data.
+
+## Complicating Evidence: Energy, Cost, and Maintenance Tradeoffs
+
+**Energy Consumption:** Cedar uses **6 kWh per day** versus Birch&#39;s **3 kWh per day**, meaning Cedar consumes 100% more energy [trial.md](attachment://trial.md). This represents a significant operational tradeoff that the council must weigh against capacity needs.
+
+**Operating Costs:** Cedar costs **18 credits per day** to operate versus Birch&#39;s **12 credits per day**, excluding installation [cost.md](attachment://cost.md/page/1). Cedar&#39;s 6 credits/day higher operating cost reflects its greater energy consumption and likely more complex operation.
+
+**Installation Requirements:** Cedar requires a **400-credit inlet upgrade** while Birch needs no inlet upgrade [cost.md](attachment://cost.md/page/1). The grant covers installation costs but does not cover recurring operating costs, meaning the council will bear the long-term operating expense difference.
+
+**Maintenance Intervals:** Cedar requires filter inspection every **7 days** versus Birch&#39;s **14 days** [maintenance.md](file:///content/maintenance.md). This means Cedar requires twice the maintenance labor and potentially more frequent parts replacement.
+
+## Resolution: Capacity Requirement Trumps All Other Factors
+
+The resolution is that capacity requirements are a hard constraint that cannot be compromised. While Cedar&#39;s higher energy use, operating costs, and maintenance frequency create financial and operational burdens, these are secondary to the fundamental requirement that the system must deliver 1000+ liters/day.
+
+The council faces three options:
+1. **Select Cedar alone** (1200 liters/day) — meets requirement, higher costs
+2. **Select Birch + additional infrastructure** (900 liters/day + expansion) — fails requirement unless expanded
+3. **Select both systems** (2100 liters/day) — exceeds requirement, potentially wasteful
+
+Option 1 is the only straightforward path to meeting the council&#39;s requirement without additional capital expenditure. The 400-credit inlet upgrade for Cedar is covered by the grant, reducing the initial barrier to deployment.
+
+## Prescription: Select Cedar with Winter Reliability Caveat
+
+The council should proceed with the **Cedar pilot system** as the sole water treatment option. This selection is predicated on the assumption that winter reliability is acceptable given the current evidence limitations.
+
+**Implementation:**
+- Cedar requires only a 400-credit inlet upgrade (grant-covered)
+- Operating costs of 18 credits/day are sustainable if the council can absorb the energy premium
+- 7-day filter inspection intervals require established maintenance procedures
+
+**Critical Caveat:** Both systems lack winter performance data. The pilot measured **no winter performance** and neither system has established annual reliability [maintenance.md](file:///content/maintenance.md). The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions, particularly cold weather operations.
+
+The council should:
+1. Monitor Cedar&#39;s performance over multiple seasons before full deployment
+2. Require winter reliability testing before scaling the pilot to full capacity
+3. Budget for potential maintenance cost increases during winter months
+
+## Conclusion
+
+The council must select the **Cedar water pilot system** because it is the only option that meets the 1000 liters/day capacity requirement on its own. While Birch offers lower operating costs (12 credits/day vs. 18 credits/day) and lower energy use (3 kWh/day vs. 6 kWh/day), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement).
+
+The selection of Cedar is justified despite higher energy consumption, operating costs, and more frequent maintenance intervals. The 400-credit inlet upgrade is grant-covered, and the system&#39;s 1200 liters/day capacity provides a 200-liter/day buffer above the requirement.
+
+### Limitations
+
+**Winter Reliability:** Neither system has winter performance data. The pilot measured no winter performance and neither system has established annual reliability [maintenance.md](file:///content/maintenance.md). This represents the most significant unknown in the selection decision.
+
+**Annual Performance Guarantees:** The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions [maintenance.md](file:///content/maintenance.md). Long-term maintenance cost projections remain unverified.
+
+**Annual Reliability Data:** No annual performance guarantees are available from this short-term pilot [maintenance.md](file:///content/maintenance.md).
+
+**Winter Reliability Data:** No winter reliability data exists in the pilot evidence [maintenance.md](file:///content/maintenance.md).
+
+## Sources
+
+- [trial.md](attachment://trial.md)
+- [audit.md](attachment://audit.md)
+- [cost.md](attachment://cost.md/page/1)
+- [maintenance.md](file:///content/maintenance.md)
+- [Harbor Water Pilot - Figure 1: Treatment routing](attachment://3b32f5401dfe/page/2)</pre><code>5fd249129c761f7cdbdbcf4ba6a5a985d24b5a5f9076dd0b705a707b7eb4fe3a</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on the evidence:</p>
+<p><strong>Which system meets the daily council requirement?</strong>
+<strong>Cedar</strong> meets the council&#39;s requirement of at least 1000 liters per day <span class="citation" title="file:///content/audit.md">audit.md</span>. Cedar delivered <strong>1200 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>, while Birch delivered <strong>900 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>, which falls short of the requirement.</p>
+<p><strong>What is its daily operating cost?</strong>
+Cedar&#39;s daily operating cost is <strong>18 credits per day</strong> <span class="citation" title="file:///content/cost.md">cost.md</span>.</p>
+<p><strong>Which component does the orange route bypass?</strong>
+The orange route bypasses the <strong>UV chamber</strong>. The routing diagram shows the orange maintenance bypass route goes from Intake directly to Storage, skipping the UV chamber component [Harbor Water Pilot page 2].</p>
+<p><strong>Summary:</strong>
+The orange route is a maintenance bypass that allows water to flow from Intake directly to Storage, bypassing the UV chamber. The blue route represents the normal treatment path (Intake → UV chamber → Storage).</p>
+</div><a href="review/answer-04-followup.md">Original follow-up packet</a></details></article><article class="card shared-prefix" data-run="04-shared-prefix-r2"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + shared prefix</h2><div class="metrics"><div><strong>723</strong><span>synthesis reasoning tokens</span></div><div><strong>8/18</strong><span>frozen rubric</span></div><div><strong>1,090</strong><span>saved answer tokens</span></div></div><small>04-shared-prefix-r2</small></header><details class="annotation" open><summary>Existing reviewer assessment · 8/18</summary><p>Omitted the financial package and visual explanation; also introduced arithmetic and maintenance errors.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot Selection: Capacity Compliance as the Deciding Factor</h1>
+<p>The council must select the Cedar system because it is the only system that meets the council&#39;s minimum capacity requirement of 1000 liters per day, while Birch alone fails this threshold at 900 liters per day despite its lower energy consumption and longer maintenance intervals. This capacity compliance is the binary gate that determines feasibility; all other factors—energy, maintenance, and reliability—become secondary considerations once the basic requirement is satisfied.</p>
+<h2>Capacity Compliance: The Binary Gate</h2>
+<p>The 30-day trial measured Cedar at 1200 liters per day and Birch at 900 liters per day, both under identical operating conditions <span class="citation" title="trial.md">Trial results</span>. The independent 30-day audit corrected an early brochure claim that Birch delivered 1400 liters per day to the measured 900 liters per day, noting that the brochure&#39;s &quot;short clean-water test was not representative&quot; <span class="citation" title="audit.md">Independent correction</span>. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement <span class="citation" title="audit.md">Independent correction</span>.</p>
+<p>This creates a hard constraint: Cedar qualifies (1200 &gt; 1000 liters/day), while Birch does not (900 &lt; 1000 liters/day). The 33% capacity gap between the systems (1200 vs. 900 liters/day) is not a matter of optimization but of feasibility—Birch cannot serve the council&#39;s minimum demand on its own.</p>
+<h2>Energy Use: The Tradeoff</h2>
+<p>Cedar consumes 6 kWh per day, twice the energy use of Birch&#39;s 3 kWh per day <span class="citation" title="trial.md">Trial results</span>. Both measurements were taken under the same operating conditions, though they do not represent annual forecasts <span class="citation" title="trial.md">Trial results</span>. This energy difference represents a concrete tradeoff: Cedar delivers double the capacity but at double the energy cost.</p>
+<p>The energy tradeoff becomes meaningful only after capacity compliance is secured. If capacity were not a hard constraint, Birch&#39;s lower energy use would be an attractive option. But since capacity is binary—either the system meets the requirement or it doesn&#39;t—the energy tradeoff is secondary to the fundamental question of whether the system can deliver water at all.</p>
+<h2>Maintenance Frequency: Operational Burden</h2>
+<p>Cedar requires filter inspection every 7 days, while Birch requires it every 14 days <span class="citation" title="maintenance.md">Maintenance and limitations</span>. This represents a 50% increase in maintenance frequency for Cedar. The pilot measured no winter performance, and neither system has established annual reliability from this short trial <span class="citation" title="maintenance.md">Maintenance and limitations</span>.</p>
+<p>The maintenance frequency difference creates operational complexity: Cedar demands more frequent filter changes and presumably more labor or resource allocation. However, this operational burden is manageable compared to the failure mode of selecting Birch—capacity shortfall. The maintenance tradeoff is a cost of doing business; the capacity failure is a system design flaw.</p>
+<h2>Reliability: What Remains Unknown</h2>
+<p>The 30-day pilot measured no winter performance <span class="citation" title="maintenance.md">Maintenance and limitations</span>. Winter performance was not measured in the trial <span class="citation" title="maintenance.md">Maintenance and limitations</span>. The 30-day trial was conducted under specific operating conditions, not representative of annual performance <span class="citation" title="trial.md">Trial results</span>. Neither system has established annual reliability from this short pilot <span class="citation" title="maintenance.md">Maintenance and limitations</span>.</p>
+<p>This reliability uncertainty complicates the decision. The trial results apply only to the specific operating conditions tested, not to annual performance or winter conditions. The brochure&#39;s Birch claim of 1400 liters per day was based on a &quot;short clean-water test that is not representative&quot; <span class="citation" title="audit.md">Independent correction</span>. The council must recognize that the 30-day results are not guarantees of annual performance.</p>
+<h2>Prescription: Select Cedar, Acknowledge Winter Unknowns</h2>
+<p>The council should select Cedar because it is the only system that meets the capacity requirement. The energy tradeoff (6 kWh/day vs. 3 kWh/day) and maintenance burden (7-day vs. 14-day filter inspections) are secondary considerations. The reliability uncertainty—particularly regarding winter performance—remains an open question that should be monitored but does not negate the fundamental feasibility gap.</p>
+<h2>Conclusion</h2>
+<p>The thesis holds: Cedar is the only viable option because capacity compliance is a binary requirement that Birch cannot meet. The energy and maintenance tradeoffs are manageable operational costs; the reliability uncertainty is a known limitation of the short pilot but does not change the fundamental feasibility assessment. Selecting Birch would fail the basic requirement; selecting Cedar meets it at the cost of higher energy use and more frequent maintenance.</p>
+<h3>Limitations</h3>
+<p>The findings do not establish annual reliability for either system. The 30-day trial was conducted under specific operating conditions, not representative of annual performance <span class="citation" title="trial.md">Trial results</span>. Winter performance was not measured in the trial <span class="citation" title="maintenance.md">Maintenance and limitations</span>. The council must recognize that Cedar&#39;s capacity performance may vary outside the tested conditions, and the reliability gap remains unaddressed.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="trial.md">Trial results</span></li>
+<li><span class="citation" title="audit.md">Independent correction</span></li>
+<li><span class="citation" title="maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 c98debb82b13…</summary><p><a href="review/answer-03.md">Open original answer packet</a></p><pre data-source="answer-03"># Harbor Water Pilot Selection: Capacity Compliance as the Deciding Factor
+
+The council must select the Cedar system because it is the only system that meets the council&#39;s minimum capacity requirement of 1000 liters per day, while Birch alone fails this threshold at 900 liters per day despite its lower energy consumption and longer maintenance intervals. This capacity compliance is the binary gate that determines feasibility; all other factors—energy, maintenance, and reliability—become secondary considerations once the basic requirement is satisfied.
+
+## Capacity Compliance: The Binary Gate
+
+The 30-day trial measured Cedar at 1200 liters per day and Birch at 900 liters per day, both under identical operating conditions [Trial results](trial.md). The independent 30-day audit corrected an early brochure claim that Birch delivered 1400 liters per day to the measured 900 liters per day, noting that the brochure&#39;s &quot;short clean-water test was not representative&quot; [Independent correction](audit.md). The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement [Independent correction](audit.md).
+
+This creates a hard constraint: Cedar qualifies (1200 &gt; 1000 liters/day), while Birch does not (900 &lt; 1000 liters/day). The 33% capacity gap between the systems (1200 vs. 900 liters/day) is not a matter of optimization but of feasibility—Birch cannot serve the council&#39;s minimum demand on its own.
+
+## Energy Use: The Tradeoff
+
+Cedar consumes 6 kWh per day, twice the energy use of Birch&#39;s 3 kWh per day [Trial results](trial.md). Both measurements were taken under the same operating conditions, though they do not represent annual forecasts [Trial results](trial.md). This energy difference represents a concrete tradeoff: Cedar delivers double the capacity but at double the energy cost.
+
+The energy tradeoff becomes meaningful only after capacity compliance is secured. If capacity were not a hard constraint, Birch&#39;s lower energy use would be an attractive option. But since capacity is binary—either the system meets the requirement or it doesn&#39;t—the energy tradeoff is secondary to the fundamental question of whether the system can deliver water at all.
+
+## Maintenance Frequency: Operational Burden
+
+Cedar requires filter inspection every 7 days, while Birch requires it every 14 days [Maintenance and limitations](maintenance.md). This represents a 50% increase in maintenance frequency for Cedar. The pilot measured no winter performance, and neither system has established annual reliability from this short trial [Maintenance and limitations](maintenance.md).
+
+The maintenance frequency difference creates operational complexity: Cedar demands more frequent filter changes and presumably more labor or resource allocation. However, this operational burden is manageable compared to the failure mode of selecting Birch—capacity shortfall. The maintenance tradeoff is a cost of doing business; the capacity failure is a system design flaw.
+
+## Reliability: What Remains Unknown
+
+The 30-day pilot measured no winter performance [Maintenance and limitations](maintenance.md). Winter performance was not measured in the trial [Maintenance and limitations](maintenance.md). The 30-day trial was conducted under specific operating conditions, not representative of annual performance [Trial results](trial.md). Neither system has established annual reliability from this short pilot [Maintenance and limitations](maintenance.md).
+
+This reliability uncertainty complicates the decision. The trial results apply only to the specific operating conditions tested, not to annual performance or winter conditions. The brochure&#39;s Birch claim of 1400 liters per day was based on a &quot;short clean-water test that is not representative&quot; [Independent correction](audit.md). The council must recognize that the 30-day results are not guarantees of annual performance.
+
+## Prescription: Select Cedar, Acknowledge Winter Unknowns
+
+The council should select Cedar because it is the only system that meets the capacity requirement. The energy tradeoff (6 kWh/day vs. 3 kWh/day) and maintenance burden (7-day vs. 14-day filter inspections) are secondary considerations. The reliability uncertainty—particularly regarding winter performance—remains an open question that should be monitored but does not negate the fundamental feasibility gap.
+
+## Conclusion
+
+The thesis holds: Cedar is the only viable option because capacity compliance is a binary requirement that Birch cannot meet. The energy and maintenance tradeoffs are manageable operational costs; the reliability uncertainty is a known limitation of the short pilot but does not change the fundamental feasibility assessment. Selecting Birch would fail the basic requirement; selecting Cedar meets it at the cost of higher energy use and more frequent maintenance.
+
+### Limitations
+
+The findings do not establish annual reliability for either system. The 30-day trial was conducted under specific operating conditions, not representative of annual performance [Trial results](trial.md). Winter performance was not measured in the trial [Maintenance and limitations](maintenance.md). The council must recognize that Cedar&#39;s capacity performance may vary outside the tested conditions, and the reliability gap remains unaddressed.
+
+## Sources
+
+- [Trial results](trial.md)
+- [Independent correction](audit.md)
+- [Maintenance and limitations](maintenance.md)
+- [Harbor Water Pilot](attachment://9a503717ac5a/page/2)</pre><code>c98debb82b1365fcda4ad9183099636cd03c47b0b6c61c21c4d7b641af4d7253</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><h1>Harbor Water Pilot Selection Brief</h1>
+<h2>Executive Summary</h2>
+<p><strong>Selection:</strong> Cedar system<br><strong>Daily operating cost:</strong> 18 credits<br><strong>Orange route bypass:</strong> UV chamber</p>
+<hr>
+<h2>Detailed Findings</h2>
+<h3>1. Capacity Compliance: Cedar Qualifies, Birch Does Not</h3>
+<p>The council requires <strong>at least 1000 liters per day</strong> [audit.md]. The 30-day trial measured:</p>
+<ul>
+<li><strong>Cedar:</strong> 1200 liters per day [trial.md]</li>
+<li><strong>Birch:</strong> 900 liters per day [trial.md]</li>
+</ul>
+<p><strong>Critical correction:</strong> An early brochure claimed Birch delivered 1400 liters per day, but the independent audit corrected this to 900 liters per day, noting the brochure&#39;s &quot;short clean-water test was not representative&quot; [audit.md].</p>
+<p><strong>Conclusion:</strong> Cedar alone meets the council&#39;s minimum requirement (1200 &gt; 1000); Birch alone fails (900 &lt; 1000).</p>
+<h3>2. Daily Operating Cost: Cedar = 18 credits</h3>
+<p>The operating ledger reports:</p>
+<ul>
+<li><strong>Cedar:</strong> 18 credits per day [cost.md]</li>
+<li><strong>Birch:</strong> 12 credits per day [cost.md]</li>
+</ul>
+<p>Cedar requires a 400-credit inlet upgrade; Birch requires no inlet upgrade. However, the grant covers installation but <strong>does not cover recurring operating costs</strong> [cost.md].</p>
+<h3>3. Orange Route Bypass: UV Chamber</h3>
+<p>The routing diagram on page 2 shows:</p>
+<ul>
+<li><strong>Blue route (normal treatment):</strong> Intake → UV chamber → Storage</li>
+<li><strong>Orange route (maintenance bypass):</strong> Intake → [skips UV chamber] → Storage</li>
+</ul>
+<p>The orange dashed line bypasses the <strong>UV chamber</strong> component [Harbor Water Pilot page 2].</p>
+<hr>
+<h2>Maintenance and Reliability Caveats</h2>
+<ul>
+<li>Cedar requires filter inspection every 7 days; Birch every 14 days [maintenance.md]</li>
+<li>The pilot measured <strong>no winter performance</strong> [maintenance.md]</li>
+<li>Neither system has established annual reliability from this 30-day pilot [maintenance.md]</li>
+</ul>
+<p><strong>Important:</strong> Do not treat a 30-day result as an annual guarantee [maintenance.md].</p>
+<hr>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="trial.md">Trial results</span></li>
+<li><span class="citation" title="audit.md">Independent correction</span></li>
+<li><span class="citation" title="cost.md">Operating costs</span></li>
+<li><span class="citation" title="maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot</span></li>
+</ul>
+</div><a href="review/answer-03-followup.md">Original follow-up packet</a></details></article></div></section>
+<section class="round" data-round="2" data-arm="http"><div class="round-heading"><h2>Round 2 <span>· seed offset 4200</span></h2><p>Ordinary HTTP produced no report in this round. Its failed generation cannot serve as a quality-matched token comparison.</p></div><div class="columns"><article class="card resident" data-run="06-resident-r2"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>471</strong><span>synthesis reasoning tokens</span></div><div><strong>12/18</strong><span>frozen rubric</span></div><div><strong>1,391</strong><span>saved answer tokens</span></div></div><small>06-resident-r2</small></header><details class="annotation" open><summary>Existing reviewer assessment · 12/18</summary><p>Correct key selection facts, but omitted the visual explanation and added unsupported operational claims.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot Selection Report</h1>
+<h2>Thesis</h2>
+<p>The council should select the <strong>Cedar pilot system</strong> as the only option meeting the 1000 liters/day capacity requirement, despite its higher energy consumption and operating costs. While Birch offers lower operating expenses (12 credits/day vs. 18 credits/day for Cedar), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement) and requires council intervention to meet demand. Both systems remain untested in winter conditions, representing a significant reliability gap regardless of selection.</p>
+<h2>Supporting Evidence: Capacity Requirements Dictate Selection</h2>
+<p>The decisive factor is audited daily capacity, which directly determines feasibility. The 30-day independent audit measured Cedar at <strong>1200 liters per day</strong> and Birch at <strong>900 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>. This represents a 33% capacity difference (1200 vs. 900 liters/day) that is material to the council&#39;s requirement of <strong>at least 1000 liters per day</strong> <span class="citation" title="attachment://audit.md">audit.md</span>.</p>
+<p>Birch alone fails this requirement (900 &lt; 1000), necessitating either a second system installation or infrastructure expansion—costs not covered by the grant. Cedar alone meets the requirement (1200 &gt; 1000), making it the only feasible single-system option.</p>
+<p>The Birch brochure claim of 1400 liters/day was inflated and corrected to 900 liters/day following the audit <span class="citation" title="attachment://audit.md">audit.md</span>. The brochure used a short clean-water test that is not representative of actual conditions, suggesting the council should reject marketing claims in favor of audited performance data.</p>
+<h2>Complicating Evidence: Energy, Cost, and Maintenance Tradeoffs</h2>
+<p><strong>Energy Consumption:</strong> Cedar uses <strong>6 kWh per day</strong> versus Birch&#39;s <strong>3 kWh per day</strong>, meaning Cedar consumes 100% more energy <span class="citation" title="attachment://trial.md">trial.md</span>. This represents a significant operational tradeoff that the council must weigh against capacity needs.</p>
+<p><strong>Operating Costs:</strong> Cedar costs <strong>18 credits per day</strong> to operate versus Birch&#39;s <strong>12 credits per day</strong>, excluding installation <span class="citation" title="attachment://cost.md/page/1">cost.md</span>. Cedar&#39;s 6 credits/day higher operating cost reflects its greater energy consumption and likely more complex operation.</p>
+<p><strong>Installation Requirements:</strong> Cedar requires a <strong>400-credit inlet upgrade</strong> while Birch needs no inlet upgrade <span class="citation" title="attachment://cost.md/page/1">cost.md</span>. The grant covers installation costs but does not cover recurring operating costs, meaning the council will bear the long-term operating expense difference.</p>
+<p><strong>Maintenance Intervals:</strong> Cedar requires filter inspection every <strong>7 days</strong> versus Birch&#39;s <strong>14 days</strong> <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. This means Cedar requires twice the maintenance labor and potentially more frequent parts replacement.</p>
+<h2>Resolution: Capacity Requirement Trumps All Other Factors</h2>
+<p>The resolution is that capacity requirements are a hard constraint that cannot be compromised. While Cedar&#39;s higher energy use, operating costs, and maintenance frequency create financial and operational burdens, these are secondary to the fundamental requirement that the system must deliver 1000+ liters/day.</p>
+<p>The council faces three options:</p>
+<ol>
+<li><strong>Select Cedar alone</strong> (1200 liters/day) — meets requirement, higher costs</li>
+<li><strong>Select Birch + additional infrastructure</strong> (900 liters/day + expansion) — fails requirement unless expanded</li>
+<li><strong>Select both systems</strong> (2100 liters/day) — exceeds requirement, potentially wasteful</li>
+</ol>
+<p>Option 1 is the only straightforward path to meeting the council&#39;s requirement without additional capital expenditure. The 400-credit inlet upgrade for Cedar is covered by the grant, reducing the initial barrier to deployment.</p>
+<h2>Prescription: Select Cedar with Winter Reliability Caveat</h2>
+<p>The council should proceed with the <strong>Cedar pilot system</strong> as the sole water treatment option. This selection is predicated on the assumption that winter reliability is acceptable given the current evidence limitations.</p>
+<p><strong>Implementation:</strong></p>
+<ul>
+<li>Cedar requires only a 400-credit inlet upgrade (grant-covered)</li>
+<li>Operating costs of 18 credits/day are sustainable if the council can absorb the energy premium</li>
+<li>7-day filter inspection intervals require established maintenance procedures</li>
+</ul>
+<p><strong>Critical Caveat:</strong> Both systems lack winter performance data. The pilot measured <strong>no winter performance</strong> and neither system has established annual reliability <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions, particularly cold weather operations.</p>
+<p>The council should:</p>
+<ol>
+<li>Monitor Cedar&#39;s performance over multiple seasons before full deployment</li>
+<li>Require winter reliability testing before scaling the pilot to full capacity</li>
+<li>Budget for potential maintenance cost increases during winter months</li>
+</ol>
+<h2>Conclusion</h2>
+<p>The council must select the <strong>Cedar water pilot system</strong> because it is the only option that meets the 1000 liters/day capacity requirement on its own. While Birch offers lower operating costs (12 credits/day vs. 18 credits/day) and lower energy use (3 kWh/day vs. 6 kWh/day), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement).</p>
+<p>The selection of Cedar is justified despite higher energy consumption, operating costs, and more frequent maintenance intervals. The 400-credit inlet upgrade is grant-covered, and the system&#39;s 1200 liters/day capacity provides a 200-liter/day buffer above the requirement.</p>
+<h3>Limitations</h3>
+<p><strong>Winter Reliability:</strong> Neither system has winter performance data. The pilot measured no winter performance and neither system has established annual reliability <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. This represents the most significant unknown in the selection decision.</p>
+<p><strong>Annual Performance Guarantees:</strong> The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. Long-term maintenance cost projections remain unverified.</p>
+<p><strong>Annual Reliability Data:</strong> No annual performance guarantees are available from this short-term pilot <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>.</p>
+<p><strong>Winter Reliability Data:</strong> No winter reliability data exists in the pilot evidence <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="attachment://trial.md">trial.md</span></li>
+<li><span class="citation" title="attachment://audit.md">audit.md</span></li>
+<li><span class="citation" title="attachment://cost.md/page/1">cost.md</span></li>
+<li><span class="citation" title="file:///content/maintenance.md">maintenance.md</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot - Figure 1: Treatment routing</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 5fd249129c76…</summary><p><a href="review/answer-04.md">Open original answer packet</a></p><pre data-source="answer-04"># Harbor Water Pilot Selection Report
+
+## Thesis
+
+The council should select the **Cedar pilot system** as the only option meeting the 1000 liters/day capacity requirement, despite its higher energy consumption and operating costs. While Birch offers lower operating expenses (12 credits/day vs. 18 credits/day for Cedar), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement) and requires council intervention to meet demand. Both systems remain untested in winter conditions, representing a significant reliability gap regardless of selection.
+
+## Supporting Evidence: Capacity Requirements Dictate Selection
+
+The decisive factor is audited daily capacity, which directly determines feasibility. The 30-day independent audit measured Cedar at **1200 liters per day** and Birch at **900 liters per day** [trial.md](attachment://trial.md). This represents a 33% capacity difference (1200 vs. 900 liters/day) that is material to the council&#39;s requirement of **at least 1000 liters per day** [audit.md](attachment://audit.md).
+
+Birch alone fails this requirement (900 &lt; 1000), necessitating either a second system installation or infrastructure expansion—costs not covered by the grant. Cedar alone meets the requirement (1200 &gt; 1000), making it the only feasible single-system option.
+
+The Birch brochure claim of 1400 liters/day was inflated and corrected to 900 liters/day following the audit [audit.md](attachment://audit.md). The brochure used a short clean-water test that is not representative of actual conditions, suggesting the council should reject marketing claims in favor of audited performance data.
+
+## Complicating Evidence: Energy, Cost, and Maintenance Tradeoffs
+
+**Energy Consumption:** Cedar uses **6 kWh per day** versus Birch&#39;s **3 kWh per day**, meaning Cedar consumes 100% more energy [trial.md](attachment://trial.md). This represents a significant operational tradeoff that the council must weigh against capacity needs.
+
+**Operating Costs:** Cedar costs **18 credits per day** to operate versus Birch&#39;s **12 credits per day**, excluding installation [cost.md](attachment://cost.md/page/1). Cedar&#39;s 6 credits/day higher operating cost reflects its greater energy consumption and likely more complex operation.
+
+**Installation Requirements:** Cedar requires a **400-credit inlet upgrade** while Birch needs no inlet upgrade [cost.md](attachment://cost.md/page/1). The grant covers installation costs but does not cover recurring operating costs, meaning the council will bear the long-term operating expense difference.
+
+**Maintenance Intervals:** Cedar requires filter inspection every **7 days** versus Birch&#39;s **14 days** [maintenance.md](file:///content/maintenance.md). This means Cedar requires twice the maintenance labor and potentially more frequent parts replacement.
+
+## Resolution: Capacity Requirement Trumps All Other Factors
+
+The resolution is that capacity requirements are a hard constraint that cannot be compromised. While Cedar&#39;s higher energy use, operating costs, and maintenance frequency create financial and operational burdens, these are secondary to the fundamental requirement that the system must deliver 1000+ liters/day.
+
+The council faces three options:
+1. **Select Cedar alone** (1200 liters/day) — meets requirement, higher costs
+2. **Select Birch + additional infrastructure** (900 liters/day + expansion) — fails requirement unless expanded
+3. **Select both systems** (2100 liters/day) — exceeds requirement, potentially wasteful
+
+Option 1 is the only straightforward path to meeting the council&#39;s requirement without additional capital expenditure. The 400-credit inlet upgrade for Cedar is covered by the grant, reducing the initial barrier to deployment.
+
+## Prescription: Select Cedar with Winter Reliability Caveat
+
+The council should proceed with the **Cedar pilot system** as the sole water treatment option. This selection is predicated on the assumption that winter reliability is acceptable given the current evidence limitations.
+
+**Implementation:**
+- Cedar requires only a 400-credit inlet upgrade (grant-covered)
+- Operating costs of 18 credits/day are sustainable if the council can absorb the energy premium
+- 7-day filter inspection intervals require established maintenance procedures
+
+**Critical Caveat:** Both systems lack winter performance data. The pilot measured **no winter performance** and neither system has established annual reliability [maintenance.md](file:///content/maintenance.md). The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions, particularly cold weather operations.
+
+The council should:
+1. Monitor Cedar&#39;s performance over multiple seasons before full deployment
+2. Require winter reliability testing before scaling the pilot to full capacity
+3. Budget for potential maintenance cost increases during winter months
+
+## Conclusion
+
+The council must select the **Cedar water pilot system** because it is the only option that meets the 1000 liters/day capacity requirement on its own. While Birch offers lower operating costs (12 credits/day vs. 18 credits/day) and lower energy use (3 kWh/day vs. 6 kWh/day), it fails the minimum capacity threshold (900 liters/day vs. 1000 liters/day requirement).
+
+The selection of Cedar is justified despite higher energy consumption, operating costs, and more frequent maintenance intervals. The 400-credit inlet upgrade is grant-covered, and the system&#39;s 1200 liters/day capacity provides a 200-liter/day buffer above the requirement.
+
+### Limitations
+
+**Winter Reliability:** Neither system has winter performance data. The pilot measured no winter performance and neither system has established annual reliability [maintenance.md](file:///content/maintenance.md). This represents the most significant unknown in the selection decision.
+
+**Annual Performance Guarantees:** The 30-day trial period is insufficient to guarantee performance under varied seasonal conditions [maintenance.md](file:///content/maintenance.md). Long-term maintenance cost projections remain unverified.
+
+**Annual Reliability Data:** No annual performance guarantees are available from this short-term pilot [maintenance.md](file:///content/maintenance.md).
+
+**Winter Reliability Data:** No winter reliability data exists in the pilot evidence [maintenance.md](file:///content/maintenance.md).
+
+## Sources
+
+- [trial.md](attachment://trial.md)
+- [audit.md](attachment://audit.md)
+- [cost.md](attachment://cost.md/page/1)
+- [maintenance.md](file:///content/maintenance.md)
+- [Harbor Water Pilot - Figure 1: Treatment routing](attachment://3b32f5401dfe/page/2)</pre><code>5fd249129c761f7cdbdbcf4ba6a5a985d24b5a5f9076dd0b705a707b7eb4fe3a</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on the evidence:</p>
+<p><strong>Which system meets the daily council requirement?</strong>
+<strong>Cedar</strong> meets the council&#39;s requirement of at least 1000 liters per day <span class="citation" title="file:///content/audit.md">audit.md</span>. Cedar delivered <strong>1200 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>, while Birch delivered <strong>900 liters per day</strong> <span class="citation" title="attachment://trial.md">trial.md</span>, which falls short of the requirement.</p>
+<p><strong>What is its daily operating cost?</strong>
+Cedar&#39;s daily operating cost is <strong>18 credits per day</strong> <span class="citation" title="file:///content/cost.md">cost.md</span>.</p>
+<p><strong>Which component does the orange route bypass?</strong>
+The orange route bypasses the <strong>UV chamber</strong>. The routing diagram shows the orange maintenance bypass route goes from Intake directly to Storage, skipping the UV chamber component [Harbor Water Pilot page 2].</p>
+<p><strong>Summary:</strong>
+The orange route is a maintenance bypass that allows water to flow from Intake directly to Storage, bypassing the UV chamber. The blue route represents the normal treatment path (Intake → UV chamber → Storage).</p>
+</div><a href="review/answer-04-followup.md">Original follow-up packet</a></details></article><article class="card http" data-run="05-http-r2"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + prefix-cache</h2><div class="metrics"><div><strong>29,061</strong><span>synthesis reasoning tokens · failed</span></div><div><strong>—</strong><span>frozen rubric · no answer</span></div><div><strong>—</strong><span>saved answer tokens</span></div></div><small>05-http-r2</small></header><div class="failure"><h3>No saved initial answer</h3><p>The synthesis exhausted its 32,768-position context while reasoning. No brief or completed follow-up was saved. This is a failed attempt, not a zero-token answer.</p></div></article></div></section>
+<section class="round" data-round="3" data-arm="shared-prefix"><div class="round-heading"><h2>Round 3 <span>· seed offset 4300</span></h2><p>Lloyal emitted 8.3% fewer synthesis reasoning tokens and scored 15/18, versus 12/18. This is a joint observation of token count and rubric quality, not a quality-matched causal estimate.</p></div><details class="rubric"><summary>Compare all nine rubric criteria and quoted evidence</summary><table><thead><tr><th>Criterion · 0–2 each</th><th>Lloyal</th><th>HTTP + shared prefix</th></tr></thead><tbody><tr><th>Capacity and brochure correction<small>Cedar 1200 L/day, Birch 900 L/day; Birch brochure 1400 corrected by audit.</small></th><td><strong>2/2</strong><p>&quot;1200 liters ... Birch’s 900&quot;; brochure &quot;1400 ... to 900&quot;.</p></td><td><strong>2/2</strong><p>&quot;Cedar delivers 1200 ... Birch ... 900&quot;; audit corrected &quot;1400 ... down to 900&quot;.</p></td></tr><tr><th>Energy<small>Cedar 6 kWh/day, Birch 3 kWh/day.</small></th><td><strong>1/2</strong><p>Correct 6/3 kWh values, but twice asserts &quot;Cedar outperforms Birch in both capacity and energy efficiency&quot;. Cedar has worse liters per kWh for the supplied figures.</p></td><td><strong>2/2</strong><p>&quot;Cedar consumes 6 kWh ... Birch’s 3 kWh&quot; and correctly describes 33% more water.</p></td></tr><tr><th>Operating costs and installation<small>Cedar 18 credits/day and 400-credit inlet upgrade; Birch 12/day and no inlet upgrade.</small></th><td><strong>2/2</strong><p>&quot;Cedar at 18 credits ... Birch at 12&quot;; &quot;400-credit for Cedar, none for Birch&quot;.</p></td><td><strong>1/2</strong><p>Correct 18/12 operating costs, 400-credit upgrade and no Birch upgrade, but later says &quot;inlet upgrade cost (400 credits) ... remain unknown&quot;, contradicting the stated ledger.</p></td></tr><tr><th>Requirement and selection<small>Council minimum 1000 L/day; Cedar alone meets it, Birch alone does not.</small></th><td><strong>2/2</strong><p>&quot;1000-liter/day requirement ... Cedar alone meets ... Birch alone fails&quot;.</p></td><td><strong>2/2</strong><p>&quot;1000-liter daily requirement ... Birch’s 900 ... falls short by 100 liters&quot;; selects Cedar.</p></td></tr><tr><th>Grant coverage<small>Installation grant does not cover recurring operating cost.</small></th><td><strong>2/2</strong><p>&quot;grant covers installation but does not cover recurring operating costs&quot;; installation described as capital expenditure covered by grant.</p></td><td><strong>2/2</strong><p>&quot;A grant covers installation but not recurring operating costs&quot;.</p></td></tr><tr><th>Maintenance<small>Cedar inspection every 7 days, Birch every 14 days.</small></th><td><strong>2/2</strong><p>&quot;filter inspection every 7 days versus Birch’s every 14 days&quot;.</p></td><td><strong>1/2</strong><p>Correct 7/14-day intervals, but reverses their meaning: &quot;50% reduction in maintenance frequency for Cedar&quot; and &quot;filters may be more robust&quot;.</p></td></tr><tr><th>Evidence limits<small>30-day pilot; winter performance and annual reliability unmeasured; no asserted winter advantage.</small></th><td><strong>2/2</strong><p>&quot;30-day trial measured no winter performance&quot;; &quot;Neither system has established annual reliability&quot;.</p></td><td><strong>2/2</strong><p>&quot;30-day trial measured no winter performance&quot;; &quot;neither system has established annual reliability&quot;.</p></td></tr><tr><th>Visual routing explanation<small>Blue: Intake to UV chamber to Storage. Orange: Intake to Storage, bypasses UV chamber; identify PDF page 2.</small></th><td><strong>2/2</strong><p>Identifies page 2; blue Intake → UV chamber → Storage; orange Intake directly to Storage, &quot;bypassing the UV chamber entirely&quot;.</p></td><td><strong>0/2</strong><p>No blue/orange routing explanation in the initial report, despite a PDF page-2 source-list entry.</p></td></tr><tr><th>Grounding<small>Recommendation and factual claims supported; no lighting distractor, invented reliability/cost claims, or unsupported certainty.</small></th><td><strong>0/2</strong><p>Invents a relationship between the brochure error and the unrelated lighting distractor (&quot;likely confused&quot;), and falsely claims superior Cedar energy efficiency.</p></td><td><strong>0/2</strong><p>Claims a Cedar maintenance advantage from more frequent inspections, suggests greater filter robustness, and inconsistently treats a known 400-credit upgrade as unknown.</p></td></tr></tbody></table><p>Original scores are unchanged. Citation usability was reviewed separately: <strong>Lloyal:</strong> Only a Sources list, with corpus filenames incorrectly styled as paginated attachment IDs. The PDF page-2 attachment citation matches the described visual topic. <strong>HTTP + shared prefix:</strong> Corpus links mix fabricated file:///data/corpus and file:///content paths with attachment://cost.md. The PDF source entry does not supply the missing route discussion.</p></details><div class="columns"><article class="card resident" data-run="08-resident-r3"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>747</strong><span>synthesis reasoning tokens</span></div><div><strong>15/18</strong><span>frozen rubric</span></div><div><strong>1,084</strong><span>saved answer tokens</span></div></div><small>08-resident-r3</small></header><details class="annotation" open><summary>Existing reviewer assessment · 15/18</summary><p>Complete coverage, but includes a false energy-efficiency claim and invents a link to the lighting distractor.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot System Selection Report</h1>
+<h2>Thesis</h2>
+<p><strong>Cedar should be selected for the Harbor water pilot</strong> because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement, despite requiring a 400-credit inlet upgrade. The 30-day trial demonstrates Cedar delivers 1200 liters per day versus Birch&#39;s 900 liters per day, which fails the minimum threshold. While Birch requires no installation upgrade, its capacity shortfall is a hard constraint that cannot be resolved through operational adjustments.</p>
+<h2>Capacity and Energy Efficiency: The Hard Constraint</h2>
+<p>The independent 30-day audit corrected the early brochure claim that Birch delivered 1400 liters per day to 900 liters per day. The brochure used a short clean-water test that is not representative of actual conditions. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement.</p>
+<p>The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, under the same operating conditions. The critical finding is that Cedar outperforms Birch in both capacity and energy efficiency. Cedar uses 6 kWh per day versus Birch&#39;s 3 kWh per day, but Cedar&#39;s higher capacity justifies the additional energy consumption.</p>
+<p><strong>Important Distinction:</strong> The distractor.md file warns that lighting quantities must not be used as water production or energy figures. The early brochure&#39;s 1400 figure for Birch was likely confused with unrelated lighting pilot data (1400 lumens for Cedar lamps and 1200 lumens for Birch lamps).</p>
+<h2>Operating Costs and Installation Constraints</h2>
+<p>The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation costs. The grant covers installation but does not cover recurring operating costs.</p>
+<p><strong>Feasible Option:</strong> Cedar alone meets the council&#39;s 1000-liter/day requirement (1200 liters per day in trial), whereas Birch alone fails (900 liters per day). However, Cedar requires a 400-credit inlet upgrade. The feasible option is Cedar, provided the council can fund the installation upgrade.</p>
+<p>The trial results confirm that Cedar outperforms Birch in both capacity and energy efficiency. Cedar meets the 1000-liter daily requirement, while Birch does not. The operating costs in the ledger (18 credits/day for Cedar, 12 credits/day for Birch) exclude installation costs. The ledger reflects ongoing operational expenses, while the installation requirements (400-credit for Cedar, none for Birch) are capital expenditures covered by the grant.</p>
+<h2>Maintenance and Reliability: The Unknowns</h2>
+<p>Cedar requires filter inspection every 7 days versus Birch&#39;s every 14 days. However, the 30-day trial measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee.</p>
+<p><strong>What is Unknown:</strong> Winter reliability is completely unknown — the pilot measured &quot;no winter performance.&quot; Annual reliability has not been established for either system. Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified. Performance under extended cold-weather conditions cannot be determined from this trial.</p>
+<h2>Visual Routing Explanation</h2>
+<p>The Harbor Water Pilot Figure 1 on page 2 shows two distinct water treatment routing paths. The blue route (normal treatment route) flows from the Intake component through the UV chamber to the Storage component, following the standard treatment sequence. The orange route (maintenance bypass) provides an alternative path from the Intake component directly to the Storage component, bypassing the UV chamber entirely. This bypass allows water to flow from Intake to Storage without undergoing UV treatment, which would be used during maintenance periods when the UV chamber needs servicing or repair.</p>
+<h2>Resolution and Recommendation</h2>
+<p>The capacity requirement creates a binary decision: Cedar meets the 1000-liter/day threshold; Birch does not. The installation cost for Cedar is a capital expense covered by the grant, not a recurring operational burden. The winter reliability unknown represents a risk that should be mitigated through additional testing, but does not change the capacity-based selection.</p>
+<p><strong>Recommendation:</strong> Select Cedar for the Harbor water pilot, contingent on council approval of the 400-credit inlet upgrade. Conduct additional winter reliability testing before full deployment to address the unknown winter performance.</p>
+<h3>Limitations</h3>
+<ul>
+<li>Winter reliability completely unknown — pilot measured &quot;no winter performance&quot;</li>
+<li>Neither system has established annual reliability from this short pilot</li>
+<li>Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified</li>
+<li>Performance under extended cold-weather conditions cannot be determined from this trial</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="attachment://audit.md/page/1">audit.md</span></li>
+<li><span class="citation" title="attachment://trial.md/page/1">trial.md</span></li>
+<li><span class="citation" title="attachment://cost.md/page/1">cost.md</span></li>
+<li><span class="citation" title="attachment://maintenance.md/page/1">maintenance.md</span></li>
+<li><span class="citation" title="attachment://distractor.md/page/1">distractor.md</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 74cea75225e0…</summary><p><a href="review/answer-06.md">Open original answer packet</a></p><pre data-source="answer-06"># Harbor Water Pilot System Selection Report
+
+## Thesis
+
+**Cedar should be selected for the Harbor water pilot** because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement, despite requiring a 400-credit inlet upgrade. The 30-day trial demonstrates Cedar delivers 1200 liters per day versus Birch&#39;s 900 liters per day, which fails the minimum threshold. While Birch requires no installation upgrade, its capacity shortfall is a hard constraint that cannot be resolved through operational adjustments.
+
+## Capacity and Energy Efficiency: The Hard Constraint
+
+The independent 30-day audit corrected the early brochure claim that Birch delivered 1400 liters per day to 900 liters per day. The brochure used a short clean-water test that is not representative of actual conditions. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement.
+
+The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, under the same operating conditions. The critical finding is that Cedar outperforms Birch in both capacity and energy efficiency. Cedar uses 6 kWh per day versus Birch&#39;s 3 kWh per day, but Cedar&#39;s higher capacity justifies the additional energy consumption.
+
+**Important Distinction:** The distractor.md file warns that lighting quantities must not be used as water production or energy figures. The early brochure&#39;s 1400 figure for Birch was likely confused with unrelated lighting pilot data (1400 lumens for Cedar lamps and 1200 lumens for Birch lamps).
+
+## Operating Costs and Installation Constraints
+
+The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation costs. The grant covers installation but does not cover recurring operating costs.
+
+**Feasible Option:** Cedar alone meets the council&#39;s 1000-liter/day requirement (1200 liters per day in trial), whereas Birch alone fails (900 liters per day). However, Cedar requires a 400-credit inlet upgrade. The feasible option is Cedar, provided the council can fund the installation upgrade.
+
+The trial results confirm that Cedar outperforms Birch in both capacity and energy efficiency. Cedar meets the 1000-liter daily requirement, while Birch does not. The operating costs in the ledger (18 credits/day for Cedar, 12 credits/day for Birch) exclude installation costs. The ledger reflects ongoing operational expenses, while the installation requirements (400-credit for Cedar, none for Birch) are capital expenditures covered by the grant.
+
+## Maintenance and Reliability: The Unknowns
+
+Cedar requires filter inspection every 7 days versus Birch&#39;s every 14 days. However, the 30-day trial measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee.
+
+**What is Unknown:** Winter reliability is completely unknown — the pilot measured &quot;no winter performance.&quot; Annual reliability has not been established for either system. Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified. Performance under extended cold-weather conditions cannot be determined from this trial.
+
+## Visual Routing Explanation
+
+The Harbor Water Pilot Figure 1 on page 2 shows two distinct water treatment routing paths. The blue route (normal treatment route) flows from the Intake component through the UV chamber to the Storage component, following the standard treatment sequence. The orange route (maintenance bypass) provides an alternative path from the Intake component directly to the Storage component, bypassing the UV chamber entirely. This bypass allows water to flow from Intake to Storage without undergoing UV treatment, which would be used during maintenance periods when the UV chamber needs servicing or repair.
+
+## Resolution and Recommendation
+
+The capacity requirement creates a binary decision: Cedar meets the 1000-liter/day threshold; Birch does not. The installation cost for Cedar is a capital expense covered by the grant, not a recurring operational burden. The winter reliability unknown represents a risk that should be mitigated through additional testing, but does not change the capacity-based selection.
+
+**Recommendation:** Select Cedar for the Harbor water pilot, contingent on council approval of the 400-credit inlet upgrade. Conduct additional winter reliability testing before full deployment to address the unknown winter performance.
+
+### Limitations
+
+- Winter reliability completely unknown — pilot measured &quot;no winter performance&quot;
+- Neither system has established annual reliability from this short pilot
+- Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified
+- Performance under extended cold-weather conditions cannot be determined from this trial
+
+## Sources
+
+- [audit.md](attachment://audit.md/page/1)
+- [trial.md](attachment://trial.md/page/1)
+- [cost.md](attachment://cost.md/page/1)
+- [maintenance.md](attachment://maintenance.md/page/1)
+- [distractor.md](attachment://distractor.md/page/1)
+- [Harbor Water Pilot](attachment://3b32f5401dfe/page/2)</pre><code>74cea75225e0eda9ee0cb4f9550682c5790137051b06eb7e987c53ed51a4314f</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on the trial results and routing diagram analysis:</p>
+<p><strong>1. System Meeting Council Requirement:</strong>
+Cedar meets the daily council requirement. The trial measured Cedar delivering 1200 liters per day, which exceeds the 1000 liters per day requirement. Birch delivered only 900 liters per day, which does not meet the requirement <span class="citation" title="file:///home/harbor/water/pilot/trial.md">trial.md</span> <span class="citation" title="attachment://3b32f5401dfe/page/1">Harbor Water Pilot</span>.</p>
+<p><strong>2. Daily Operating Cost:</strong>
+Cedar&#39;s daily operating cost is 18 credits per day, excluding installation costs <span class="citation" title="file:///home/harbor/water/pilot/cost.md">cost.md</span>.</p>
+<p><strong>3. Orange Route Bypass Component:</strong>
+The orange route bypasses the UV chamber. The routing diagram shows the orange dashed line as a &quot;maintenance bypass&quot; that goes directly from Intake to Storage, skipping the UV chamber component that is in the blue normal treatment route <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>.</p>
+<p><strong>Key Evidence:</strong></p>
+<ul>
+<li>Trial results: &quot;Cedar delivered 1200 liters per day; Birch delivered 900 liters per day&quot; <span class="citation" title="file:///home/harbor/water/pilot/trial.md">trial.md</span></li>
+<li>Operating costs: &quot;Cedar at 18 credits per day and Birch at 12 credits per day&quot; <span class="citation" title="file:///home/harbor/water/pilot/cost.md">cost.md</span></li>
+<li>Routing diagram: Orange route shows &quot;maintenance bypass&quot; from Intake to Storage, bypassing the UV chamber <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><span class="citation" title="file:///home/harbor/water/pilot/trial.md">Trial Results</span></li>
+<li><span class="citation" title="file:///home/harbor/water/pilot/cost.md">Operating Costs</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</div><a href="review/answer-06-followup.md">Original follow-up packet</a></details></article><article class="card shared-prefix" data-run="09-shared-prefix-r3"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + shared prefix</h2><div class="metrics"><div><strong>815</strong><span>synthesis reasoning tokens</span></div><div><strong>12/18</strong><span>frozen rubric</span></div><div><strong>1,341</strong><span>saved answer tokens</span></div></div><small>09-shared-prefix-r3</small></header><details class="annotation" open><summary>Existing reviewer assessment · 12/18</summary><p>Financial facts mostly present, but the maintenance comparison is reversed and the visual explanation is absent.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>The Capacity Constraint Dictates Harbor&#39;s Water Pilot Choice</h1>
+<h2>Thesis</h2>
+<p>Cedar must be selected despite its higher operating costs because it is the only system meeting the council&#39;s non-negotiable 1000-liter daily capacity requirement, while Birch fails this threshold at 900 liters per day. The capacity constraint renders cost and maintenance tradeoffs secondary to the fundamental service guarantee.</p>
+<h2>Supporting Evidence: Capacity as the Deciding Factor</h2>
+<p>The trial results establish a hard boundary: Cedar delivers 1200 liters per day while Birch delivers only 900 liters per day, both measured under identical operating conditions <span class="citation" title="file:///data/corpus/trial.md">trial.md</span>. The council&#39;s requirement of at least 1000 liters per day <span class="citation" title="file:///data/corpus/audit.md">audit.md</span> eliminates Birch from consideration regardless of other attributes. This finding is corroborated by an independent 30-day audit that corrected an early brochure claim of 1400 liters per day for Birch down to 900 liters per day, noting the brochure used a short clean-water test that is not representative <span class="citation" title="file:///data/corpus/audit.md">audit.md</span>.</p>
+<p>Cedar&#39;s capacity advantage is substantial—33% more water than Birch (1200 vs. 900 liters/day)—but comes at an energy cost: Cedar consumes 6 kWh per day versus Birch&#39;s 3 kWh per day <span class="citation" title="file:///data/corpus/trial.md">trial.md</span>. Both systems met the drinking-water quality target during the trial, confirming that capacity and water quality are independently achievable.</p>
+<h2>Complicating Evidence: Cost, Installation, and Maintenance Tradeoffs</h2>
+<p>Operating costs create a complicating tension. Cedar costs 18 credits per day to operate while Birch costs 12 credits per day, a 50% premium for Cedar <span class="citation" title="attachment://cost.md">cost.md</span>. The inlet upgrade requirement further complicates the economics: Cedar requires a 400-credit upgrade to the inlet system, whereas Birch needs no upgrade <span class="citation" title="attachment://cost.md">cost.md</span>. A grant covers installation but not recurring operating costs, meaning the council bears the full 18 credits/day for Cedar versus 12 credits/day for Birch.</p>
+<p>Maintenance intervals offer Cedar a relative advantage: Cedar requires filter inspection every 7 days while Birch requires inspection every 14 days <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. This represents a 50% reduction in maintenance frequency for Cedar, though the actual labor and replacement costs remain unknown.</p>
+<h2>Resolution: Capacity Compliance Overrides Economic Tradeoffs</h2>
+<p>The resolution rests on a single constraint: the council&#39;s 1000-liter daily requirement is a hard floor, not a target. Birch&#39;s 900 liters/day falls short by 100 liters, a 10% gap that cannot be bridged by operational adjustments. The brochure&#39;s inflated 1400-liter claim for Birch was an artifact of testing conditions not representative of actual operation; the audit&#39;s correction to 900 liters/day confirms Birch cannot meet the requirement <span class="citation" title="file:///data/corpus/audit.md">audit.md</span>.</p>
+<p>Cedar&#39;s higher energy consumption (6 kWh/day) and operating cost (18 credits/day) are quantifiable tradeoffs, but they do not affect capacity compliance. The inlet upgrade cost (400 credits) is a one-time installation expense, whereas the operating cost difference (6 credits/day) compounds over time. The grant covering installation but not operations means the council must budget for the upgrade and the ongoing premium, but Cedar remains the only system that can deliver the promised service volume.</p>
+<p>The maintenance advantage for Cedar—inspections every 7 days versus every 14 days—further tilts the balance toward Cedar, assuming maintenance labor costs are comparable across sites. This frequency difference suggests Cedar&#39;s filters may be more robust or require less frequent replacement, though the actual cost impact remains unknown.</p>
+<h2>Prescription: Select Cedar With Budgeted Upgrade and Operating Premium</h2>
+<p>The council should select Cedar and budget for the 400-credit inlet upgrade plus 18 credits/day operating cost. The 6 kWh/day energy consumption must be factored into long-term utility projections, though the trial does not specify energy pricing <span class="citation" title="file:///data/corpus/trial.md">trial.md</span>. The council must also plan for 7-day filter inspections and ensure sufficient budget for replacement cycles.</p>
+<p>Birch should be rejected not because it is cheaper or easier to maintain, but because it cannot meet the fundamental service requirement. The 12 credits/day operating cost advantage is irrelevant when the system delivers 100 liters/day less than the council requires.</p>
+<h2>Conclusion</h2>
+<p>Cedar must be selected because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement; Birch&#39;s 900 liters/day falls short of the minimum <span class="citation" title="file:///data/corpus/audit.md">audit.md</span>. The capacity constraint renders cost and maintenance tradeoffs secondary to the fundamental service guarantee. The council should budget for the 400-credit inlet upgrade and the 18 credits/day operating premium, accepting the higher energy consumption (6 kWh/day) as the price of reliable capacity delivery <span class="citation" title="file:///data/corpus/trial.md">trial.md</span>.</p>
+<h3>Limitations</h3>
+<p>The pilot evidence has critical gaps that limit confidence in long-term performance. First, the 30-day trial measured no winter performance; winter conditions were not tested <span class="citation" title="file:///content/maintenance.md">maintenance.md</span>. Second, neither system has established annual reliability from this short pilot; the trial figures refer to the same operating conditions, not annual forecasts <span class="citation" title="file:///data/corpus/trial.md">trial.md</span>. Third, the inlet upgrade cost (400 credits) and energy cost conversion (kWh to credits) remain unknown, as do the actual maintenance labor and replacement costs for the 7-day inspection cycle <span class="citation" title="attachment://cost.md">cost.md</span>. The brochure correction process itself demonstrates that initial claims may be unreliable, suggesting additional validation may be needed before final deployment.</p>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="file:///data/corpus/trial.md">Trial results</span></li>
+<li><span class="citation" title="file:///data/corpus/audit.md">Independent correction</span></li>
+<li><span class="citation" title="attachment://cost.md">Operating costs</span></li>
+<li><span class="citation" title="file:///content/maintenance.md">Maintenance and limitations</span></li>
+<li><span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 16da2d98d669…</summary><p><a href="review/answer-05.md">Open original answer packet</a></p><pre data-source="answer-05"># The Capacity Constraint Dictates Harbor&#39;s Water Pilot Choice
+
+## Thesis
+
+Cedar must be selected despite its higher operating costs because it is the only system meeting the council&#39;s non-negotiable 1000-liter daily capacity requirement, while Birch fails this threshold at 900 liters per day. The capacity constraint renders cost and maintenance tradeoffs secondary to the fundamental service guarantee.
+
+## Supporting Evidence: Capacity as the Deciding Factor
+
+The trial results establish a hard boundary: Cedar delivers 1200 liters per day while Birch delivers only 900 liters per day, both measured under identical operating conditions [trial.md](file:///data/corpus/trial.md). The council&#39;s requirement of at least 1000 liters per day [audit.md](file:///data/corpus/audit.md) eliminates Birch from consideration regardless of other attributes. This finding is corroborated by an independent 30-day audit that corrected an early brochure claim of 1400 liters per day for Birch down to 900 liters per day, noting the brochure used a short clean-water test that is not representative [audit.md](file:///data/corpus/audit.md).
+
+Cedar&#39;s capacity advantage is substantial—33% more water than Birch (1200 vs. 900 liters/day)—but comes at an energy cost: Cedar consumes 6 kWh per day versus Birch&#39;s 3 kWh per day [trial.md](file:///data/corpus/trial.md). Both systems met the drinking-water quality target during the trial, confirming that capacity and water quality are independently achievable.
+
+## Complicating Evidence: Cost, Installation, and Maintenance Tradeoffs
+
+Operating costs create a complicating tension. Cedar costs 18 credits per day to operate while Birch costs 12 credits per day, a 50% premium for Cedar [cost.md](attachment://cost.md). The inlet upgrade requirement further complicates the economics: Cedar requires a 400-credit upgrade to the inlet system, whereas Birch needs no upgrade [cost.md](attachment://cost.md). A grant covers installation but not recurring operating costs, meaning the council bears the full 18 credits/day for Cedar versus 12 credits/day for Birch.
+
+Maintenance intervals offer Cedar a relative advantage: Cedar requires filter inspection every 7 days while Birch requires inspection every 14 days [maintenance.md](file:///content/maintenance.md). This represents a 50% reduction in maintenance frequency for Cedar, though the actual labor and replacement costs remain unknown.
+
+## Resolution: Capacity Compliance Overrides Economic Tradeoffs
+
+The resolution rests on a single constraint: the council&#39;s 1000-liter daily requirement is a hard floor, not a target. Birch&#39;s 900 liters/day falls short by 100 liters, a 10% gap that cannot be bridged by operational adjustments. The brochure&#39;s inflated 1400-liter claim for Birch was an artifact of testing conditions not representative of actual operation; the audit&#39;s correction to 900 liters/day confirms Birch cannot meet the requirement [audit.md](file:///data/corpus/audit.md).
+
+Cedar&#39;s higher energy consumption (6 kWh/day) and operating cost (18 credits/day) are quantifiable tradeoffs, but they do not affect capacity compliance. The inlet upgrade cost (400 credits) is a one-time installation expense, whereas the operating cost difference (6 credits/day) compounds over time. The grant covering installation but not operations means the council must budget for the upgrade and the ongoing premium, but Cedar remains the only system that can deliver the promised service volume.
+
+The maintenance advantage for Cedar—inspections every 7 days versus every 14 days—further tilts the balance toward Cedar, assuming maintenance labor costs are comparable across sites. This frequency difference suggests Cedar&#39;s filters may be more robust or require less frequent replacement, though the actual cost impact remains unknown.
+
+## Prescription: Select Cedar With Budgeted Upgrade and Operating Premium
+
+The council should select Cedar and budget for the 400-credit inlet upgrade plus 18 credits/day operating cost. The 6 kWh/day energy consumption must be factored into long-term utility projections, though the trial does not specify energy pricing [trial.md](file:///data/corpus/trial.md). The council must also plan for 7-day filter inspections and ensure sufficient budget for replacement cycles.
+
+Birch should be rejected not because it is cheaper or easier to maintain, but because it cannot meet the fundamental service requirement. The 12 credits/day operating cost advantage is irrelevant when the system delivers 100 liters/day less than the council requires.
+
+## Conclusion
+
+Cedar must be selected because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement; Birch&#39;s 900 liters/day falls short of the minimum [audit.md](file:///data/corpus/audit.md). The capacity constraint renders cost and maintenance tradeoffs secondary to the fundamental service guarantee. The council should budget for the 400-credit inlet upgrade and the 18 credits/day operating premium, accepting the higher energy consumption (6 kWh/day) as the price of reliable capacity delivery [trial.md](file:///data/corpus/trial.md).
+
+### Limitations
+
+The pilot evidence has critical gaps that limit confidence in long-term performance. First, the 30-day trial measured no winter performance; winter conditions were not tested [maintenance.md](file:///content/maintenance.md). Second, neither system has established annual reliability from this short pilot; the trial figures refer to the same operating conditions, not annual forecasts [trial.md](file:///data/corpus/trial.md). Third, the inlet upgrade cost (400 credits) and energy cost conversion (kWh to credits) remain unknown, as do the actual maintenance labor and replacement costs for the 7-day inspection cycle [cost.md](attachment://cost.md). The brochure correction process itself demonstrates that initial claims may be unreliable, suggesting additional validation may be needed before final deployment.
+
+## Sources
+
+- [Trial results](file:///data/corpus/trial.md)
+- [Independent correction](file:///data/corpus/audit.md)
+- [Operating costs](attachment://cost.md)
+- [Maintenance and limitations](file:///content/maintenance.md)
+- [Harbor Water Pilot](attachment://9a503717ac5a/page/2)</pre><code>16da2d98d66976250e381f13bfb7bd336d925aa9db44fb49a99229de8862da00</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><h2>Harbor Water Pilot Selection Brief</h2>
+<h3>1. Which System Meets the Council Requirement?</h3>
+<p><strong>Cedar</strong> is the only system meeting the council&#39;s daily requirement.</p>
+<ul>
+<li><strong>Council requirement</strong>: At least 1000 liters per day <span class="citation" title="file:///data/corpus/audit.md">audit.md</span></li>
+<li><strong>Cedar capacity</strong>: 1200 liters per day <span class="citation" title="file:///data/corpus/trial.md">trial.md</span></li>
+<li><strong>Birch capacity</strong>: 900 liters per day <span class="citation" title="file:///data/corpus/trial.md">trial.md</span></li>
+</ul>
+<p>The independent 30-day audit corrected an early brochure claim that Birch delivered 1400 liters per day down to 900 liters per day, noting the brochure used a short clean-water test that is not representative. Birch&#39;s 900 liters/day falls short by 100 liters of the minimum requirement.</p>
+<h3>2. Daily Operating Cost</h3>
+<p><strong>Cedar&#39;s daily operating cost</strong>: 18 credits per day</p>
+<ul>
+<li>Cedar operating cost: 18 credits/day <span class="citation" title="attachment://cost.md">cost.md</span></li>
+<li>Birch operating cost: 12 credits/day <span class="citation" title="attachment://cost.md">cost.md</span></li>
+</ul>
+<p>Cedar requires a 400-credit inlet upgrade (one-time installation cost), while Birch requires no upgrade.</p>
+<h3>3. Component Bypassed by the Orange Route</h3>
+<p><strong>The orange route bypasses the UV chamber</strong>.</p>
+<p>From the Harbor Water Pilot routing diagram on page 2:</p>
+<ul>
+<li><strong>Blue route</strong> (normal treatment): Intake → UV chamber → Storage</li>
+<li><strong>Orange route</strong> (maintenance bypass): Intake → skips UV chamber → Storage</li>
+</ul>
+<p>The orange dashed line shows water flowing from Intake directly to Storage, completely bypassing the UV chamber component.</p>
+<hr>
+<h2>Conclusion</h2>
+<p>Cedar must be selected because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement. Birch&#39;s 900 liters/day falls short by 100 liters, a gap that cannot be bridged by operational adjustments. The higher operating cost (18 credits/day vs. 12 credits/day) and inlet upgrade requirement (400 credits) are quantifiable tradeoffs, but Cedar&#39;s capacity compliance is non-negotiable.</p>
+<h3>Limitations</h3>
+<p>The pilot evidence has critical gaps:</p>
+<ul>
+<li><strong>Winter reliability</strong>: No winter performance was measured <span class="citation" title="file:///content/maintenance.md">maintenance.md</span></li>
+<li><strong>Annual forecasts</strong>: Trial figures refer to identical operating conditions, not annual projections <span class="citation" title="file:///data/corpus/trial.md">trial.md</span></li>
+<li><strong>Unknown costs</strong>: Actual maintenance labor/replacement costs and energy pricing remain unknown <span class="citation" title="attachment://cost.md">cost.md</span></li>
+</ul>
+<hr>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="file:///data/corpus/trial.md">Trial results</span></li>
+<li><span class="citation" title="file:///data/corpus/audit.md">Independent correction</span></li>
+<li><span class="citation" title="attachment://cost.md">Operating costs</span></li>
+<li><span class="citation" title="attachment://9a503717ac5a/page/2">Harbor Water Pilot - Figure 1: Treatment routing</span></li>
+</ul>
+</div><a href="review/answer-05-followup.md">Original follow-up packet</a></details></article></div></section>
+<section class="round" data-round="3" data-arm="http"><div class="round-heading"><h2>Round 3 <span>· seed offset 4300</span></h2><p>Ordinary HTTP produced no report in this round. Its failed generation cannot serve as a quality-matched token comparison.</p></div><div class="columns"><article class="card resident" data-run="08-resident-r3"><header><div class="eyebrow">Fieldnote · resident context</div><h2>Lloyal</h2><div class="metrics"><div><strong>747</strong><span>synthesis reasoning tokens</span></div><div><strong>15/18</strong><span>frozen rubric</span></div><div><strong>1,084</strong><span>saved answer tokens</span></div></div><small>08-resident-r3</small></header><details class="annotation" open><summary>Existing reviewer assessment · 15/18</summary><p>Complete coverage, but includes a false energy-efficiency claim and invents a link to the lighting distractor.</p></details>
+    <section class="answer" aria-label="Complete initial answer"><h1>Harbor Water Pilot System Selection Report</h1>
+<h2>Thesis</h2>
+<p><strong>Cedar should be selected for the Harbor water pilot</strong> because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement, despite requiring a 400-credit inlet upgrade. The 30-day trial demonstrates Cedar delivers 1200 liters per day versus Birch&#39;s 900 liters per day, which fails the minimum threshold. While Birch requires no installation upgrade, its capacity shortfall is a hard constraint that cannot be resolved through operational adjustments.</p>
+<h2>Capacity and Energy Efficiency: The Hard Constraint</h2>
+<p>The independent 30-day audit corrected the early brochure claim that Birch delivered 1400 liters per day to 900 liters per day. The brochure used a short clean-water test that is not representative of actual conditions. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement.</p>
+<p>The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, under the same operating conditions. The critical finding is that Cedar outperforms Birch in both capacity and energy efficiency. Cedar uses 6 kWh per day versus Birch&#39;s 3 kWh per day, but Cedar&#39;s higher capacity justifies the additional energy consumption.</p>
+<p><strong>Important Distinction:</strong> The distractor.md file warns that lighting quantities must not be used as water production or energy figures. The early brochure&#39;s 1400 figure for Birch was likely confused with unrelated lighting pilot data (1400 lumens for Cedar lamps and 1200 lumens for Birch lamps).</p>
+<h2>Operating Costs and Installation Constraints</h2>
+<p>The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation costs. The grant covers installation but does not cover recurring operating costs.</p>
+<p><strong>Feasible Option:</strong> Cedar alone meets the council&#39;s 1000-liter/day requirement (1200 liters per day in trial), whereas Birch alone fails (900 liters per day). However, Cedar requires a 400-credit inlet upgrade. The feasible option is Cedar, provided the council can fund the installation upgrade.</p>
+<p>The trial results confirm that Cedar outperforms Birch in both capacity and energy efficiency. Cedar meets the 1000-liter daily requirement, while Birch does not. The operating costs in the ledger (18 credits/day for Cedar, 12 credits/day for Birch) exclude installation costs. The ledger reflects ongoing operational expenses, while the installation requirements (400-credit for Cedar, none for Birch) are capital expenditures covered by the grant.</p>
+<h2>Maintenance and Reliability: The Unknowns</h2>
+<p>Cedar requires filter inspection every 7 days versus Birch&#39;s every 14 days. However, the 30-day trial measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee.</p>
+<p><strong>What is Unknown:</strong> Winter reliability is completely unknown — the pilot measured &quot;no winter performance.&quot; Annual reliability has not been established for either system. Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified. Performance under extended cold-weather conditions cannot be determined from this trial.</p>
+<h2>Visual Routing Explanation</h2>
+<p>The Harbor Water Pilot Figure 1 on page 2 shows two distinct water treatment routing paths. The blue route (normal treatment route) flows from the Intake component through the UV chamber to the Storage component, following the standard treatment sequence. The orange route (maintenance bypass) provides an alternative path from the Intake component directly to the Storage component, bypassing the UV chamber entirely. This bypass allows water to flow from Intake to Storage without undergoing UV treatment, which would be used during maintenance periods when the UV chamber needs servicing or repair.</p>
+<h2>Resolution and Recommendation</h2>
+<p>The capacity requirement creates a binary decision: Cedar meets the 1000-liter/day threshold; Birch does not. The installation cost for Cedar is a capital expense covered by the grant, not a recurring operational burden. The winter reliability unknown represents a risk that should be mitigated through additional testing, but does not change the capacity-based selection.</p>
+<p><strong>Recommendation:</strong> Select Cedar for the Harbor water pilot, contingent on council approval of the 400-credit inlet upgrade. Conduct additional winter reliability testing before full deployment to address the unknown winter performance.</p>
+<h3>Limitations</h3>
+<ul>
+<li>Winter reliability completely unknown — pilot measured &quot;no winter performance&quot;</li>
+<li>Neither system has established annual reliability from this short pilot</li>
+<li>Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified</li>
+<li>Performance under extended cold-weather conditions cannot be determined from this trial</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li><span class="citation" title="attachment://audit.md/page/1">audit.md</span></li>
+<li><span class="citation" title="attachment://trial.md/page/1">trial.md</span></li>
+<li><span class="citation" title="attachment://cost.md/page/1">cost.md</span></li>
+<li><span class="citation" title="attachment://maintenance.md/page/1">maintenance.md</span></li>
+<li><span class="citation" title="attachment://distractor.md/page/1">distractor.md</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</section>
+    <details class="source"><summary>Exact saved Markdown · SHA-256 74cea75225e0…</summary><p><a href="review/answer-06.md">Open original answer packet</a></p><pre data-source="answer-06"># Harbor Water Pilot System Selection Report
+
+## Thesis
+
+**Cedar should be selected for the Harbor water pilot** because it is the only system meeting the council&#39;s 1000-liter daily capacity requirement, despite requiring a 400-credit inlet upgrade. The 30-day trial demonstrates Cedar delivers 1200 liters per day versus Birch&#39;s 900 liters per day, which fails the minimum threshold. While Birch requires no installation upgrade, its capacity shortfall is a hard constraint that cannot be resolved through operational adjustments.
+
+## Capacity and Energy Efficiency: The Hard Constraint
+
+The independent 30-day audit corrected the early brochure claim that Birch delivered 1400 liters per day to 900 liters per day. The brochure used a short clean-water test that is not representative of actual conditions. The council requires at least 1000 liters per day, so Birch alone fails the capacity requirement.
+
+The trial results show Cedar delivered 1200 liters per day and Birch delivered 900 liters per day over 30 days, under the same operating conditions. The critical finding is that Cedar outperforms Birch in both capacity and energy efficiency. Cedar uses 6 kWh per day versus Birch&#39;s 3 kWh per day, but Cedar&#39;s higher capacity justifies the additional energy consumption.
+
+**Important Distinction:** The distractor.md file warns that lighting quantities must not be used as water production or energy figures. The early brochure&#39;s 1400 figure for Birch was likely confused with unrelated lighting pilot data (1400 lumens for Cedar lamps and 1200 lumens for Birch lamps).
+
+## Operating Costs and Installation Constraints
+
+The operating ledger reports Cedar at 18 credits per day and Birch at 12 credits per day, excluding installation costs. The grant covers installation but does not cover recurring operating costs.
+
+**Feasible Option:** Cedar alone meets the council&#39;s 1000-liter/day requirement (1200 liters per day in trial), whereas Birch alone fails (900 liters per day). However, Cedar requires a 400-credit inlet upgrade. The feasible option is Cedar, provided the council can fund the installation upgrade.
+
+The trial results confirm that Cedar outperforms Birch in both capacity and energy efficiency. Cedar meets the 1000-liter daily requirement, while Birch does not. The operating costs in the ledger (18 credits/day for Cedar, 12 credits/day for Birch) exclude installation costs. The ledger reflects ongoing operational expenses, while the installation requirements (400-credit for Cedar, none for Birch) are capital expenditures covered by the grant.
+
+## Maintenance and Reliability: The Unknowns
+
+Cedar requires filter inspection every 7 days versus Birch&#39;s every 14 days. However, the 30-day trial measured no winter performance. Neither system has established annual reliability from this short pilot. Do not treat a 30-day result as an annual guarantee.
+
+**What is Unknown:** Winter reliability is completely unknown — the pilot measured &quot;no winter performance.&quot; Annual reliability has not been established for either system. Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified. Performance under extended cold-weather conditions cannot be determined from this trial.
+
+## Visual Routing Explanation
+
+The Harbor Water Pilot Figure 1 on page 2 shows two distinct water treatment routing paths. The blue route (normal treatment route) flows from the Intake component through the UV chamber to the Storage component, following the standard treatment sequence. The orange route (maintenance bypass) provides an alternative path from the Intake component directly to the Storage component, bypassing the UV chamber entirely. This bypass allows water to flow from Intake to Storage without undergoing UV treatment, which would be used during maintenance periods when the UV chamber needs servicing or repair.
+
+## Resolution and Recommendation
+
+The capacity requirement creates a binary decision: Cedar meets the 1000-liter/day threshold; Birch does not. The installation cost for Cedar is a capital expense covered by the grant, not a recurring operational burden. The winter reliability unknown represents a risk that should be mitigated through additional testing, but does not change the capacity-based selection.
+
+**Recommendation:** Select Cedar for the Harbor water pilot, contingent on council approval of the 400-credit inlet upgrade. Conduct additional winter reliability testing before full deployment to address the unknown winter performance.
+
+### Limitations
+
+- Winter reliability completely unknown — pilot measured &quot;no winter performance&quot;
+- Neither system has established annual reliability from this short pilot
+- Long-term maintenance intervals beyond the 7-day/14-day filter inspections are not specified
+- Performance under extended cold-weather conditions cannot be determined from this trial
+
+## Sources
+
+- [audit.md](attachment://audit.md/page/1)
+- [trial.md](attachment://trial.md/page/1)
+- [cost.md](attachment://cost.md/page/1)
+- [maintenance.md](attachment://maintenance.md/page/1)
+- [distractor.md](attachment://distractor.md/page/1)
+- [Harbor Water Pilot](attachment://3b32f5401dfe/page/2)</pre><code>74cea75225e0eda9ee0cb4f9550682c5790137051b06eb7e987c53ed51a4314f</code></details>
+    <details class="followup"><summary>Separate follow-up answer — excluded from the initial score</summary><div class="answer"><p>Based on the trial results and routing diagram analysis:</p>
+<p><strong>1. System Meeting Council Requirement:</strong>
+Cedar meets the daily council requirement. The trial measured Cedar delivering 1200 liters per day, which exceeds the 1000 liters per day requirement. Birch delivered only 900 liters per day, which does not meet the requirement <span class="citation" title="file:///home/harbor/water/pilot/trial.md">trial.md</span> <span class="citation" title="attachment://3b32f5401dfe/page/1">Harbor Water Pilot</span>.</p>
+<p><strong>2. Daily Operating Cost:</strong>
+Cedar&#39;s daily operating cost is 18 credits per day, excluding installation costs <span class="citation" title="file:///home/harbor/water/pilot/cost.md">cost.md</span>.</p>
+<p><strong>3. Orange Route Bypass Component:</strong>
+The orange route bypasses the UV chamber. The routing diagram shows the orange dashed line as a &quot;maintenance bypass&quot; that goes directly from Intake to Storage, skipping the UV chamber component that is in the blue normal treatment route <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span>.</p>
+<p><strong>Key Evidence:</strong></p>
+<ul>
+<li>Trial results: &quot;Cedar delivered 1200 liters per day; Birch delivered 900 liters per day&quot; <span class="citation" title="file:///home/harbor/water/pilot/trial.md">trial.md</span></li>
+<li>Operating costs: &quot;Cedar at 18 credits per day and Birch at 12 credits per day&quot; <span class="citation" title="file:///home/harbor/water/pilot/cost.md">cost.md</span></li>
+<li>Routing diagram: Orange route shows &quot;maintenance bypass&quot; from Intake to Storage, bypassing the UV chamber <span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><span class="citation" title="file:///home/harbor/water/pilot/trial.md">Trial Results</span></li>
+<li><span class="citation" title="file:///home/harbor/water/pilot/cost.md">Operating Costs</span></li>
+<li><span class="citation" title="attachment://3b32f5401dfe/page/2">Harbor Water Pilot</span></li>
+</ul>
+</div><a href="review/answer-06-followup.md">Original follow-up packet</a></details></article><article class="card http" data-run="07-http-r3"><header><div class="eyebrow">LangGraph + llama-server · prefix-cache enabled</div><h2>HTTP + prefix-cache</h2><div class="metrics"><div><strong>28,857</strong><span>synthesis reasoning tokens · failed</span></div><div><strong>—</strong><span>frozen rubric · no answer</span></div><div><strong>—</strong><span>saved answer tokens</span></div></div><small>07-http-r3</small></header><div class="failure"><h3>No saved initial answer</h3><p>The synthesis exhausted its 32,768-position context while reasoning. No brief or completed follow-up was saved. This is a failed attempt, not a zero-token answer.</p></div></article></div></section>
+<div class="footer"><p>All answers are shown in full. Model-produced citation targets are preserved in the raw Markdown and on hover; they are inert in this view because several are fabricated or session-local. Expand “Exact saved Markdown” to inspect the original text and its verified SHA-256. Follow-ups are separate and cannot repair an initial answer’s score.</p><p>One synthetic task, 3 rounds. Full prompts and generated evidence differ, and the shared-prefix arm changes instruction placement and tool headers. These observations do not isolate a retained-state mechanism or establish a general quality advantage. Application timing is reported separately in the main benchmark report.</p><p><a href="quality-rubric.json">Frozen rubric</a> · <a href="quality-review-blinded.json">Original anonymous review</a> · <a href="quality-by-run.json">Run mapping and evidence</a> · <a href="summary.json">Measurements</a> · <a href="README.md">Setup and interpretation</a></p></div>
+</main><script>
+const panels = [...document.querySelectorAll('.round')];
+const buttons = [...document.querySelectorAll('[data-select-round]')];
+const select = document.getElementById('comparator');
+function render() {
+  const params = new URLSearchParams(location.hash.slice(1));
+  const round = buttons.some(b => b.dataset.selectRound === params.get('round')) ? params.get('round') : '2';
+  const arm = params.get('arm') === 'http' ? 'http' : 'shared-prefix';
+  panels.forEach(p => { p.hidden = p.dataset.round !== round || p.dataset.arm !== arm; });
+  buttons.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.selectRound === round)));
+  select.value = arm;
+}
+buttons.forEach(b => b.addEventListener('click', () => { location.hash = new URLSearchParams({round:b.dataset.selectRound,arm:select.value}); }));
+select.addEventListener('change', () => { location.hash = new URLSearchParams({round:document.querySelector('[aria-pressed="true"]').dataset.selectRound,arm:select.value}); });
+window.addEventListener('hashchange', render); render();
+</script></body></html>

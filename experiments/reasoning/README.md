@@ -2,7 +2,7 @@
 
 The benchmark runs the full Fieldnote Survey workload through its web UI: original PDF and site map uploads, Markdown corpus retrieval, reranking, fresh source preflight, planning and review, four concurrent inquiries, recovery when triggered, synthesis, a saved brief and a follow-up. It tests whether the exploratory synthesis-reasoning difference recurs on CUDA.
 
-**Completed:** [NVIDIA L40S results, 10 October 2026](results/cuda-fieldnote-v1/README.md). Lloyal emitted 617 / 471 / 747 synthesis reasoning tokens. Shared-prefix HTTP reached a similar range, with one tool-call-only output and omissions in the other reports. Ordinary HTTP completed one report and exhausted its context in two attempts. All nine attempts, quality reviews and raw evidence are retained; these results do not establish a state-reuse mechanism or quality equivalence.
+**Completed:** [NVIDIA L40S results, 10 October 2026](results/cuda-fieldnote-v1/README.md). In both substantive shared-prefix comparisons, Lloyal used fewer synthesis reasoning tokens (34.9% and 8.3% fewer) and scored higher on the frozen rubric (12 vs 8 and 15 vs 12 out of 18). The remaining shared-prefix output was only a tool-call block. Ordinary HTTP completed one report and exhausted its context in two attempts. [Read the complete answers side by side](results/cuda-fieldnote-v1/answers.html). All nine attempts, quality reviews and raw evidence are retained; these results do not establish a general advantage, a state-reuse mechanism or quality equivalence.
 
 | Arm | Implementation |
 |---|---|
@@ -52,6 +52,7 @@ python3 ../reasoning/scripts/analyze.py ../reasoning/runs/my-cuda-suite \
 python3 ../reasoning/scripts/verify.py ../reasoning/runs/my-cuda-suite
 python3 ../reasoning/scripts/join-review.py ../reasoning/runs/my-cuda-suite
 python3 ../reasoning/scripts/report.py ../reasoning/runs/my-cuda-suite
+node ../reasoning/scripts/compare-answers.mjs ../reasoning/runs/my-cuda-suite
 ```
 
 Save rubric assessments as `quality-review.json` before joining the mapping. The published review provides the expected format. On the prepared CUDA host, `bash ../reasoning/scripts/tokenize-and-analyze.sh /absolute/path/to/suite` starts and stops a standalone tokenizer server and runs analysis plus receipt verification, refusing to overlap existing model stacks. `report.py` requires Matplotlib and NumPy. To verify tokenizer counts afresh from an evidence archive, first move aside its `token-counts.json`; otherwise those saved post-hoc counts are reused. Primary reasoning metrics cover the initial brief; follow-up acceptance, quality and raw-log metrics are recorded separately.
