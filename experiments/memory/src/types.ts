@@ -7,6 +7,7 @@ export interface Config {
   projector: string; reranker: string; context: number; parallel: number; port: number;
   maxOutputTokens: number; maxToolTurns: number; timeoutMs: number; holdMs: number;
   toolLatencyMs: number; maxProcessRssBytes: number;
+  reasoning?: { arm: 'resident' | 'http' | 'shared-prefix'; seed: number; sampling: { temperature: number; topK: number; topP: number; minP: number }; nativeBranches: number };
   memoryInstrumentation?: boolean; cpuDiagnostic?: boolean; fieldnotePort?: number; rerankerPort?: number;
 }
 export interface Task { id: string; description: string }

@@ -1,0 +1,50 @@
+{
+  "revision": "0225ffc747c467f4d5225c75d383b96c34833a82",
+  "runs": {
+    "01-resident-r1": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "02-shared-prefix-r1": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "03-http-r1": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "04-shared-prefix-r2": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "05-http-r2": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "06-resident-r2": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "07-http-r3": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "08-resident-r3": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    },
+    "09-shared-prefix-r3": {
+      "allMatch": true,
+      "mismatches": [],
+      "nativePatchMatches": true
+    }
+  }
+}

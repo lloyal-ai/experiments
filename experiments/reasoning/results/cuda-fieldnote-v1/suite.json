@@ -1,0 +1,146 @@
+{
+  "createdAt": "2026-10-10T02:18:34.255Z",
+  "protocol": {
+    "version": 1,
+    "status": "frozen",
+    "purpose": "Test whether the lower emitted synthesis reasoning observed in the composed Fieldnote workload repeats on CUDA, including a shared-prefix HTTP control.",
+    "workload": "Full Fieldnote Survey, Standard effort, fresh session/coverage, original Harbor PDF and site map plus Markdown corpus, four reviewed objectives, saved brief and follow-up. Route-explicit question is identical to the completed CUDA memory composed workload.",
+    "arms": [
+      "resident",
+      "http",
+      "shared-prefix"
+    ],
+    "armMeaning": {
+      "resident": "Pinned Fieldnote orchestration with public Branch sampler settings at stage boundaries; resident trunk/spine and ordinary native abilities.",
+      "http": "Existing idiomatic LangGraph host behind the same Fieldnote UI, cache_prompt=true, llama-server prefix-cache enabled.",
+      "shared-prefix": "The same HTTP host and workflow: stable system brief/catalog and tool schema, with complete original stage instructions and adjacent text/images grouped in the user turn. Synthesis retains the research tool schema with stock tool_choice=none. Natural prefix-cache reuse; no synthetic padding or hidden priming."
+    },
+    "repetitions": 3,
+    "seedOffsets": [
+      4100,
+      4200,
+      4300
+    ],
+    "sampling": {
+      "temperature": 0.5,
+      "plannerTemperature": 0.3,
+      "topK": 40,
+      "topP": 0.95,
+      "minP": 0.05,
+      "typicalP": 1,
+      "repeatPenalty": 1,
+      "frequencyPenalty": 0,
+      "presencePenalty": 0,
+      "repeatLastN": 64,
+      "order": [
+        "penalties",
+        "top_k",
+        "typ_p",
+        "top_p",
+        "min_p",
+        "temperature",
+        "dist"
+      ]
+    },
+    "seeds": {
+      "preflight": "2000 + source index, fixed by pinned coverage API",
+      "planner": "offset + 100",
+      "inquiries": "offset + 1000 + index",
+      "synthesis": "offset + 3000"
+    },
+    "controls": {
+      "model": "qwen3.5-4b.gguf",
+      "projector": "qwen3.5-4b-mmproj.gguf",
+      "reranker": "qwen3-reranker-0.6b-q8.gguf",
+      "context": 32768,
+      "httpParallel": 4,
+      "nativeBranches": 8,
+      "prefixCacheMiB": 1024,
+      "httpKvLayout": "--kv-unified (same as prior composed runs)",
+      "gpu": "one NVIDIA L40S; stacks run sequentially",
+      "tracing": "Native LLOYAL_DEV=1, instrumented native and server binaries from previous CUDA experiment",
+      "outputCap": "No explicit synthesis cap on either path; retain context/output-limit failures"
+    },
+    "order": "Random initial arm permutation, cyclic rotation per repetition; one occurrence in each position. Save realized order before any measured run.",
+    "acceptance": [
+      "Full UI journey completed",
+      "Fresh preflight and synthesis events present",
+      "Four reviewed inquiry objectives retained with original routing",
+      "Model/projector/reranker and pinned runtime identities saved",
+      "Explicit accepted sampler settings recorded",
+      "HTTP exact requests, rendered prompts, SSE and cache receipts retained",
+      "Shared-prefix synthesis has nonzero server-reported cache_n, with reusable token-prefix evidence"
+    ],
+    "outcomes": [
+      "Emitted reasoning tokens by stage, post-hoc same GGUF tokenizer",
+      "Visible final answer tokens and words",
+      "Per-stage generation totals and wall time",
+      "Synthesis and workload HTTP prefix-cache reuse",
+      "Tool calls, recovery and failures",
+      "Rubric-scored initial answer and separate follow-up"
+    ],
+    "interpretation": "Three repetitions of one synthetic task are exploratory. Full inputs and generated evidence differ. Shared-prefix layout is an input-construction intervention, not a pure cache on/off ablation. Matching sampler settings does not make different execution paths bitwise identical. Reasoning text is not a measure of all internal computation. No causal or quality-equivalence claim from token counts alone. The shared-prefix variant changes instruction placement from system to user and retains the research tool schema at synthesis; its synthesis system prompt is therefore not byte-identical to the other two arms. Original stage instruction text is preserved.",
+    "failurePolicy": "Retain every pilot, completed attempt and failure. No unrecorded automatic replacement. Pilot repairs precede a new protocol/source freeze; results with missing acceptance receipts remain ineligible.",
+    "pilotAcceptance": {
+      "resident": "pilot-resident-v1: full UI journey complete; stage samplers applied through public Branch API",
+      "shared-prefix": "pilot-shared-prefix-v2: full UI journey complete; synthesis cache_n=1788, prompt_n=3786; seven tool schemas retained with tool_choice=none",
+      "retainedFailure": "pilot-shared-prefix-v1: full UI completed but synthesis cache_n=0; shared prefix inside changing system message lacked a reusable recurrent checkpoint"
+    }
+  },
+  "protocolSha256": "02693fcf7fc93052df6cb9d8a85b2831a27b0a34e93f7e850ec20cdff5cebc3e",
+  "rubricSha256": "6ae3c2e22737ff6307d338329c694523c970251eaa9c60f015be3fc96ffe494c",
+  "schedule": [
+    {
+      "replicate": 1,
+      "seed": 4100,
+      "arm": "resident"
+    },
+    {
+      "replicate": 1,
+      "seed": 4100,
+      "arm": "shared-prefix"
+    },
+    {
+      "replicate": 1,
+      "seed": 4100,
+      "arm": "http"
+    },
+    {
+      "replicate": 2,
+      "seed": 4200,
+      "arm": "shared-prefix"
+    },
+    {
+      "replicate": 2,
+      "seed": 4200,
+      "arm": "http"
+    },
+    {
+      "replicate": 2,
+      "seed": 4200,
+      "arm": "resident"
+    },
+    {
+      "replicate": 3,
+      "seed": 4300,
+      "arm": "http"
+    },
+    {
+      "replicate": 3,
+      "seed": 4300,
+      "arm": "resident"
+    },
+    {
+      "replicate": 3,
+      "seed": 4300,
+      "arm": "shared-prefix"
+    }
+  ],
+  "nativePatch": {
+    "source": "/data/lloyal-experiments/experiments/memory/work/fieldnote-instrumented/src/harness/research.ts",
+    "sourceSha256": "bfb88aaf4df1f9b403f54e8498f3d711903e9ac37a2c2a50eaee1d48287b1acb",
+    "patchedSha256": "a392c92f1f568c656aae21d717553cc65c560b48b04fc9c3fee6c7593fe6258f",
+    "helperSha256": "8aa0654bf2bd5020da817b8b40a4168472946ef2a3e2180640b74805675fc705",
+    "scope": "Explicit public Branch sampler settings at stage boundaries; inquiry seed offset. No orchestration, evidence, prompt or budget edits. Preflight agent seeds stay 2000+i, as in the pinned coverage API."
+  }
+}

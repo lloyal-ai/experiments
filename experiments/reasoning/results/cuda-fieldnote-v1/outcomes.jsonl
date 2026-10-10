@@ -1,0 +1,9 @@
+{"id":"01-resident-r1","replicate":1,"seed":4100,"arm":"resident","code":0,"signal":null,"finishedAt":"2026-10-10T02:23:57.917Z"}
+{"id":"02-shared-prefix-r1","replicate":1,"seed":4100,"arm":"shared-prefix","code":0,"signal":null,"finishedAt":"2026-10-10T02:24:58.850Z"}
+{"id":"03-http-r1","replicate":1,"seed":4100,"arm":"http","code":0,"signal":null,"finishedAt":"2026-10-10T02:26:23.479Z"}
+{"id":"04-shared-prefix-r2","replicate":2,"seed":4200,"arm":"shared-prefix","code":0,"signal":null,"finishedAt":"2026-10-10T02:27:33.038Z"}
+{"id":"05-http-r2","replicate":2,"seed":4200,"arm":"http","code":1,"signal":null,"finishedAt":"2026-10-10T02:31:25.156Z"}
+{"id":"06-resident-r2","replicate":2,"seed":4200,"arm":"resident","code":0,"signal":null,"finishedAt":"2026-10-10T02:37:01.319Z"}
+{"id":"07-http-r3","replicate":3,"seed":4300,"arm":"http","code":1,"signal":null,"finishedAt":"2026-10-10T02:41:04.988Z"}
+{"id":"08-resident-r3","replicate":3,"seed":4300,"arm":"resident","code":0,"signal":null,"finishedAt":"2026-10-10T02:51:05.834Z"}
+{"id":"09-shared-prefix-r3","replicate":3,"seed":4300,"arm":"shared-prefix","code":0,"signal":null,"finishedAt":"2026-10-10T02:52:21.334Z"}

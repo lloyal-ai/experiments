@@ -1,0 +1,1807 @@
+{
+  "analysisSourceSha256": "b938c1b8d530ea25c344dc5cdc7f062474f07b63c3d42d21ae74fa0af823869f",
+  "tokenizer": {
+    "url": null,
+    "method": "Same GGUF /tokenize, add_special=false, parse_special=false; sum completed reasoning turns separately. Recovery reasoning unavailable on native traces is flagged, never treated as zero."
+  },
+  "runs": [
+    {
+      "run": "01-resident-r1",
+      "arm": "resident",
+      "seed": 4100,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": null
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 64452.783951000005,
+        "plannerMs": 11652.219364000004,
+        "reviewMs": 678.2421389999945,
+        "researchMs": 182865.796514,
+        "synthesisMs": 26129.364194999973,
+        "researchToCompleteMs": 209210.08264199996,
+        "firstGenerationAfterResearchMs": 537.3978510000015,
+        "firstFindingAfterResearchMs": 76864.140736,
+        "queryToCompleteMs": 286272.93668099993,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1477,
+        "inquiryTokens": 4555,
+        "synthesisTokensIncludingReasoning": 2206,
+        "answerChars": 7263,
+        "visibleWordsApprox": 890,
+        "reasoningChars": 2518,
+        "reasoningTokenCount": 617,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": null,
+          "reasoningChars": 3039,
+          "completedTurnsOrRequests": 8,
+          "recoveryReasoningUnavailable": true,
+          "completedTurnReasoningTokens": 715
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2217,
+          "reasoningChars": 9695,
+          "completedTurnsOrRequests": 24
+        },
+        "synthesis": {
+          "reasoningTokens": 617,
+          "reasoningChars": 2518,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 1588,
+      "answerTokens": 1587,
+      "answerWords": 901,
+      "answerSha256": "696995394455c36d5607a155f8e23cb633d91dafc22497b185e3af8bca52385c",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": null,
+      "httpWorkloadCache": {
+        "inputTokens": null,
+        "cachedTokens": null,
+        "fraction": null,
+        "available": false
+      },
+      "nativeSampling": [
+        {
+          "stage": "preflight",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 6100,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791598722955
+        },
+        {
+          "stage": "planning",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.3,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 4200,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791598787410
+        },
+        {
+          "stage": "inquiry",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5100,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791598799938
+        },
+        {
+          "stage": "synthesis",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 7100,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791598982608
+        },
+        {
+          "stage": "inquiry",
+          "branch": 196610,
+          "position": 3402,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5100,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599009322
+        }
+      ],
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": true,
+      "rawJournal": {
+        "bytes": 9037144,
+        "rows": 23180,
+        "sha256": "80f80be821f3ca9c6a41bc449db8e8a5d6d1c1dd9faa3dddf743db0d97ee605d",
+        "lastSeq": 23180
+      },
+      "sourceProtocolSha256": "c0c8ae17de5d284dc3462f7431bf776b956dce0a07e01d6a61dddf75f595d3ba",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 32,
+        "researchCallsReported": 24,
+        "byTool": {
+          "search_documents": 5,
+          "search": 10,
+          "grep": 3,
+          "read_document": 1,
+          "read_file": 8,
+          "view_page": 1,
+          "report": 4
+        },
+        "researchByTool": {
+          "search_documents": 1,
+          "grep": 3,
+          "search": 6,
+          "read_document": 1,
+          "read_file": 8,
+          "view_page": 1,
+          "report": 4
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 15,
+        "candidatesScored": 70,
+        "admittedTokens": 4155,
+        "selectedPassages": 70,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 2,
+      "errors": [
+        {
+          "seq": 4553,
+          "atMs": 76381.754999,
+          "type": "wire.native.raw",
+          "data": {
+            "type": "agent:failed",
+            "agentId": 65539,
+            "reason": "recovery_skipped"
+          },
+          "afterTerminal": false
+        }
+      ],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 27,
+        "endSeq": 19656,
+        "startMs": 7410.4129649999995,
+        "endMs": 293683.34964599996,
+        "elapsedMs": 286272.93668099993,
+        "observedMs": 286272.93668099993,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-18-42-679-9b0419ce-89c0-4a1b-ba15-312f16fe88af",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 2206,
+      "posthocBoundaryDelta": 2,
+      "qualityReview": {
+        "packet": "answer-02",
+        "score": 16,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "02-shared-prefix-r1",
+      "arm": "shared-prefix",
+      "seed": 4100,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": true
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 9733.447441999999,
+        "plannerMs": 2583.2929299999996,
+        "reviewMs": 1078.2812489999997,
+        "researchMs": 25007.760028999997,
+        "synthesisMs": 3795.609107999997,
+        "researchToCompleteMs": 28807.764583999997,
+        "firstGenerationAfterResearchMs": 1151.3344480000014,
+        "firstFindingAfterResearchMs": 16235.384607,
+        "queryToCompleteMs": 42229.42795999999,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1714,
+        "inquiryTokens": 5218,
+        "synthesisTokensIncludingReasoning": 499,
+        "answerChars": 99,
+        "visibleWordsApprox": 7,
+        "reasoningChars": 2030,
+        "reasoningTokenCount": 470,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 1173,
+          "reasoningChars": 4919,
+          "completedTurnsOrRequests": 7
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2973,
+          "reasoningChars": 13336,
+          "completedTurnsOrRequests": 22
+        },
+        "synthesis": {
+          "reasoningTokens": 470,
+          "reasoningChars": 2030,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 26,
+      "answerTokens": 26,
+      "answerWords": 7,
+      "answerSha256": "34a264e41f5956f7e01a025c144c39a8d6397c5fa86bf5a8d9d84d86fc461418",
+      "synthesisSystemSha256": "8bcf7cdc9ee26ef517d7dbc4536338e5be93861736e2dc7ad8d0ceb40b38977f",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "c30d4221-d487-43b1-bb8d-f12059cf038c",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 129478,
+        "sha256": "725bc508948083002fad6488ed064613de78560471a7ef64098148256e9343f8",
+        "serverTimings": {
+          "cache_n": 1788,
+          "prompt_n": 3646,
+          "prompt_ms": 389.117,
+          "prompt_per_token_ms": 0.10672435545803621,
+          "prompt_per_second": 9369.932436773515,
+          "predicted_n": 499,
+          "predicted_ms": 3141.407,
+          "predicted_per_token_ms": 6.295404809619239,
+          "predicted_per_second": 158.8460202705348
+        },
+        "sseDone": true,
+        "finishReason": "stop",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 1798,
+        "renderedTextualTokens": 5434
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 132513,
+        "cachedTokens": 89401,
+        "fraction": 0.6746583354086014,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 2285765,
+        "rows": 7763,
+        "sha256": "da5ed4d0dc1fff46c643e4c0977d0885b53793e66b2027d9a5d9bf3b1e3d1050",
+        "lastSeq": 7763
+      },
+      "sourceProtocolSha256": "a55d995a3851a4b2c97a4188707b52be250935db93f97ddf3ebad8ad8b5e701a",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 32,
+        "researchCallsReported": 23,
+        "byTool": {
+          "search_documents": 6,
+          "search": 8,
+          "read_file": 15,
+          "read_document": 1,
+          "grep": 1,
+          "view_page": 1
+        },
+        "researchByTool": {
+          "search": 6,
+          "search_documents": 3,
+          "read_file": 11,
+          "read_document": 1,
+          "grep": 1,
+          "view_page": 1
+        },
+        "errorResults": [
+          {
+            "seq": 3209,
+            "tool": "search_documents",
+            "result": {
+              "error": "Unknown document: cost.md"
+            }
+          },
+          {
+            "seq": 3211,
+            "tool": "search_documents",
+            "result": {
+              "error": "Unknown document: audit.md"
+            }
+          }
+        ]
+      },
+      "retrieval": {
+        "operations": 12,
+        "candidatesScored": 56,
+        "admittedTokens": 3324,
+        "selectedPassages": 56,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 0,
+      "errors": [],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 6562,
+        "startMs": 8067.692065,
+        "endMs": 50297.120025,
+        "elapsedMs": 42229.42795999999,
+        "observedMs": 42229.42795999999,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-24-06.982Z-daafb3c5-ed4a-43cf-bded-e9e825b00c95",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 499,
+      "posthocBoundaryDelta": 3,
+      "qualityReview": {
+        "packet": "answer-01",
+        "score": 0,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "03-http-r1",
+      "arm": "http",
+      "seed": 4100,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": null
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 18704.665054999998,
+        "plannerMs": 2989.842583999998,
+        "reviewMs": 648.011305,
+        "researchMs": 22780.739549,
+        "synthesisMs": 22736.624678,
+        "researchToCompleteMs": 45520.80245399999,
+        "firstGenerationAfterResearchMs": 1263.0480690000004,
+        "firstFindingAfterResearchMs": 13803.960079000004,
+        "queryToCompleteMs": 67887.12626199999,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 3381,
+        "inquiryTokens": 5524,
+        "synthesisTokensIncludingReasoning": 3492,
+        "answerChars": 3722,
+        "visibleWordsApprox": 475,
+        "reasoningChars": 9669,
+        "reasoningTokenCount": 2689,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 2151,
+          "reasoningChars": 9191,
+          "completedTurnsOrRequests": 8
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 3129,
+          "reasoningChars": 13348,
+          "completedTurnsOrRequests": 20
+        },
+        "synthesis": {
+          "reasoningTokens": 2689,
+          "reasoningChars": 9669,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 800,
+      "answerTokens": 800,
+      "answerWords": 482,
+      "answerSha256": "d4fc8a099dc0d2da6866fe3d5373a5465323fe16c902c28cf867688cd90212f2",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "c84c5a47-d659-46a6-80c2-0a4bffb820b1",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 896377,
+        "sha256": "97899495cb4f322d1e897a2460e8cbf92711184f768ef9dbc997c362f2c1bef7",
+        "serverTimings": {
+          "cache_n": 0,
+          "prompt_n": 3783,
+          "prompt_ms": 400.489,
+          "prompt_per_token_ms": 0.10586545070050224,
+          "prompt_per_second": 9445.952323284784,
+          "predicted_n": 3492,
+          "predicted_ms": 21436.467,
+          "predicted_per_token_ms": 6.138736254295533,
+          "predicted_per_second": 162.89997787415248
+        },
+        "sseDone": true,
+        "finishReason": "stop",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 4,
+        "renderedTextualTokens": 3783
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 121007,
+        "cachedTokens": 75717,
+        "fraction": 0.6257241316618047,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 3480510,
+        "rows": 12198,
+        "sha256": "c9df46f1e47d1ba95526572cf3f20b9e0992a71c84d28abe690d8e6b91547925",
+        "lastSeq": 12198
+      },
+      "sourceProtocolSha256": "06caa1f3b39b66ef97a6aad8c2772dc11bc007f2f217bb05f17fdebb416a493d",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 38,
+        "researchCallsReported": 21,
+        "byTool": {
+          "search": 9,
+          "search_documents": 5,
+          "read_document": 3,
+          "view_page": 2,
+          "read_file": 17,
+          "grep": 2
+        },
+        "researchByTool": {
+          "search": 7,
+          "read_file": 9,
+          "search_documents": 1,
+          "view_page": 1,
+          "grep": 2,
+          "read_document": 1
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 14,
+        "candidatesScored": 65,
+        "admittedTokens": 3830,
+        "selectedPassages": 65,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 0,
+      "errors": [],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 11376,
+        "startMs": 8099.715949999999,
+        "endMs": 75986.84221199999,
+        "elapsedMs": 67887.12626199999,
+        "observedMs": 67887.12626199999,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-25-07.947Z-38326a34-4cc2-4d1e-b0c3-aa42f56b5f5d",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 3492,
+      "posthocBoundaryDelta": 3,
+      "qualityReview": {
+        "packet": "answer-07",
+        "score": 13,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "04-shared-prefix-r2",
+      "arm": "shared-prefix",
+      "seed": 4200,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": true
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 14314.384689999999,
+        "plannerMs": 2331.304684999999,
+        "reviewMs": 751.2141010000014,
+        "researchMs": 17693.518032000004,
+        "synthesisMs": 12871.203142999999,
+        "researchToCompleteMs": 30568.965070999995,
+        "firstGenerationAfterResearchMs": 1152.5720389999988,
+        "firstFindingAfterResearchMs": 14615.883949,
+        "queryToCompleteMs": 47988.023343999994,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 2536,
+        "inquiryTokens": 4688,
+        "synthesisTokensIncludingReasoning": 1816,
+        "answerChars": 5499,
+        "visibleWordsApprox": 747,
+        "reasoningChars": 3455,
+        "reasoningTokenCount": 723,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 1759,
+          "reasoningChars": 7617,
+          "completedTurnsOrRequests": 8
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2453,
+          "reasoningChars": 10540,
+          "completedTurnsOrRequests": 15
+        },
+        "synthesis": {
+          "reasoningTokens": 723,
+          "reasoningChars": 3455,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 1090,
+      "answerTokens": 1090,
+      "answerWords": 756,
+      "answerSha256": "c98debb82b1365fcda4ad9183099636cd03c47b0b6c61c21c4d7b641af4d7253",
+      "synthesisSystemSha256": "8bcf7cdc9ee26ef517d7dbc4536338e5be93861736e2dc7ad8d0ceb40b38977f",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "95310b20-171e-42cb-bdb0-c3c9351f37c4",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 461604,
+        "sha256": "fd2e35ccedc821dbd6ac8bc4d23eab38185ad2d06b0b990d72115f74e9867952",
+        "serverTimings": {
+          "cache_n": 1788,
+          "prompt_n": 3901,
+          "prompt_ms": 391.277,
+          "prompt_per_token_ms": 0.1003017175083312,
+          "prompt_per_second": 9969.919008784058,
+          "predicted_n": 1816,
+          "predicted_ms": 11261.102,
+          "predicted_per_token_ms": 6.2010473568281945,
+          "predicted_per_second": 161.26308064699174
+        },
+        "sseDone": true,
+        "finishReason": "stop",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 1798,
+        "renderedTextualTokens": 5689
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 107337,
+        "cachedTokens": 62138,
+        "fraction": 0.578905689557189,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 2877087,
+        "rows": 9347,
+        "sha256": "da1db34ed7c7b411283289240ee98c0139ddc0cb7068c5189d7cf9949546f1f5",
+        "lastSeq": 9347
+      },
+      "sourceProtocolSha256": "471ea807c9fe7c8ba0264f3fb8a1b12a09a3c5a34e2119f769a6255433ec29be",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 35,
+        "researchCallsReported": 19,
+        "byTool": {
+          "search_documents": 3,
+          "search": 10,
+          "read_file": 18,
+          "read_document": 2,
+          "grep": 1,
+          "view_page": 1
+        },
+        "researchByTool": {
+          "search": 5,
+          "search_documents": 1,
+          "grep": 1,
+          "read_file": 10,
+          "read_document": 1,
+          "view_page": 1
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 13,
+        "candidatesScored": 62,
+        "admittedTokens": 3793,
+        "selectedPassages": 62,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 1,
+      "errors": [],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 8182,
+        "startMs": 8144.017952,
+        "endMs": 56132.041295999996,
+        "elapsedMs": 47988.023343999994,
+        "observedMs": 47988.023343999994,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-26-32.626Z-1f32c9a2-d16d-44a7-a2c8-c52061a5bad9",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 1816,
+      "posthocBoundaryDelta": 3,
+      "qualityReview": {
+        "packet": "answer-03",
+        "score": 8,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "05-http-r2",
+      "arm": "http",
+      "seed": 4200,
+      "status": {
+        "driverComplete": false,
+        "preflightExecuted": true,
+        "synthesisCompleted": false,
+        "sharedPrefixHit": null
+      },
+      "quality": "unreviewed",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 9102.137611000002,
+        "plannerMs": 2433.651711999999,
+        "reviewMs": 844.3885069999997,
+        "researchMs": 19064.922185,
+        "synthesisMs": null,
+        "researchToCompleteMs": null,
+        "firstGenerationAfterResearchMs": 1331.6482480000013,
+        "firstFindingAfterResearchMs": 11088.965272000001,
+        "queryToCompleteMs": null,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1918,
+        "inquiryTokens": 4888,
+        "synthesisTokensIncludingReasoning": null,
+        "answerChars": 0,
+        "visibleWordsApprox": 0,
+        "reasoningChars": 92247,
+        "reasoningTokenCount": 29061,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 1196,
+          "reasoningChars": 5219,
+          "completedTurnsOrRequests": 6
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2648,
+          "reasoningChars": 11254,
+          "completedTurnsOrRequests": 17
+        },
+        "synthesis": {
+          "reasoningTokens": 29061,
+          "reasoningChars": 92247,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": false,
+      "streamedSynthesisAnswerTokens": 0,
+      "answerTokens": null,
+      "answerWords": 0,
+      "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "00f9f545-570d-4530-bcac-dd222f0d20c4",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 7505929,
+        "sha256": "ab4e7a9e56414bab4054ef526bf904d42d79207c2795ad397294360dc1b26705",
+        "serverTimings": {
+          "cache_n": 0,
+          "prompt_n": 3707,
+          "prompt_ms": 396.034,
+          "prompt_per_token_ms": 0.10683409765308875,
+          "prompt_per_second": 9360.307448350395,
+          "predicted_n": 29061,
+          "predicted_ms": 189668.129,
+          "predicted_per_token_ms": 6.526552045696982,
+          "predicted_per_second": 153.22025979388454
+        },
+        "sseDone": true,
+        "finishReason": "length",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 4,
+        "renderedTextualTokens": 3707
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 93669,
+        "cachedTokens": 57668,
+        "fraction": 0.6156572612070162,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 6446119,
+        "rows": 35187,
+        "sha256": "c2fb1b1f8688bc7a6aa63a8b8cdf7abca414ce3f29adb2e320ca13c4a49a79b6",
+        "lastSeq": 35187
+      },
+      "sourceProtocolSha256": "d1c5f25239201d145b8d02b0f26b903c0e14fc7aa1327a7fa8ae4fd46a07ee02",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 30,
+        "researchCallsReported": 19,
+        "byTool": {
+          "search": 7,
+          "search_documents": 5,
+          "read_document": 3,
+          "read_file": 12,
+          "grep": 2,
+          "view_page": 1
+        },
+        "researchByTool": {
+          "grep": 2,
+          "search": 4,
+          "search_documents": 2,
+          "read_file": 8,
+          "read_document": 2,
+          "view_page": 1
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 12,
+        "candidatesScored": 55,
+        "admittedTokens": 3180,
+        "selectedPassages": 55,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 0,
+      "errors": [
+        {
+          "seq": 35181,
+          "atMs": 222448.132058,
+          "type": "http.failure",
+          "data": {
+            "requestId": "00f9f545-570d-4530-bcac-dd222f0d20c4",
+            "agentId": 8,
+            "durationMs": 190978.692051,
+            "error": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35182,
+          "atMs": 222448.14892799998,
+          "type": "wire.event",
+          "data": {
+            "type": "agent:failed",
+            "agentId": 8,
+            "reason": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35184,
+          "atMs": 222448.803585,
+          "type": "wire.event",
+          "data": {
+            "type": "ui:error",
+            "message": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35186,
+          "atMs": 222449.997178,
+          "type": "journey.failure",
+          "data": {
+            "docId": "2026-10-10T02-27-42.073Z-96a5f453-2091-4cbb-85db-3620c1d8c9d1",
+            "error": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": true
+        }
+      ],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 35185,
+        "startMs": 8025.634392000001,
+        "endMs": 230474.472588,
+        "elapsedMs": 222448.838196,
+        "observedMs": 222448.838196,
+        "status": "aborted",
+        "docId": "2026-10-10T02-27-42.073Z-96a5f453-2091-4cbb-85db-3620c1d8c9d1",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 29061,
+      "posthocBoundaryDelta": null
+    },
+    {
+      "run": "06-resident-r2",
+      "arm": "resident",
+      "seed": 4200,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": null
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 48408.784731,
+        "plannerMs": 14842.479613999996,
+        "reviewMs": 1018.2588839999953,
+        "researchMs": 205165.15419699997,
+        "synthesisMs": 22511.990437,
+        "researchToCompleteMs": 227867.01932500003,
+        "firstGenerationAfterResearchMs": 546.2512529999949,
+        "firstFindingAfterResearchMs": 104852.05437200001,
+        "queryToCompleteMs": 292414.354752,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1323,
+        "inquiryTokens": 4714,
+        "synthesisTokensIncludingReasoning": 1864,
+        "answerChars": 6651,
+        "visibleWordsApprox": 832,
+        "reasoningChars": 2069,
+        "reasoningTokenCount": 471,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": null,
+          "reasoningChars": 3201,
+          "completedTurnsOrRequests": 7,
+          "recoveryReasoningUnavailable": true,
+          "completedTurnReasoningTokens": 736
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2106,
+          "reasoningChars": 9518,
+          "completedTurnsOrRequests": 24
+        },
+        "synthesis": {
+          "reasoningTokens": 471,
+          "reasoningChars": 2069,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 1392,
+      "answerTokens": 1391,
+      "answerWords": 841,
+      "answerSha256": "5fd249129c761f7cdbdbcf4ba6a5a985d24b5a5f9076dd0b705a707b7eb4fe3a",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": null,
+      "httpWorkloadCache": {
+        "inputTokens": null,
+        "cachedTokens": null,
+        "fraction": null,
+        "available": false
+      },
+      "nativeSampling": [
+        {
+          "stage": "preflight",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 6200,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599493889
+        },
+        {
+          "stage": "planning",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.3,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 4300,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599542299
+        },
+        {
+          "stage": "inquiry",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5200,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599558363
+        },
+        {
+          "stage": "synthesis",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 7200,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599763328
+        },
+        {
+          "stage": "inquiry",
+          "branch": 196610,
+          "position": 3206,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5200,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791599786471
+        }
+      ],
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": true,
+      "rawJournal": {
+        "bytes": 9069680,
+        "rows": 23412,
+        "sha256": "2ab924f7c1ab6f8a6bdf1ead2066669e1de02c153ec6e8ae6dcc9f2d855bdc9d",
+        "lastSeq": 23412
+      },
+      "sourceProtocolSha256": "4b6e698f3b4afb214a69fe5cabdb5ae7a0595f15f5e1bea5e1c460d1bf48496e",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 31,
+        "researchCallsReported": 24,
+        "byTool": {
+          "search_documents": 5,
+          "search": 8,
+          "read_document": 2,
+          "report": 5,
+          "read_file": 9,
+          "view_page": 1,
+          "grep": 1
+        },
+        "researchByTool": {
+          "search": 6,
+          "search_documents": 2,
+          "read_file": 9,
+          "read_document": 1,
+          "view_page": 1,
+          "grep": 1,
+          "report": 4
+        },
+        "errorResults": [
+          {
+            "seq": 5120,
+            "tool": "search_documents",
+            "result": {
+              "error": "Unknown document: Harbor Water Pilot \u2014 2 pages. Attached: Harbor Water Pilot (3b32f5401dfe).",
+              "_contextAvailablePercent": 82
+            }
+          }
+        ]
+      },
+      "retrieval": {
+        "operations": 12,
+        "candidatesScored": 56,
+        "admittedTokens": 3324,
+        "selectedPassages": 56,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 1,
+      "errors": [
+        {
+          "seq": 4011,
+          "atMs": 63526.378484,
+          "type": "wire.native.raw",
+          "data": {
+            "type": "agent:failed",
+            "agentId": 65539,
+            "reason": "recovery_skipped"
+          },
+          "afterTerminal": false
+        }
+      ],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 27,
+        "endSeq": 19019,
+        "startMs": 7421.470036000001,
+        "endMs": 299835.824788,
+        "elapsedMs": 292414.354752,
+        "observedMs": 292414.354752,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-31-33-615-46e0838e-4472-4d32-aad4-f878203d28c0",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 1864,
+      "posthocBoundaryDelta": 2,
+      "qualityReview": {
+        "packet": "answer-04",
+        "score": 12,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "07-http-r3",
+      "arm": "http",
+      "seed": 4300,
+      "status": {
+        "driverComplete": false,
+        "preflightExecuted": true,
+        "synthesisCompleted": false,
+        "sharedPrefixHit": null
+      },
+      "quality": "unreviewed",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 14401.815524,
+        "plannerMs": 2704.8808229999995,
+        "reviewMs": 836.1535059999987,
+        "researchMs": 24369.51708,
+        "synthesisMs": null,
+        "researchToCompleteMs": null,
+        "firstGenerationAfterResearchMs": 1305.685246000001,
+        "firstFindingAfterResearchMs": 16900.973596,
+        "queryToCompleteMs": null,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 2674,
+        "inquiryTokens": 5160,
+        "synthesisTokensIncludingReasoning": null,
+        "answerChars": 0,
+        "visibleWordsApprox": 0,
+        "reasoningChars": 99489,
+        "reasoningTokenCount": 28857,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 1815,
+          "reasoningChars": 7909,
+          "completedTurnsOrRequests": 8
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2686,
+          "reasoningChars": 11866,
+          "completedTurnsOrRequests": 22
+        },
+        "synthesis": {
+          "reasoningTokens": 28857,
+          "reasoningChars": 99489,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": false,
+      "streamedSynthesisAnswerTokens": 0,
+      "answerTokens": null,
+      "answerWords": 0,
+      "answerSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "4202a729-5e0c-4f14-9f61-2b0983700a03",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 7461791,
+        "sha256": "98e4ebc4ef44a0c00cd3dc8bee3e2862789fa6e3c68a63cb8d4fca289579ebae",
+        "serverTimings": {
+          "cache_n": 0,
+          "prompt_n": 3911,
+          "prompt_ms": 403.609,
+          "prompt_per_token_ms": 0.10319841472769112,
+          "prompt_per_second": 9690.071331412331,
+          "predicted_n": 28857,
+          "predicted_ms": 190529.63,
+          "predicted_per_token_ms": 6.602544616557508,
+          "predicted_per_second": 151.4567576707098
+        },
+        "sseDone": true,
+        "finishReason": "length",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 4,
+        "renderedTextualTokens": 3911
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 130568,
+        "cachedTokens": 81646,
+        "fraction": 0.6253140126217757,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 7018750,
+        "rows": 35850,
+        "sha256": "87c29de518ad5cd27001cb75bce5a0dce87ee2c1c72418f4cd37c4790d7f0676",
+        "lastSeq": 35850
+      },
+      "sourceProtocolSha256": "040a149d898e674ea718e483111d29410e7ba4acf33266fca0dad24a43a5ec62",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 37,
+        "researchCallsReported": 24,
+        "byTool": {
+          "search": 8,
+          "search_documents": 8,
+          "read_file": 12,
+          "read_document": 5,
+          "view_page": 2,
+          "grep": 2
+        },
+        "researchByTool": {
+          "search": 5,
+          "search_documents": 5,
+          "read_document": 3,
+          "read_file": 8,
+          "view_page": 1,
+          "grep": 2
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 16,
+        "candidatesScored": 72,
+        "admittedTokens": 4048,
+        "selectedPassages": 72,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 1,
+      "errors": [
+        {
+          "seq": 35844,
+          "atMs": 233847.67033899997,
+          "type": "http.failure",
+          "data": {
+            "requestId": "4202a729-5e0c-4f14-9f61-2b0983700a03",
+            "agentId": 8,
+            "durationMs": 191509.84571999998,
+            "error": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35845,
+          "atMs": 233847.68797899998,
+          "type": "wire.event",
+          "data": {
+            "type": "agent:failed",
+            "agentId": 8,
+            "reason": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35847,
+          "atMs": 233848.51937899998,
+          "type": "wire.event",
+          "data": {
+            "type": "ui:error",
+            "message": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": false
+        },
+        {
+          "seq": 35849,
+          "atMs": 233849.76040499998,
+          "type": "journey.failure",
+          "data": {
+            "docId": "2026-10-10T02-37-10.468Z-08534ff6-a950-4388-9a8a-13d8e2852314",
+            "error": "Error: Model output reached the server context/output limit; incomplete output is not a successful report"
+          },
+          "afterTerminal": true
+        }
+      ],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 35848,
+        "startMs": 8158.048029999999,
+        "endMs": 242006.64357,
+        "elapsedMs": 233848.59553999998,
+        "observedMs": 233848.59553999998,
+        "status": "aborted",
+        "docId": "2026-10-10T02-37-10.468Z-08534ff6-a950-4388-9a8a-13d8e2852314",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 28857,
+      "posthocBoundaryDelta": null
+    },
+    {
+      "run": "08-resident-r3",
+      "arm": "resident",
+      "seed": 4300,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": null
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 61059.44515,
+        "plannerMs": 12049.240549000002,
+        "reviewMs": 739.248900000006,
+        "researchMs": 211673.55416000003,
+        "synthesisMs": 21927.48035499995,
+        "researchToCompleteMs": 233775.206449,
+        "firstGenerationAfterResearchMs": 531.8507849999878,
+        "firstFindingAfterResearchMs": 71485.29054399999,
+        "queryToCompleteMs": 307903.845611,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1603,
+        "inquiryTokens": 5129,
+        "synthesisTokensIncludingReasoning": 1833,
+        "answerChars": 5177,
+        "visibleWordsApprox": 718,
+        "reasoningChars": 3279,
+        "reasoningTokenCount": 747,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": null,
+          "reasoningChars": 3816,
+          "completedTurnsOrRequests": 8,
+          "recoveryReasoningUnavailable": true,
+          "completedTurnReasoningTokens": 907
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 2460,
+          "reasoningChars": 10750,
+          "completedTurnsOrRequests": 29
+        },
+        "synthesis": {
+          "reasoningTokens": 747,
+          "reasoningChars": 3279,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 1085,
+      "answerTokens": 1084,
+      "answerWords": 727,
+      "answerSha256": "74cea75225e0eda9ee0cb4f9550682c5790137051b06eb7e987c53ed51a4314f",
+      "synthesisSystemSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": null,
+      "httpWorkloadCache": {
+        "inputTokens": null,
+        "cachedTokens": null,
+        "fraction": null,
+        "available": false
+      },
+      "nativeSampling": [
+        {
+          "stage": "preflight",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 6300,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791600073753
+        },
+        {
+          "stage": "planning",
+          "branch": 1,
+          "position": 246,
+          "params": {
+            "temperature": 0.3,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 4400,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791600134814
+        },
+        {
+          "stage": "inquiry",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5300,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791600147798
+        },
+        {
+          "stage": "synthesis",
+          "branch": 131074,
+          "position": 1808,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 7300,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791600359279
+        },
+        {
+          "stage": "inquiry",
+          "branch": 196610,
+          "position": 2899,
+          "params": {
+            "temperature": 0.5,
+            "topK": 40,
+            "topP": 0.95,
+            "minP": 0.05,
+            "seed": 5300,
+            "penalties": {
+              "repeat": 1,
+              "frequency": 0,
+              "presence": 0,
+              "lastN": 64
+            }
+          },
+          "applied": true,
+          "unixMs": 1791600381781
+        }
+      ],
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": true,
+      "rawJournal": {
+        "bytes": 16490218,
+        "rows": 43351,
+        "sha256": "78dfd6eb2e8538aeefa01519676db4c23d9d2066d96ff161f4a3aeedfd6205b4",
+        "lastSeq": 43351
+      },
+      "sourceProtocolSha256": "d0bb68ca4dee5b989ace289360f82eeec413ee70f01eeaa6a4fe1db195dc696e",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 37,
+        "researchCallsReported": 29,
+        "byTool": {
+          "search_documents": 6,
+          "search": 10,
+          "report": 5,
+          "grep": 4,
+          "read_file": 10,
+          "read_document": 1,
+          "view_page": 1
+        },
+        "researchByTool": {
+          "search": 7,
+          "search_documents": 2,
+          "grep": 4,
+          "read_file": 10,
+          "read_document": 1,
+          "view_page": 1,
+          "report": 4
+        },
+        "errorResults": [
+          {
+            "seq": 5734,
+            "tool": "search_documents",
+            "result": {
+              "error": "Unknown document: Harbor Water Pilot \u2014 2 pages. Attached: Harbor Water Pilot (3b32f5401dfe).",
+              "_contextAvailablePercent": 81
+            }
+          }
+        ]
+      },
+      "retrieval": {
+        "operations": 15,
+        "candidatesScored": 70,
+        "admittedTokens": 4155,
+        "selectedPassages": 70,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 1,
+      "errors": [
+        {
+          "seq": 4534,
+          "atMs": 73387.118284,
+          "type": "wire.native.raw",
+          "data": {
+            "type": "agent:failed",
+            "agentId": 65539,
+            "reason": "recovery_skipped"
+          },
+          "afterTerminal": false
+        }
+      ],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 27,
+        "endSeq": 19481,
+        "startMs": 7452.573474,
+        "endMs": 315356.419085,
+        "elapsedMs": 307903.845611,
+        "observedMs": 307903.845611,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-41-13-477-19807fa0-008f-4dff-bad0-f7d0763712a0",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 1833,
+      "posthocBoundaryDelta": 2,
+      "qualityReview": {
+        "packet": "answer-06",
+        "score": 15,
+        "maximum": 18
+      }
+    },
+    {
+      "run": "09-shared-prefix-r3",
+      "arm": "shared-prefix",
+      "seed": 4300,
+      "status": {
+        "driverComplete": true,
+        "preflightExecuted": true,
+        "synthesisCompleted": true,
+        "sharedPrefixHit": true
+      },
+      "quality": "rubric-reviewed; implementing assistant; not independent",
+      "comparisonEligible": false,
+      "timing": {
+        "preflightMs": 8043.836409,
+        "plannerMs": 2400.3767210000005,
+        "reviewMs": 916.1411059999991,
+        "researchMs": 27999.504028000003,
+        "synthesisMs": 13935.876442,
+        "researchToCompleteMs": 41942.167288000004,
+        "firstGenerationAfterResearchMs": 1120.808616000002,
+        "firstFindingAfterResearchMs": 17177.707638,
+        "queryToCompleteMs": 53326.93248,
+        "preflightStatus": "executed"
+      },
+      "generation": {
+        "preflightTokens": 1582,
+        "inquiryTokens": 6015,
+        "synthesisTokensIncludingReasoning": 2159,
+        "answerChars": 6247,
+        "visibleWordsApprox": 814,
+        "reasoningChars": 3901,
+        "reasoningTokenCount": 815,
+        "wordCountMethod": "Whitespace words after removing Markdown link destinations and formatting; includes headings and source labels."
+      },
+      "reasoningByStage": {
+        "preflight": {
+          "reasoningTokens": 1162,
+          "reasoningChars": 5059,
+          "completedTurnsOrRequests": 5
+        },
+        "planning": {
+          "reasoningTokens": 0,
+          "reasoningChars": 0,
+          "completedTurnsOrRequests": 1
+        },
+        "inquiry": {
+          "reasoningTokens": 3522,
+          "reasoningChars": 15424,
+          "completedTurnsOrRequests": 25
+        },
+        "synthesis": {
+          "reasoningTokens": 815,
+          "reasoningChars": 3901,
+          "completedTurnsOrRequests": 1
+        }
+      },
+      "savedAnswerAvailable": true,
+      "streamedSynthesisAnswerTokens": 1341,
+      "answerTokens": 1341,
+      "answerWords": 823,
+      "answerSha256": "16da2d98d66976250e381f13bfb7bd336d925aa9db44fb49a99229de8862da00",
+      "synthesisSystemSha256": "8bcf7cdc9ee26ef517d7dbc4536338e5be93861736e2dc7ad8d0ceb40b38977f",
+      "synthesisStageInstructionSha256": "e0720d13f5455ecb1fcd380871ef22bcfd1a34aaf6c70c5d6f14bc52380618b9",
+      "synthesisCache": {
+        "requestId": "edf2f09f-eb42-4cb2-bb75-e26052ad05f7",
+        "stage": "synthesis",
+        "available": true,
+        "bytes": 547747,
+        "sha256": "b9726df3608048d1a997190aaa9a6dcf0d2c8d6dd66ddc0a0d62c2b189ae4504",
+        "serverTimings": {
+          "cache_n": 1788,
+          "prompt_n": 4083,
+          "prompt_ms": 399.0,
+          "prompt_per_token_ms": 0.09772226304188097,
+          "prompt_per_second": 10233.082706766916,
+          "predicted_n": 2159,
+          "predicted_ms": 13368.895,
+          "predicted_per_token_ms": 6.192169986104679,
+          "predicted_per_second": 161.49427458290307
+        },
+        "sseDone": true,
+        "finishReason": "stop",
+        "malformedDataLines": 0,
+        "renderedTextualPrefixTokens": 1798,
+        "renderedTextualTokens": 5871
+      },
+      "httpWorkloadCache": {
+        "inputTokens": 138754,
+        "cachedTokens": 93043,
+        "fraction": 0.6705608486962538,
+        "available": true
+      },
+      "nativeSampling": null,
+      "nativeTurnsWithoutReasoningDelimiter": [],
+      "nativeRecoveryReasoningCaveat": false,
+      "rawJournal": {
+        "bytes": 3228717,
+        "rows": 10481,
+        "sha256": "cb9e07c0fd5fe3a9aa70e00af9b63e1ddc13972c073fe66f88c897ae4b671515",
+        "lastSeq": 10481
+      },
+      "sourceProtocolSha256": "bc143f758351b545f728c22f924b189a4ad9c6327f8175e95d975de73fcbf966",
+      "scope": "Initial brief only; full-journey acceptance and separate quality review include follow-up.",
+      "tools": {
+        "calls": 26,
+        "researchCallsReported": 21,
+        "byTool": {
+          "search_documents": 3,
+          "search": 11,
+          "read_document": 3,
+          "read_file": 8,
+          "view_page": 1
+        },
+        "researchByTool": {
+          "search_documents": 1,
+          "search": 9,
+          "read_file": 8,
+          "read_document": 2,
+          "view_page": 1
+        },
+        "errorResults": []
+      },
+      "retrieval": {
+        "operations": 14,
+        "candidatesScored": 67,
+        "admittedTokens": 4118,
+        "selectedPassages": 67,
+        "note": "Rank score scales and query sets differ; scores are not cross-backend quality scores."
+      },
+      "recoveredAgents": 1,
+      "errors": [],
+      "attempt": {
+        "attempt": 1,
+        "startSeq": 36,
+        "endSeq": 9124,
+        "startMs": 8163.833627,
+        "endMs": 61490.766107,
+        "elapsedMs": 53326.93248,
+        "observedMs": 53326.93248,
+        "status": "completed-with-answer",
+        "docId": "2026-10-10T02-51-15.051Z-f93de3a4-4d0c-4383-b3a1-67d82274aaff",
+        "question": "Which Harbor water pilot system should the council select? Use the attached PDF, site map and local evidence corpus. Compare audited capacity, energy, cost, correction and maintenance. Explain the routing figure visually. Give a concise cited research brief and distinguish measured results from unknowns.  Use exactly these four independent inquiries. Assign the stated protocol to each inquiry: 1. corpus_research: Compare the audited daily capacity and energy use of Cedar and Birch; check the corrected brochure claim. Cite the trial and audit. 2. corpus_research: Compare operating cost, installation constraints and the council requirement. Reconcile the audit with the ledger and explain the feasible option. 3. document_research: Inspect the attached pilot PDF figure visually. Explain the blue and orange routes and which component the orange route bypasses. Cite page 2. 4. corpus_research: Evaluate maintenance intervals and limits of the pilot evidence, including what is unknown about winter reliability. Cite sources.",
+        "mode": "flat",
+        "effort": "medium",
+        "followup": false
+      },
+      "synthesisReportedGenerationTokens": 2159,
+      "posthocBoundaryDelta": 3,
+      "qualityReview": {
+        "packet": "answer-05",
+        "score": 12,
+        "maximum": 18
+      }
+    }
+  ]
+}

@@ -5,7 +5,7 @@ Source, protocols and measurement records for comparing Lloyal's execution model
 | Experiment | Status | Start here |
 | --- | --- | --- |
 | [Memory](experiments/memory/) | CUDA capacity measurements, Fieldnote workload comparison and runnable benchmark setup | [Setup and commands](experiments/memory/README.md) |
-| [Reasoning](experiments/reasoning/) | Historical exploratory observations; dedicated causal experiment pending | [Existing evidence and open controls](experiments/reasoning/README.md) |
+| [Reasoning](experiments/reasoning/) | Nine full Fieldnote CUDA attempts, including a shared-prefix HTTP control; causal attribution remains open | [Results and reproduction](experiments/reasoning/README.md) |
 
 Each experiment owns its dependencies, fixtures, protocols and results. Run commands from that experiment's directory. Recorded results retain their original scope and limitations; setup portability changes do not constitute a new benchmark run.
 

@@ -1,0 +1,15 @@
+{
+  "url": "https://github.com/lloyal-ai/experiments/releases/download/reasoning-cuda-fieldnote-v1/reasoning-cuda-fieldnote-v1-raw.tar.gz",
+  "release": "https://github.com/lloyal-ai/experiments/releases/tag/reasoning-cuda-fieldnote-v1",
+  "sha256": "ff4fa61e019364a6ee5ac3ed1745b8fea258566d6e7650e862c5b2a87ea431d4",
+  "bytes": 38542207,
+  "executionRevision": "0225ffc747c467f4d5225c75d383b96c34833a82",
+  "extractInto": "experiments/reasoning",
+  "measuredSuite": "runs/cuda-fieldnote-v1",
+  "pilots": [
+    "runs/pilot-resident-v1",
+    "runs/pilot-shared-prefix-v1",
+    "runs/pilot-shared-prefix-v2"
+  ],
+  "contents": "All nine attempts including failures, three pilots, native/HTTP logs and receipts, browser journals/screenshots, source snapshots, tokenizer counts and receipts, frozen protocol, quality review, scripts and derived charts. No weights or dependencies."
+}

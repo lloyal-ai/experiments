@@ -37,7 +37,7 @@ export async function runAgent(input:AgentInput,model:Model,evidence:Evidence,co
     if(!recovery && input.hardMs!==undefined)clearDeadline=control.deadline(input.hardMs,started,()=>requestAbort.abort(new Error('Inquiry time limit')));
     let aggregate:any;let streamed='';
     try {
-      return await model.chat(messages,{signal:AbortSignal.any([signal,requestAbort.signal]),agentId:input.agentId,tools:[...evidence.schemas(),reportTool(input.probe)],seed:input.seed,thinking:true,...(recovery?{toolChoice:'report'}:{}),
+      return await model.chat(messages,{signal:AbortSignal.any([signal,requestAbort.signal]),agentId:input.agentId,stage:input.probe?'preflight':input.direct?'followup':'inquiry',tools:[...evidence.schemas(),reportTool(input.probe)],seed:input.seed,thinking:true,...(recovery?{toolChoice:'report'}:{}),
         onReasoning:text=>send({type:'agent:reasoning_delta',text}),
         onRequest:id=>{if(pendingImages.length){evidence.submit(pendingImages,id);send({type:'agent:http_images',attachments:pendingImages.flatMap(r=>r.attachment?[r.attachment]:[]),requestId:id,evidence:'submitted'});pendingImages.length=0;}},
         onChunk:chunk=>{
