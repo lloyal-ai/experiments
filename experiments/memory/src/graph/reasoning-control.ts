@@ -1,4 +1,4 @@
-import { SystemMessage, type BaseMessage } from '@langchain/core/messages';
+import { SystemMessage, HumanMessage, type BaseMessage } from '@langchain/core/messages';
 import type { Config } from '../types.js';
 import type { ModelCall } from './contracts.js';
 
@@ -7,9 +7,15 @@ export function sharedPrefixMessages(messages: BaseMessage[], header: string): B
   if (!header) throw new Error('Shared-prefix arm requires the current Fieldnote brief and catalog');
   const first = messages[0];
   if (first?.type !== 'system' || typeof first.content !== 'string') throw new Error('Expected a text system instruction');
-  // The catalog was already at the beginning of inquiry/preflight instructions.
-  // Preserve the complete original instruction, including that repetition, for auditability.
-  return [new SystemMessage(header + '\n\n# Current stage instructions\n' + first.content), ...messages.slice(1)];
+  const result: BaseMessage[] = [new SystemMessage(header)];
+  let pending: any[] = [{type:'text',text:'# Current stage instructions\n'+first.content}];
+  const flush=()=>{if(pending.length){result.push(new HumanMessage({content:pending}));pending=[];}};
+  // One ordinary multimodal user turn lets the server checkpoint the shared header.
+  for(const message of messages.slice(1)) {
+    if(message.type==='human')pending.push(...(typeof message.content==='string'?[{type:'text',text:message.content}]:message.content));
+    else {flush();result.push(message);}
+  }
+  flush();return result;
 }
 
 export function reasoningSampling(config: Config, options: ModelCall) {

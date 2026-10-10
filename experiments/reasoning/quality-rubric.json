@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "method": "Answer-only manual review using anonymous IDs before joining token/timing metrics. Reviewer is the implementing assistant, not independent; report this limitation. Cite exact answer passages for each score. Keyword checks alone cannot establish quality.",
+  "scale": {"0": "missing or wrong", "1": "partially correct or materially incomplete", "2": "correct and complete"},
+  "criteria": {
+    "capacity_and_correction": "Cedar 1200 L/day, Birch 900 L/day; Birch brochure 1400 corrected by audit.",
+    "energy": "Cedar 6 kWh/day, Birch 3 kWh/day.",
+    "cost_and_installation": "Cedar 18 credits/day and 400-credit inlet upgrade; Birch 12/day and no inlet upgrade.",
+    "requirement_and_selection": "Council minimum 1000 L/day; Cedar alone meets it, Birch alone does not.",
+    "grant": "Installation grant does not cover recurring operating cost.",
+    "maintenance": "Cedar inspection every 7 days, Birch every 14 days.",
+    "evidence_limits": "30-day pilot; winter performance and annual reliability unmeasured; no asserted winter advantage.",
+    "visual_route": "Blue: Intake to UV chamber to Storage. Orange: Intake to Storage, bypasses UV chamber; identify PDF page 2.",
+    "grounding": "Recommendation and factual claims supported; no lighting distractor, invented reliability/cost claims, or unsupported certainty."
+  },
+  "citations": "Review separately: usable corpus and attachment references, and whether cited content supports the nearby claim. Similar word count is not quality equivalence.",
+  "followup": "Separately check chosen system/capacity, daily operating cost and orange bypass; do not let continuation repair the initial-answer score."
+}

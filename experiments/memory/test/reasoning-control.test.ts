@@ -7,8 +7,8 @@ const config={reasoning:{arm:'shared-prefix',seed:4100,sampling:{temperature:0.5
 test('shared-prefix layout retains stage instructions and original message objects without mutation',()=>{
  const tail=new HumanMessage('Actual evidence');const source=[new SystemMessage('Synthesis rules'),tail];
  const changed=sharedPrefixMessages(source,'Stable catalog and question');
- assert.equal(source[0].content,'Synthesis rules');assert.equal(changed[1],tail);
- assert.equal(changed[0].content,'Stable catalog and question\n\n# Current stage instructions\nSynthesis rules');
+ assert.equal(source[0].content,'Synthesis rules');assert.deepEqual(changed[1].content,[{type:'text',text:'# Current stage instructions\nSynthesis rules'},{type:'text',text:'Actual evidence'}]);
+ assert.equal(changed[0].content,'Stable catalog and question');
  assert.throws(()=>sharedPrefixMessages(source,''));
 });
 test('explicit sampler parameters match native stage seeds and filters',()=>{

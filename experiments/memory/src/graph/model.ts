@@ -11,10 +11,15 @@ import { sharedPrefixMessages, reasoningSampling } from './reasoning-control.js'
 /** Standard LangChain Chat Completions client; logging observes bytes without altering prompts. */
 export class LocalChatModel implements Model {
   private sharedHeader = '';
-  setRunContext(header: string) { this.sharedHeader = header; }
+  private sharedTools: any[] = [];
+  setRunContext(header: string, tools: any[]) { this.sharedHeader = header; this.sharedTools = tools; }
   constructor(private config: Config, private dir: string, private emit: Emit) {}
   async chat(messages: BaseMessage[], options: ModelCall): Promise<AIMessage> {
-    if (this.config.reasoning?.arm === 'shared-prefix') messages = sharedPrefixMessages(messages, this.sharedHeader);
+    if (this.config.reasoning?.arm === 'shared-prefix') {
+      messages = sharedPrefixMessages(messages, this.sharedHeader);
+      // Stable tool schema, stock tool_choice none: synthesis cannot start new tool work.
+      if (options.stage === 'synthesis') options = {...options, tools:this.sharedTools, toolChoice:'none'};
+    }
     const sampling = reasoningSampling(this.config, options);
     const requestId = randomUUID(), at = performance.now();
     const folder=resolve(this.dir,'http'); await mkdir(folder,{recursive:true});

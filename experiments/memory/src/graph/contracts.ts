@@ -10,4 +10,4 @@ export interface Ask { docId: string; text: string; mode: 'flat' | 'deep'; effor
 export interface Finding { index: number; task: string; body: string; tokens: number; toolCalls: number; failed?: string }
 export interface ModelCall { signal: AbortSignal; agentId: number; tools?: any[]; toolChoice?: string; responseSchema?: { name: string; schema: Record<string, any> }; temperature?: number; thinking?: boolean; seed?: number; stage?: string; onChunk?: (message: any) => void; onReasoning?: (text:string)=>void; onRequest?: (id: string) => void }
 export interface Model {
-  setRunContext?(header: string): void; chat(messages: BaseMessage[], options: ModelCall): Promise<AIMessage> }
+  setRunContext?(header: string, tools: any[]): void; chat(messages: BaseMessage[], options: ModelCall): Promise<AIMessage> }

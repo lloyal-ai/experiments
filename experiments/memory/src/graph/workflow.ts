@@ -5,7 +5,7 @@ import { z } from 'zod';
 import type { Evidence } from '../evidence.js';
 import { BUDGETS, prompt, render, preamble, sharedCatalog } from '../prompts.js';
 import { runAgent } from './agent.js';
-import { planSchema } from './schemas.js';
+import { planSchema, reportTool } from './schemas.js';
 import { RunControl } from './control.js';
 import type { Ask, Finding, Model, Plan, ResearchTask, Wire } from './contracts.js';
 const State=Annotation.Root({
@@ -24,7 +24,7 @@ export class ResearchWorkflow {
  pending?:Plan;
  constructor(readonly ask:Ask,readonly evidence:Evidence,private model:Model,private wire:Wire,coverageCache=new Map<string,string>(),private allocateAgent=()=>this.nextId++) {
   this.coverageCache=coverageCache;
-  model.setRunContext?.(sharedCatalog(ask.sources)+'\n\n# Current brief\n'+ask.text);
+  model.setRunContext?.(sharedCatalog(ask.sources).replaceAll('agent system message','stage instructions')+'\n\n# Current brief\n'+ask.text,[...evidence.schemas(),reportTool(false)]);
   this.graph=new StateGraph(State)
    .addNode('discover',s=>this.discover(s.ask))
    .addNode('planning',s=>this.plan(s.ask))

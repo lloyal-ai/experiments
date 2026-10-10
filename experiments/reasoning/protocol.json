@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "status": "pilot; freeze after shared-prefix and native sampling acceptance",
+  "purpose": "Test whether the lower emitted synthesis reasoning observed in the composed Fieldnote workload repeats on CUDA, including a shared-prefix HTTP control.",
+  "workload": "Full Fieldnote Survey, Standard effort, fresh session/coverage, original Harbor PDF and site map plus Markdown corpus, four reviewed objectives, saved brief and follow-up. Route-explicit question is identical to the completed CUDA memory composed workload.",
+  "arms": ["resident", "http", "shared-prefix"],
+  "armMeaning": {
+    "resident": "Pinned Fieldnote orchestration with public Branch sampler settings at stage boundaries; resident trunk/spine and ordinary native abilities.",
+    "http": "Existing idiomatic LangGraph host behind the same Fieldnote UI, cache_prompt=true, llama-server prefix-cache enabled.",
+    "shared-prefix": "The same HTTP host and workflow; each system message begins with a stable current brief and source catalog, followed by its complete original stage instructions. Natural request reuse; no synthetic padding or hidden cache priming."
+  },
+  "repetitions": 3,
+  "seedOffsets": [4100, 4200, 4300],
+  "sampling": {"temperature": 0.5, "plannerTemperature": 0.3, "topK": 40, "topP": 0.95, "minP": 0.05, "typicalP": 1, "repeatPenalty": 1, "frequencyPenalty": 0, "presencePenalty": 0, "repeatLastN": 64, "order": ["penalties", "top_k", "typ_p", "top_p", "min_p", "temperature", "dist"]},
+  "seeds": {"preflight": "2000 + source index, fixed by pinned coverage API", "planner": "offset + 100", "inquiries": "offset + 1000 + index", "synthesis": "offset + 3000"},
+  "controls": {"model": "qwen3.5-4b.gguf", "projector": "qwen3.5-4b-mmproj.gguf", "reranker": "qwen3-reranker-0.6b-q8.gguf", "context": 32768, "httpParallel": 4, "nativeBranches": 8, "prefixCacheMiB": 1024, "httpKvLayout": "--kv-unified (same as prior composed runs)", "gpu": "one NVIDIA L40S; stacks run sequentially", "tracing": "Native LLOYAL_DEV=1, instrumented native and server binaries from previous CUDA experiment", "outputCap": "No explicit synthesis cap on either path; retain context/output-limit failures"},
+  "order": "Random initial arm permutation, cyclic rotation per repetition; one occurrence in each position. Save realized order before any measured run.",
+  "acceptance": ["Full UI journey completed", "Fresh preflight and synthesis events present", "Four reviewed inquiry objectives retained with original routing", "Model/projector/reranker and pinned runtime identities saved", "Explicit accepted sampler settings recorded", "HTTP exact requests, rendered prompts, SSE and cache receipts retained", "Shared-prefix synthesis has nonzero server-reported cache_n, with reusable token-prefix evidence"],
+  "outcomes": ["Emitted reasoning tokens by stage, post-hoc same GGUF tokenizer", "Visible final answer tokens and words", "Per-stage generation totals and wall time", "Synthesis and workload HTTP prefix-cache reuse", "Tool calls, recovery and failures", "Rubric-scored initial answer and separate follow-up"],
+  "interpretation": "Three repetitions of one synthetic task are exploratory. Full inputs and generated evidence differ. Shared-prefix layout is an input-construction intervention, not a pure cache on/off ablation. Matching sampler settings does not make different execution paths bitwise identical. Reasoning text is not a measure of all internal computation. No causal or quality-equivalence claim from token counts alone.",
+  "failurePolicy": "Retain every pilot, completed attempt and failure. No unrecorded automatic replacement. Pilot repairs precede a new protocol/source freeze; results with missing acceptance receipts remain ineligible."
+}
