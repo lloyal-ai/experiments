@@ -25,7 +25,7 @@
     "capacityChartRegeneration": "passed",
     "credentialPatternScan": "no matches in 905 files/archive entries",
     "incumbentDependencyBoundary": "passed; 921 inputs, no native inference/Effection/ability factories",
-    "publicationContents": "626 indexed files, all pinned Fieldnote source files included; runtime artifacts excluded; three upstream .env templates contain only loopback/port/session defaults"
+    "publicationContents": "625 indexed files, all pinned Fieldnote source files included; runtime artifacts excluded; three upstream .env templates contain only loopback/port/session defaults"
   },
   "notRun": [
     "Fresh Linux/CUDA build through the publication bootstrap",
