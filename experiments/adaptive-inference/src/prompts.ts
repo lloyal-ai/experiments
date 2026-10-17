@@ -43,6 +43,7 @@ export function recipe() {
     controllerRepair:
       "Typed validation feedback on a fresh controller fork, within the same round/token budget",
     discovery: "Independent discovery tasks may run together; result-dependent identities are chosen in a subsequent decision",
+    evidenceAllowance: "At most 100 lines / 8192 characters per passage, 38400 total evidence characters per finding, exact source bytes",
     findingOutput: "Completed range reports and terminal-captured quotations normalize to the same validated source-exact finding; failed/capped outcomes remain rejected",
     finalOutput: "Public captured report text; completed prose allowed; empty, failed, capped and protocol-contaminated output rejected",
     evidenceChecks: "Exact metric labels, periods, populations, conditional proportions and scoped counterexamples",

@@ -78,3 +78,19 @@ test("normalizing completed reports never admits invalid sources or unfinished w
   assert.equal(acceptedFinding({ ...outcome, failed: "tool failure" }, schema, false), null);
   assert.equal(acceptedFinding({ ...outcome, exitReason: "budget" }, schema, false), null);
 });
+
+test("a complete supporting section may exceed 1600 characters within the total evidence allowance", () => {
+  const text = "A complete financial table row with its headings and units. ".repeat(40);
+  const documents = [{ text }];
+  const value = { finding: "The table supplies the requested value.", evidence: [{ document: 1, startLine: 1, endLine: 1 }], uncertainty: "" };
+  const accepted = acceptedFinding({ result: JSON.stringify(value), failed: null }, findingOutputSchema(documents), false);
+  assert.equal(accepted?.evidence[0]?.quote, text);
+});
+
+test("larger individual sections never exceed the existing total evidence character allowance", () => {
+  const text = "a".repeat(8000);
+  const documents = [{ text }];
+  const value = { finding: "A bounded report.", evidence: Array.from({ length: 5 }, () => ({ document: 1, startLine: 1, endLine: 1 })), uncertainty: "" };
+  assert.equal(findingOutputSchema(documents).safeParse(value).success, false);
+  assert.equal(findingOutputSchema(documents).safeParse({ ...value, evidence: value.evidence.map(() => ({ document: 1, quote: text })) }).success, false);
+});

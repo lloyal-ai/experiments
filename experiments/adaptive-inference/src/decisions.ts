@@ -91,10 +91,15 @@ export const decisionSchema = z
     }
   });
 export type Decision = z.infer<typeof decisionSchema>;
+export const EVIDENCE_LIMITS = {
+  passageCharacters: 8192,
+  totalCharacters: 24 * 1600,
+  lines: 100,
+} as const;
 const evidenceSchema = z
   .object({
     document: z.number().int().positive(),
-    quote: z.string().min(8).max(1600),
+    quote: z.string().min(8).max(EVIDENCE_LIMITS.passageCharacters),
   })
   .strict();
 export const baseFinding = z
@@ -110,6 +115,15 @@ const normalize = (text: string) =>
 export function findingSchema(documents: readonly { text: string }[]) {
   const normalized = documents.map((d) => normalize(d.text));
   return baseFinding.superRefine((value, ctx) => {
+    if (
+      value.evidence.reduce((n, e) => n + e.quote.length, 0) >
+      EVIDENCE_LIMITS.totalCharacters
+    )
+      ctx.addIssue({
+        code: "custom",
+        path: ["evidence"],
+        message: "Supporting passages exceed the total evidence character allowance",
+      });
     for (const [i, e] of value.evidence.entries()) {
       if (!normalized[e.document - 1]?.includes(normalize(e.quote)))
         ctx.addIssue({

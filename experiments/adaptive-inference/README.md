@@ -139,3 +139,8 @@ V5 adds generic checks for exact metric/row labels, periods, populations, condit
 ### Evidence output normalization
 
 The frozen V5 run exposed a harness boundary mismatch: a worker that completed with valid JSON line ranges without calling the terminal tool was checked against the post-capture quotation schema and rejected. V6 accepts either fully validated representation, resolving line ranges to the same exact source bytes before admission. It does not relax document, range, length, protocol, failed-worker or budget checks. A regression test first reproduced the rejection; all 38 tests and typecheck pass after the fix. V5 remains unchanged and will be reported as a complete candidate, including this defect. No V6 benchmark score exists yet.
+
+
+A subsequent format audit found that all observed raw-range reports also exceeded V5's 1,600-character per-passage allowance; normalization alone would not have recovered them. V6 therefore permits a complete supporting section of up to 8,192 characters / 100 lines while retaining the same 38,400-character total evidence ceiling (the prior 24 × 1,600 maximum). No quote is silently cut. Both captured quotations and direct ranges enforce this ceiling. A second test reproduced a valid complete section being rejected first; the new total-limit regression prevents expanding aggregate admission. These are generic representation/budget changes, not answer-key corrections or retrospective score adjustments.
+
+Validation after both fixes: all 40 tests and typecheck pass. No V6 model run has been launched.
