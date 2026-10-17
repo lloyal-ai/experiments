@@ -40,7 +40,16 @@
   },
   "grading": {
     "final": null,
-    "interim": []
+    "interim": [
+      {
+        "snapshot": "interim-20261017T144246Z",
+        "track": "interim",
+        "verdict": "INCORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "0d4685272a552a816d2295b013245c0e9fd61e9d1e0b80a977cca1e049cca389",
+        "gradeSha256": "a95e04f80f6b31bc495c046fe7e7366d7202042fc6603062cd7c8508df5c4bcf"
+      }
+    ]
   },
   "rawArtifacts": "Private backup: full submission, trace, source documents and judge request/response; not included in this receipt."
 }
