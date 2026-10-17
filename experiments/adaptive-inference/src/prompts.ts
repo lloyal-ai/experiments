@@ -20,7 +20,7 @@ export function recipe() {
     ]),
   );
   const configuration = {
-    name: "adaptive-aa-lcr-composable-discovery-v4",
+    name: "adaptive-aa-lcr-evidence-checks-v5",
     system: SYSTEM,
     templates,
     sampling: SAMPLING,
@@ -43,6 +43,8 @@ export function recipe() {
     controllerRepair:
       "Typed validation feedback on a fresh controller fork, within the same round/token budget",
     discovery: "Independent discovery tasks may run together; result-dependent identities are chosen in a subsequent decision",
+    finalOutput: "Public captured report text; completed prose allowed; empty, failed, capped and protocol-contaminated output rejected",
+    evidenceChecks: "Exact metric labels, periods, populations, conditional proportions and scoped counterexamples",
     thinking: true,
   };
   return { ...configuration, sha256: digest(JSON.stringify(configuration)) };

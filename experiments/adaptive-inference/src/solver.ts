@@ -34,7 +34,6 @@ import {
 import {
   decisionSchema,
   findingSchema,
-  answerSchema,
   acceptedFinding,
   stableSeed,
   type Decision,
@@ -46,6 +45,7 @@ import { SYSTEM, prompt } from "./prompts.js";
 import { SAMPLING } from "./configuration.js";
 import { validateCapacity, type Problem } from "./aa-lcr.js";
 import { ArithmeticTool } from "./corpus-tools.js";
+import { finalAnswer } from "./final-output.js";
 
 type RecordEvent = (type: string, data: unknown) => void;
 function* one<T>(
@@ -413,14 +413,9 @@ export function* solve(
       });
       if (requested >= LIMITS.workerSpawns) break;
     }
-    const final = defineOutput("report", answerSchema, {
-      grammarOrder: "sampleFirst",
-      description:
-        "Submit the definitive answer to the original question, with all requested details.",
-    });
-    return (yield* one(
+    return yield* one(
       root,
-      final,
+      finalAnswer,
       "synthesis",
       meter,
       stableSeed(seed, "final"),
@@ -431,6 +426,6 @@ export function* solve(
       record,
       ability,
       problem.question,
-    )).answer;
+    );
   });
 }

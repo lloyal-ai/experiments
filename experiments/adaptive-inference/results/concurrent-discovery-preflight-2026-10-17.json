@@ -1,0 +1,27 @@
+{
+  "inputTokens": 122307,
+  "generatedTokens": 1149,
+  "peakCells": 131109,
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 9552,
+    "queryTokens": 4,
+    "elapsedMs": 195.7986400000009,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "memoryMiB": [
+    26699,
+    18787
+  ],
+  "accepted": 4,
+  "elapsedMs": 38125.020285,
+  "cleanup": {
+    "cells": 0,
+    "slots": 16
+  },
+  "git": "823c773721cd26e83fa5e232a134d78a8423ab82",
+  "purpose": "Unscored concurrent discovery, exact source ranges, GPU capacity and complete cleanup validation.",
+  "rawReceiptSha256": "906ea74a1039d3fa0758de77ba1c4361da03b494d5da705cf21979a0f765d903"
+}

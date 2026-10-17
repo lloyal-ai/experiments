@@ -4,3 +4,10 @@ Answer this original question using the supplied documents and any accepted find
 Known gaps / execution history: <%= it.history %>
 
 Recheck the requested scope, dates, exclusions, units, entity aliases and ordering against the full original evidence. Provide the requested answer explicitly and completely. Give a concise explanation when useful; do not substitute a plan, a document summary or discussion of tools for the answer. If the question requests a list, include all supported entries. Do not cite invented evidence. Use grep, search, read_file and arithmetic to resolve any remaining gaps directly before finishing. Call report with the answer as plain text in the answer field. You may reason before calling the tool.
+
+Audit the answer against the exact wording before submission:
+- Use the exact requested metric and period, not a similarly named subtotal or adjacent table row. Re-read the label and column header if the evidence omitted either.
+- For percentages, identify the base population requested by the question. Convert conditional/subgroup proportions to that base only when the source supports the nesting. Keep units through arithmetic and round only at the end.
+- For categories or exceptions, apply the stated inclusion conditions to the facts actually given. Do not broaden a category or assume an unstated triggering condition. Distinguish where inputs/subjects are located from where outputs are used when that matters to the rule.
+- Resolve conflicts by checking the original source, not by counting agreeing workers. Distinguish a real missing fact from an overlooked table or passage.
+Lead with the requested value, list or conclusion. Keep additional explanation short and directly relevant; do not append a research log, an inventory of unrelated exclusions or a list of tools used.
