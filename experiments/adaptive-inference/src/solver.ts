@@ -167,8 +167,14 @@ export function* executeWork(
           reason = "Report was not valid JSON";
         }
       }
-      const rejection = { agent: a.id, reason };
-      rejections.push(rejection);
+      const rejection = {
+        agent: a.id,
+        reason,
+        turnTokens: a.turnTokens,
+        generatedTokens: a.tokenCount,
+        rawOutput: a.rawOutput,
+      };
+      rejections.push({ agent: a.id, reason });
       record("finding-rejected", rejection);
     }
     return accepted;

@@ -147,3 +147,6 @@ Validation after both fixes: all 40 tests and typecheck pass. No V6 model run ha
 
 
 The same frozen V5 trace also showed an answer decision rejected for putting `answer` in the irrelevant topology field. V6 makes topology/tasks conditional: final-answer decisions require only action and reason; executable work still requires a valid topology and tasks. The tool schema remains a flat object for tagged tool formats, with conditional requirements checked at the public output boundary. A red-first regression covers the simpler answer shape, and the queued GPU preflight now exercises an actual answer-only terminal call as well as four concurrent corpus workers. This is another harness-contract correction; no V5 outputs change.
+
+
+Failure diagnostics now save rejected workers' unfinished `Agent.rawOutput` and public token counters in private run events. The V5 trace retained only `policy_exit` for a 32,768-token unfinished generation, preventing inspection of possible repetition. Raw diagnostic text is not fed back into the controller and is not included in public score receipts. Inference policy and acceptance are unchanged.
