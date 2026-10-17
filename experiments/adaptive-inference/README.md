@@ -14,7 +14,7 @@ The lockfile pins SDK 5.1.0, agents 7.1.0, rig 6.1.0 and the transitive native b
 
 ## Recovery
 
-Fetch branch `feat/adaptive-inference-evals` in `lloyal-ai/experiments`, run `npm ci` in this directory, and supply the model path from the new machine. Each working checkpoint is committed and pushed. Runs will carry model, source, dependency and dataset identities so a restarted machine does not silently change an experiment.
+Fetch branch `feat/composable-discovery` in `lloyal-ai/experiments`, run `npm ci` in this directory, and supply the model path from the new machine. Each working checkpoint is committed and pushed. Runs will carry model, source, dependency and dataset identities so a restarted machine does not silently change an experiment.
 
 ## Evaluation boundaries
 
@@ -125,3 +125,12 @@ Qwen3-Reranker-0.6B uses the pinned original BF16 checkpoint, F16 K/V, 32,768 sh
 Workers cite `document`, `startLine`, and `endLine` from corpus `read_file`. The harness validates those addresses and copies exact original bytes into the accepted finding. It does not ask the model to retype long quotations or silently repair its prose. Logical support still needs model verification and benchmark judging; a valid address alone is not proof of the claim.
 
 Invalid controller outputs receive their actual schema errors and bounded previous output on the next owned controller branch, within the same six rounds and generated-token allowance. They are never silently reinterpreted as a different topology. Native errors remain failures; no framework code is changed.
+
+
+## Development results and current candidate
+
+The complete predeclared ten-question v3 pilot scored **5/10** with the pinned official AA-LCR v1.1 grader, including one failed final output in the denominator. It used 57.22 solver-minutes and 118,208 generated tokens. The corpus reranker made 33 queries in 11.16 cumulative seconds; peak process allocation was 26,696 MiB. Every attempt released all inference cells and all 16 sequence slots. See [score receipt](results/corpus-spans-v3-development.json), [performance](results/corpus-spans-v3-performance.json), and [runtime projection](results/corpus-spans-v3-runtime-projection.json). This development subset is not comparable to a full-set leaderboard percentage.
+
+V4 removed an unnecessary one-task restriction on discovery. Independent discovery tasks can now use the same public parallel orchestration as other work; identities that depend on discovery results are still selected after those findings exist. Its GPU preflight passed. The v4 scored plan was not run: the completed v3 failure review motivated the next combined candidate first.
+
+V5 adds generic checks for exact metric/row labels, periods, populations, conditional percentages and scope. Final answer text uses the public `defineOutput` capture contract and `stripDanglingToolCall`, as the framework's report primitive does. A completed prose response no longer fails merely for lacking a JSON envelope; failed/capped outcomes, empty text and remaining protocol fragments are still rejected. Typed topology decisions and evidence-address validation remain strict. All 36 contract tests and typecheck pass. `plans/development-evidence-checks-v5.json` declares the same complete ten-case set and seed for evaluation; prior outcomes are retained unchanged.
