@@ -1,0 +1,134 @@
+{
+  "run": "aa-lcr-full-evidence-output-v6-r0",
+  "status": "incomplete-unscored",
+  "reason": "Stopped at the q3 completed-attempt boundary before grading after reproducing a generic corpus read_file defect: omitted endLine ignored startLine and could return inverted empty ranges. V7 uses an isolated tested ability build and reruns all 100 cases without reusing answers.",
+  "git": "8a83dfc0335f0683a16274d6b9bb6d06a2b67aa0",
+  "plannedQuestions": 100,
+  "completedAttempts": 3,
+  "completedMetrics": [
+    {
+      "id": "q1-r0",
+      "questionId": "1",
+      "repeat": 0,
+      "status": "completed",
+      "failure": null,
+      "elapsedMs": 112622.519654,
+      "input": {
+        "inputTokens": 104010,
+        "prefillMs": 14665.197206000004,
+        "promptSha256": "a269513ecbc7823bd4a2caad9d6678f4ec82484d65963b4a68326da959afafec"
+      },
+      "generatedTokens": 3547,
+      "generatedByRole": {
+        "controller": 1213,
+        "worker": 1444,
+        "synthesis": 890
+      },
+      "peakLiveCells": 109037,
+      "peakGpuMiB": 26688,
+      "reranker": {
+        "queries": 2,
+        "documents": 200,
+        "documentTokens": 41706,
+        "queryTokens": 18,
+        "elapsedMs": 723.8413750000036,
+        "failed": 0,
+        "templateTokens": null
+      },
+      "remainingCells": 0,
+      "availableSequences": 16
+    },
+    {
+      "id": "q2-r0",
+      "questionId": "2",
+      "repeat": 0,
+      "status": "completed",
+      "failure": null,
+      "elapsedMs": 383636.01879,
+      "input": {
+        "inputTokens": 104001,
+        "prefillMs": 14899.405828000017,
+        "promptSha256": "4f3f5b8bb6fe7861bd1bb83ff4dadb589bb5d735dc8c8b69b4490701124ab153"
+      },
+      "generatedTokens": 16382,
+      "generatedByRole": {
+        "controller": 1889,
+        "worker": 11707,
+        "verifier": 1578,
+        "synthesis": 1208
+      },
+      "peakLiveCells": 154264,
+      "peakGpuMiB": 26690,
+      "reranker": {
+        "queries": 10,
+        "documents": 1000,
+        "documentTokens": 208004,
+        "queryTokens": 75,
+        "elapsedMs": 7074.995018000016,
+        "failed": 0,
+        "templateTokens": null
+      },
+      "remainingCells": 0,
+      "availableSequences": 16
+    },
+    {
+      "id": "q3-r0",
+      "questionId": "3",
+      "repeat": 0,
+      "status": "completed",
+      "failure": null,
+      "elapsedMs": 698788.7365369999,
+      "input": {
+        "inputTokens": 103992,
+        "prefillMs": 14998.825381999952,
+        "promptSha256": "a402eaaf198dfa18f94343fba0e67af89b1c0d43919a75a2deeab3fc43ec70cf"
+      },
+      "generatedTokens": 28556,
+      "generatedByRole": {
+        "controller": 5391,
+        "worker": 10533,
+        "verifier": 9511,
+        "synthesis": 3121
+      },
+      "peakLiveCells": 133152,
+      "peakGpuMiB": 26690,
+      "reranker": {
+        "queries": 3,
+        "documents": 300,
+        "documentTokens": 61455,
+        "queryTokens": 31,
+        "elapsedMs": 1826.4886950000655,
+        "failed": 0,
+        "templateTokens": null
+      },
+      "remainingCells": 0,
+      "availableSequences": 16
+    }
+  ],
+  "partialNextAttempt": {
+    "id": "q4-r0",
+    "submissionExists": false,
+    "metricsExist": false,
+    "events": [
+      {
+        "at": "2026-10-17T12:33:16.737Z",
+        "elapsedMs": 0.024890000000596046,
+        "type": "attempt-start",
+        "data": {
+          "questionId": "4",
+          "repeat": 0,
+          "seed": 647085402,
+          "recipeSha256": "f72edb8afa330dc7a52d750082b2306062b523bb91ba480bf7fa6a5b05aa0916"
+        }
+      }
+    ]
+  },
+  "halt": {
+    "at": "2026-10-17T12:33:16.749034+00:00",
+    "after": "q3-r0",
+    "signal": "SIGINT",
+    "pid": 467311
+  },
+  "gradedAttempts": 0,
+  "score": null
+}

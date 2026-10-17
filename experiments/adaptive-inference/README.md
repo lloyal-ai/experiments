@@ -14,7 +14,7 @@ The lockfile pins SDK 5.1.0, agents 7.1.0, rig 6.1.0 and the transitive native b
 
 ## Recovery
 
-Fetch branch `feat/composable-discovery` in `lloyal-ai/experiments`, run `npm ci` in this directory, and supply the model path from the new machine. Each working checkpoint is committed and pushed. Runs will carry model, source, dependency and dataset identities so a restarted machine does not silently change an experiment.
+Fetch branch `fix/corpus-offset-ability` in `lloyal-ai/experiments`, run `npm ci` in this directory, and supply the model path from the new machine. Each working checkpoint is committed and pushed. Runs will carry model, source, dependency and dataset identities so a restarted machine does not silently change an experiment.
 
 ## Evaluation boundaries
 
@@ -168,3 +168,14 @@ The corpus offset candidate (V7) changes only the corpus ability's default read 
 V7 includes a locally built, explicitly unsigned benchmark package `3.0.0-bench-offset.1`, with HDK source commit and tarball hash in `vendor/corpus-offset-build.json`. Only `dist/tools/read-file.js` and its source map differ from the prior installed executable. The recipe includes provenance and the executable hash; this is not represented as a published platform release. Models, reranker settings, sampling, budgets and solver prompts remain unchanged from V6.
 
 The short V6 full-set attempt is being stopped at its next completed-question boundary before any grading because the generic read defect was reproduced. Its outputs are retained as an incomplete unscored run; none will be reused or selected into V7. The new plan covers all 100 questions with one fresh answer each. V7 must pass a combined GPU preflight including the installed offset-read regression before launch. The prelaunch V5-based runtime projection remains approximately 12.19 solver-hours for a full pass, with substantial uncertainty.
+
+### Corrected corpus ability GPU gate
+
+The V7 GPU preflight passed with the pinned local corpus build: 122,307 input tokens,
+four accepted concurrent workers, exact offset lines 112–211, and zero cells/all 16
+sequence slots after cleanup. Total integration time was 47.76 seconds; GPU memory
+was 26,699 MiB used / 18,787 MiB free. See
+`results/corpus-offset-v7-preflight.json`. V6 stopped after three completed attempts
+before grading; its next attempt has no submission or completed metrics. It remains
+an unscored partial run, recorded in `results/evidence-output-v6-incomplete.json`.
+V7 will execute the entire declared 100-question plan afresh.
