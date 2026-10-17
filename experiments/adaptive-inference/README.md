@@ -179,3 +179,22 @@ was 26,699 MiB used / 18,787 MiB free. See
 before grading; its next attempt has no submission or completed metrics. It remains
 an unscored partial run, recorded in `results/evidence-output-v6-incomplete.json`.
 V7 will execute the entire declared 100-question plan afresh.
+
+### Per-answer result checkpoints
+
+`scripts/publish-answer-receipts.py RUN_DIRECTORY` records one Git commit for each
+finished attempt under `results/RUN_NAME/`. It waits for both the frozen submission
+and cleanup metrics, records the original solver commit and artifact hashes, and
+publishes only whitelisted numeric metrics and verdicts. Full answer text, source
+documents, judge payloads, error text and credentials remain outside Git. Repeated
+polls are idempotent; later grading creates a separate receipt-update commit.
+`progress.json` distinguishes finished execution, interim grades, final grades and
+an incomplete denominator. It cannot display a full-set percentage until every
+planned attempt has a final verdict. Failed attempts remain in the denominator.
+
+A separate local relay polls every 30 seconds and pushes these Brev commits using
+existing local GitHub authentication. The solver and its frozen recipe do not
+import this publisher. If the relay machine sleeps or loses connectivity, queued
+results are committed and pushed when it returns; the Brev evaluation continues.
+Run `python3 scripts/test_publish_answer_receipts.py` to check publication boundaries,
+submission/grade identity, denominator handling and commit idempotency.
