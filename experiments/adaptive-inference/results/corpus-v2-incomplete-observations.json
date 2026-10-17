@@ -1,0 +1,66 @@
+{
+  "status": "incomplete_abandoned_recipe",
+  "plannedQuestions": 10,
+  "completedQuestions": 2,
+  "benchmarkScore": null,
+  "comparableToPublished63Percent": false,
+  "reason": "Repeated worker quotation-transcription failures prevent accepted evidence handoffs. Replace with source-addressed reports. Decision made without inspecting correctness grades.",
+  "rows": [
+    {
+      "attempt": "q1-r0",
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 101519.155829,
+      "generatedTokens": 3179,
+      "reranker": {
+        "queries": 2,
+        "documents": 200,
+        "documentTokens": 40479,
+        "queryTokens": 14,
+        "elapsedMs": 703.4328680000035,
+        "failed": 0,
+        "templateTokens": null
+      },
+      "judgeUsage": {
+        "input_tokens": 780,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 17,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 797
+      }
+    },
+    {
+      "attempt": "q6-r0",
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 763290.946235,
+      "generatedTokens": 29300,
+      "reranker": {
+        "queries": 4,
+        "documents": 400,
+        "documentTokens": 36340,
+        "queryTokens": 75,
+        "elapsedMs": 858.1184189999476,
+        "failed": 0,
+        "templateTokens": null
+      },
+      "judgeUsage": {
+        "input_tokens": 816,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 0
+        },
+        "output_tokens": 17,
+        "output_tokens_details": {
+          "reasoning_tokens": 0
+        },
+        "total_tokens": 833
+      }
+    }
+  ]
+}
