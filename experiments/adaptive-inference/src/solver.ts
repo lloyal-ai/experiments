@@ -1,3 +1,9 @@
+import {
+  evidenceSpanSchema,
+  resolveFinding,
+  decisionFeedback,
+  InvalidDecision,
+} from "./evidence-spans.js";
 import { z } from "zod";
 import { scoped, ensure, type Operation } from "effection";
 import { Branch, type SessionContext } from "@lloyal-labs/sdk";
@@ -51,6 +57,7 @@ function* one<T>(
   content: string,
   record: RecordEvent,
   ability?: Ability,
+  originalQuestion?: string,
 ): Operation<T> {
   const policy = new LimitedPolicy(role, meter, output.tool.name);
   const started = performance.now();
@@ -59,7 +66,7 @@ function* one<T>(
     parent: root,
     terminal: output.tool,
     tools: ability ? [...ability.tools, new ArithmeticTool()] : [],
-    scorer: ability?.source.createScorer(content),
+    scorer: ability?.source.createScorer(originalQuestion ?? content),
     enableThinking: true,
     policy,
     maxTurns: BUDGETS[role].maxTurns,
@@ -99,8 +106,11 @@ function* one<T>(
       `${role} did not complete: ${outcome?.failed ?? outcome?.exitReason ?? "missing/capped result"}`,
     );
   const result = output.read(outcome);
-  if (result === null)
+  if (result === null) {
+    if (role === "controller")
+      throw new InvalidDecision(decisionFeedback(outcome.result ?? "null"));
     throw new Error(`${role} returned an invalid typed output`);
+  }
   return result;
 }
 
@@ -115,10 +125,12 @@ export function* executeWork(
   rejections: unknown[] = [],
 ): Operation<Map<string, Finding>> {
   const schema = findingSchema(problem.documents);
-  const output = defineOutput("report", schema, {
+  const output = defineOutput("report", evidenceSpanSchema(problem.documents), {
     grammarOrder: "sampleFirst",
+    capture: (value) =>
+      JSON.stringify(resolveFinding(value, problem.documents)),
     description:
-      "Submit specific supported findings, exact document quotations, and remaining uncertainty.",
+      "Submit supported findings with document numbers and exact line ranges from read_file. The harness copies those source passages; do not transcribe quotes.",
   });
   const role = decision.action === "verify" ? "verifier" : "worker";
   const policy = new LimitedPolicy(role, meter, output.tool.name),
@@ -349,7 +361,13 @@ export function* solve(
           round,
           error: e instanceof Error ? e.message : String(e),
         });
-        break;
+        record("controller-rejected", {
+          round,
+          error: e instanceof Error ? e.message : String(e),
+        });
+        if (e instanceof InvalidDecision) continue;
+        if (e instanceof WindDown) break;
+        throw e;
       }
       record("decision", { round, decision });
       if (decision.action === "answer") break;
@@ -412,6 +430,7 @@ export function* solve(
       }),
       record,
       ability,
+      problem.question,
     )).answer;
   });
 }

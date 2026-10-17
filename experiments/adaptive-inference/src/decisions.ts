@@ -101,7 +101,7 @@ const evidenceSchema = z
     quote: z.string().min(8).max(1600),
   })
   .strict();
-const baseFinding = z
+export const baseFinding = z
   .object({
     finding: cleanText.min(1).max(16000),
     evidence: z.array(evidenceSchema).max(24),

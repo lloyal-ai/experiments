@@ -20,7 +20,7 @@ export function recipe() {
     ]),
   );
   const configuration = {
-    name: "adaptive-aa-lcr-corpus-v2",
+    name: "adaptive-aa-lcr-corpus-spans-v3",
     system: SYSTEM,
     templates,
     sampling: SAMPLING,
@@ -38,6 +38,10 @@ export function recipe() {
       ),
     },
     reranker: RERANKER,
+    evidence:
+      "Source line ranges resolved byte-exactly by harness; no model transcription",
+    controllerRepair:
+      "Typed validation feedback on a fresh controller fork, within the same round/token budget",
     thinking: true,
   };
   return { ...configuration, sha256: digest(JSON.stringify(configuration)) };

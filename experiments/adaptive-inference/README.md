@@ -119,3 +119,9 @@ The signed `lloyal/corpus@3.0.0` ability supplies `grep`, `read_file`, and BM25 
 Qwen3-Reranker-0.6B uses the pinned original BF16 checkpoint, F16 K/V, 32,768 shared cells, ten sequence slots and batch 2048. The public `createReranker` provider is bound by the harness because the model-family binder does not expose per-service KV precision. No native access is used. Search uses the ability's 256-token windows, 100 BM25 candidates, top five hits and 2,048-token admission budget. Relevance scoring is not answer grading. Per-attempt receipts include ranking latency and document/query content tokens; scoring-template token overhead is unavailable and recorded as null.
 
 `src/ability-preflight.ts` checks longest-input coexistence, real reranked search, four corpus workers, accepted evidence, fast-forwarded findings, GPU headroom and complete teardown. The red-first corpus isolation/accounting and singleton-discovery tests are part of `npm test`.
+
+### Source ranges and decision repair (v3)
+
+Workers cite `document`, `startLine`, and `endLine` from corpus `read_file`. The harness validates those addresses and copies exact original bytes into the accepted finding. It does not ask the model to retype long quotations or silently repair its prose. Logical support still needs model verification and benchmark judging; a valid address alone is not proof of the claim.
+
+Invalid controller outputs receive their actual schema errors and bounded previous output on the next owned controller branch, within the same six rounds and generated-token allowance. They are never silently reinterpreted as a different topology. Native errors remain failures; no framework code is changed.
