@@ -150,3 +150,14 @@ The same frozen V5 trace also showed an answer decision rejected for putting `an
 
 
 Failure diagnostics now save rejected workers' unfinished `Agent.rawOutput` and public token counters in private run events. The V5 trace retained only `policy_exit` for a 32,768-token unfinished generation, preventing inspection of possible repetition. Raw diagnostic text is not fed back into the controller and is not included in public score receipts. Inference policy and acceptance are unchanged.
+
+
+### Complete V5 pilot and full-set candidate
+
+The unchanged V5 candidate scored **6/10**, with zero solver failures, on the same ten development questions: **91.83 solver minutes**, **246,687 generated tokens**, and **9,994 / 531 judge input/output tokens**. V3 was 5/10 in 57.22 minutes / 118,208 generated tokens. V5 corrected two answers and regressed on one; these are complete-candidate comparisons, not per-case best-of selections. This is not a comparable full-set score against AA's 63% reference.
+
+The regression added an out-of-scope historical document to a requested outlook list. Earlier, the controller had identified the reference-matching list but its answer decision was rejected for an irrelevant topology field. Later work included a worker capped at 32,768 tokens; that output was rejected and synthesis still completed. V6 removes the mandatory execution fields from answer decisions and retains the controller's stopping reason in synthesis history as a proposed resolution to check, rather than dropping it at the break.
+
+V6's public-API GPU check passed at the revision recorded in `results/evidence-output-v6-preflight.json`: 122,307 full input tokens, four accepted corpus workers, an answer-only terminal call, 26,703 MiB used / 18,783 MiB free, and zero live cells / all 16 slots after cleanup. The subsequent handoff change only retains the existing controller reason in the final prompt. No framework code or native access is involved.
+
+The declared first full-set pass includes every one of the 100 v1.1 questions and explicitly discloses the ten development-exposed cases. It is one repeat, not the planned final three-repeat mean. V5's category-weighted planning projection is **12.19 solver hours per full pass**, with substantial uncertainty; the V6 changes may alter that cost. Full-set results are not available yet.

@@ -378,7 +378,10 @@ export function* solve(
         throw e;
       }
       record("decision", { round, decision });
-      if (decision.action === "answer") break;
+      if (decision.action === "answer") {
+        history.push({ round, action: "answer", reason: decision.reason });
+        break;
+      }
       assertWorkDecision(decision);
       if (decision.tasks.length > LIMITS.workerSpawns - requested) {
         history.push({

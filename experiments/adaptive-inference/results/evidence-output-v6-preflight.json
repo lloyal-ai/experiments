@@ -1,0 +1,28 @@
+{
+  "inputTokens": 122307,
+  "generatedTokens": 2168,
+  "peakCells": 131785,
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 9552,
+    "queryTokens": 4,
+    "elapsedMs": 194.91331899999932,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "memoryMiB": [
+    26703,
+    18783
+  ],
+  "accepted": 4,
+  "elapsedMs": 58103.63464599999,
+  "cleanup": {
+    "cells": 0,
+    "slots": 16
+  },
+  "git": "1eed8716061eeefa740bebbadf187970650d0279",
+  "rawReceiptSha256": "c95435c2400f5425eba461b6a7448da3f8234c48b76c760a56a4642a290b4b8d",
+  "purpose": "Unscored full-context corpus, four concurrent workers, answer-only tool decision, GPU headroom and cleanup check; not a benchmark score.",
+  "answerDecisionAccepted": true
+}

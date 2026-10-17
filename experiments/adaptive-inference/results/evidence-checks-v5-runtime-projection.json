@@ -1,0 +1,62 @@
+{
+  "basedOn": "aa-lcr-development-evidence-checks-v5",
+  "recipeSha256": "a71f51f4fd0c32db339ef378eb894480615a6d774f5bd8e36abaff8c7f26cc78",
+  "pilotSolverSeconds": 5509.90551727,
+  "categoryWeightedFull100Hours": 12.193054622747914,
+  "unweightedFull100Hours": 15.305293103527777,
+  "threeRepeatCategoryWeightedHours": 36.57916386824374,
+  "categories": [
+    {
+      "category": "Academia",
+      "fullSetQuestions": 5,
+      "pilotQuestions": 2,
+      "pilotMeanSeconds": 196.75801715199992,
+      "projectedFullCategorySeconds": 983.7900857599996
+    },
+    {
+      "category": "Company_Documents",
+      "fullSetQuestions": 63,
+      "pilotQuestions": 2,
+      "pilotMeanSeconds": 342.07638920149975,
+      "projectedFullCategorySeconds": 21550.812519694486
+    },
+    {
+      "category": "Government_Consultations",
+      "fullSetQuestions": 11,
+      "pilotQuestions": 1,
+      "pilotMeanSeconds": 740.2601539389999,
+      "projectedFullCategorySeconds": 8142.861693328999
+    },
+    {
+      "category": "Industry_Reports",
+      "fullSetQuestions": 8,
+      "pilotQuestions": 1,
+      "pilotMeanSeconds": 913.94846746,
+      "projectedFullCategorySeconds": 7311.58773968
+    },
+    {
+      "category": "Legal",
+      "fullSetQuestions": 6,
+      "pilotQuestions": 1,
+      "pilotMeanSeconds": 386.08296637899986,
+      "projectedFullCategorySeconds": 2316.4977982739993
+    },
+    {
+      "category": "Marketing",
+      "fullSetQuestions": 6,
+      "pilotQuestions": 2,
+      "pilotMeanSeconds": 299.3754220924999,
+      "projectedFullCategorySeconds": 1796.2525325549993
+    },
+    {
+      "category": "Survey_Reports",
+      "fullSetQuestions": 1,
+      "pilotQuestions": 1,
+      "pilotMeanSeconds": 1793.1942726000002,
+      "projectedFullCategorySeconds": 1793.1942726000002
+    }
+  ],
+  "limitations": "Small purposive development sample; rough solver-time planning projection, not a confidence bound or measured full-set runtime. V6 changes can alter this. Excludes grading, provisioning and idle billed time.",
+  "billingRate": null,
+  "operatingDollars": null
+}
