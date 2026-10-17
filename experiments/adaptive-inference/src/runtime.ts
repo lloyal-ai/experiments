@@ -9,6 +9,9 @@ import {
 import { resolve } from "node:path";
 import { ensure, type Operation } from "effection";
 import { createContext } from "@lloyal-labs/sdk/node";
+import { Services } from "@lloyal-labs/rig";
+import { createReranker } from "@lloyal-labs/rig/node";
+import { RERANKER } from "./service-config.js";
 import {
   initAgents,
   JsonlTraceWriter,
@@ -131,6 +134,28 @@ export function* gpuRuntime(
   });
   writeJson(`${out}/manifest.json`, manifest);
   yield* initAgents(ctx, { traceWriter: trace, disposeContext: false });
+  if (benchmark) {
+    const receipt = JSON.parse(
+      readFileSync("work/provision/reranker-receipt.json", "utf8"),
+    );
+    const path = resolve(RERANKER.path);
+    if (
+      command("sha256sum", [path]).split(" ")[0] !== receipt.model.sha256 ||
+      !receipt.model.tensorTypes.BF16
+    )
+      throw new Error("Reranker BF16 receipt mismatch");
+    const started = performance.now();
+    // The harness binds the public provider directly to state F16 KV explicitly;
+    // rig 6.1.0's model-family binder does not expose per-service KV tuning.
+    const reranker = yield* createReranker(path, RERANKER.options);
+    yield* Services.set({ reranker });
+    manifest.reranker = {
+      ...RERANKER,
+      receipt,
+      loadMs: performance.now() - started,
+    };
+    writeJson(`${out}/manifest.json`, manifest);
+  }
   yield* NSeqMax.set(options.nSeqMax!);
   yield* PoolDefaults.set({
     enableThinking: true,

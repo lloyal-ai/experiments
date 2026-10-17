@@ -10,7 +10,13 @@ import {
   waitUntilSettled,
   type SpawnSpec,
 } from "@lloyal-labs/lloyal-agents";
-import { defineOutput, type Output } from "@lloyal-labs/rig";
+import {
+  defineOutput,
+  renderSpine,
+  renderAgentPreamble,
+  type Ability,
+  type Output,
+} from "@lloyal-labs/rig";
 import {
   AttemptMeter,
   LimitedPolicy,
@@ -33,7 +39,7 @@ import { guardedShape, DependencyRejected } from "./composition.js";
 import { SYSTEM, prompt } from "./prompts.js";
 import { SAMPLING } from "./configuration.js";
 import { validateCapacity, type Problem } from "./aa-lcr.js";
-import { DocumentTool, ArithmeticTool } from "./corpus-tools.js";
+import { ArithmeticTool } from "./corpus-tools.js";
 
 type RecordEvent = (type: string, data: unknown) => void;
 function* one<T>(
@@ -44,6 +50,7 @@ function* one<T>(
   seed: number,
   content: string,
   record: RecordEvent,
+  ability?: Ability,
 ): Operation<T> {
   const policy = new LimitedPolicy(role, meter, output.tool.name);
   const started = performance.now();
@@ -51,13 +58,25 @@ function* one<T>(
   const pool = yield* agentPool({
     parent: root,
     terminal: output.tool,
+    tools: ability ? [...ability.tools, new ArithmeticTool()] : [],
+    scorer: ability?.source.createScorer(content),
     enableThinking: true,
     policy,
     maxTurns: BUDGETS[role].maxTurns,
     capacity: 1,
     pruneOnReturn: true,
     orchestrate: parallel([
-      { key: "value", systemPrompt: SYSTEM, content, seed },
+      {
+        key: "value",
+        systemPrompt: SYSTEM,
+        content: ability
+          ? renderAgentPreamble(ability, { maxTurns: BUDGETS[role].maxTurns }) +
+            "\n" +
+            content
+          : content,
+        seed,
+        assignedAbility: ability?.manifest.name,
+      },
     ]),
   });
   const outcome = pool.byKey("value"),
@@ -92,9 +111,11 @@ export function* executeWork(
   meter: AttemptMeter,
   seed: number,
   record: RecordEvent,
+  ability?: Ability,
+  rejections: unknown[] = [],
 ): Operation<Map<string, Finding>> {
   const schema = findingSchema(problem.documents);
-  const output = defineOutput("findings", schema, {
+  const output = defineOutput("report", schema, {
     grammarOrder: "sampleFirst",
     description:
       "Submit specific supported findings, exact document quotations, and remaining uncertainty.",
@@ -106,17 +127,40 @@ export function* executeWork(
     key: t.id,
     seed: stableSeed(seed, t.id),
     systemPrompt: SYSTEM,
-    content: prompt("worker", {
-      question: problem.question,
-      instruction: t.instruction,
-      reason: t.reason,
-    }),
+    assignedAbility: ability?.manifest.name,
+    content:
+      (ability
+        ? renderAgentPreamble(ability, {
+            agentCount: 1,
+            maxTurns: BUDGETS[role].maxTurns,
+          }) + "\n"
+        : "") +
+      prompt("worker", {
+        question: problem.question,
+        instruction: t.instruction,
+        reason: t.reason,
+      }),
   });
-  const orchestrate = guardedShape(decision, specs, findings, (a) =>
-    acceptedFinding(a, schema, policy.wasCapped(a)),
-  );
+  const orchestrate = guardedShape(decision, specs, findings, (a) => {
+    const accepted = acceptedFinding(a, schema, policy.wasCapped(a));
+    if (!accepted) {
+      let reason: unknown = a.failed ?? a.exitReason ?? "Generated-token cap";
+      if (a.result && !policy.wasCapped(a) && !a.failed && !a.exitReason) {
+        try {
+          const parsed = schema.safeParse(JSON.parse(a.result));
+          reason = parsed.error?.issues ?? "Invalid result";
+        } catch {
+          reason = "Report was not valid JSON";
+        }
+      }
+      const rejection = { agent: a.id, reason };
+      rejections.push(rejection);
+      record("finding-rejected", rejection);
+    }
+    return accepted;
+  });
   const toolkit = createToolkit(
-    [new DocumentTool(problem.documents), new ArithmeticTool()],
+    [...(ability?.tools ?? []), new ArithmeticTool()],
     output.tool,
   );
   const started = performance.now(),
@@ -141,6 +185,7 @@ export function* executeWork(
           toolsJson: toolkit.toolsJson,
           terminalToolName: toolkit.terminalName,
           policy,
+          scorer: ability?.source.createScorer(problem.question),
           maxTurns: BUDGETS[role].maxTurns,
           capacity: LIMITS.capacity,
           enableThinking: true,
@@ -238,6 +283,7 @@ export function* solve(
   seed: number,
   nBatch: number,
   record: RecordEvent,
+  ability?: Ability,
 ): Operation<string> {
   return yield* scoped(function* () {
     const root = Branch.create(ctx, 0, { ...SAMPLING, seed }, nBatch);
@@ -246,7 +292,16 @@ export function* solve(
     });
     const formatted = ctx.formatChatSync(
       JSON.stringify([
-        { role: "system", content: SYSTEM },
+        {
+          role: "system",
+          content:
+            SYSTEM +
+            (ability
+              ? "\n" +
+                renderSpine({ abilities: [ability] }) +
+                "\nCorpus filenames document-N.md map exactly to BEGIN DOCUMENT N, preserving every original byte. These are the only allowed sources."
+              : ""),
+        },
         { role: "user", content: problem.prompt },
       ]),
       { enableThinking: true, addGenerationPrompt: false },
@@ -307,6 +362,7 @@ export function* solve(
       }
       requested += decision.tasks.length;
       let findings: Map<string, Finding>;
+      const rejections: unknown[] = [];
       try {
         findings = yield* executeWork(
           root,
@@ -315,6 +371,8 @@ export function* solve(
           meter,
           stableSeed(seed, round, "work"),
           record,
+          ability,
+          rejections,
         );
       } catch (e) {
         if (!(e instanceof WindDown)) throw e;
@@ -330,13 +388,14 @@ export function* solve(
         topology: decision.topology,
         reason: decision.reason,
         accepted: [...findings.keys()],
+        rejections,
         missing: decision.tasks
           .filter((t) => !findings.has(t.id))
           .map((t) => t.id),
       });
       if (requested >= LIMITS.workerSpawns) break;
     }
-    const final = defineOutput("submit", answerSchema, {
+    const final = defineOutput("report", answerSchema, {
       grammarOrder: "sampleFirst",
       description:
         "Submit the definitive answer to the original question, with all requested details.",
@@ -352,6 +411,7 @@ export function* solve(
         history: JSON.stringify(history),
       }),
       record,
+      ability,
     )).answer;
   });
 }

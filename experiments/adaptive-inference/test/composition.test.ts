@@ -181,3 +181,17 @@ test("seeds are reproducible and distinguish repeat, stage and task", () => {
   assert.notEqual(stableSeed(42, "5", 0, "a"), stableSeed(42, "5", 1, "a"));
   assert.notEqual(stableSeed(42, "5", 0, "a"), stableSeed(42, "5", 0, "b"));
 });
+
+test("a discovery step accepts any valid singleton topology", () => {
+  for (const topology of ["parallel", "chain", "dag"]) {
+    assert.ok(
+      decisionSchema.safeParse({
+        action: "discover",
+        reason: "Identify candidates first",
+        topology,
+        tasks: [task("survey")],
+      }).success,
+      topology,
+    );
+  }
+});

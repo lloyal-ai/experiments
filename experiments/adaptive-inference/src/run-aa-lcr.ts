@@ -9,6 +9,7 @@ import { readProblem, DATASET } from "./aa-lcr.js";
 import { recipe } from "./prompts.js";
 import { stableSeed } from "./decisions.js";
 import { AttemptMeter, LIMITS } from "./budgets.js";
+import { useCorpus } from "./corpus-ability.js";
 import { solve } from "./solver.js";
 import { digest, writeJson } from "./artifacts.js";
 import { freezeSubmission } from "./submission.js";
@@ -107,6 +108,7 @@ main(function* () {
     });
     let answer: string | null = null,
       failure: string | null = null;
+    let serviceMetrics: (() => unknown) | undefined;
     try {
       answer = yield* scoped(function* () {
         yield* spawn(function* () {
@@ -138,6 +140,8 @@ main(function* () {
             yield* sleep(5000);
           }
         });
+        const corpus = yield* useCorpus(problem, attemptDir, record);
+        serviceMetrics = corpus.metrics;
         return yield* race([
           solve(
             ctx,
@@ -146,6 +150,7 @@ main(function* () {
             seed,
             (manifest.options as { nBatch: number }).nBatch,
             record,
+            corpus.ability,
           ),
           (function* () {
             yield* sleep(plan.timeoutMs);
@@ -183,6 +188,7 @@ main(function* () {
       generatedByRole: meter.byRole(),
       peakLiveCells: meter.peakCells,
       peakGpuMiB,
+      reranker: serviceMetrics?.() ?? null,
       remainingCells: pressure.cellsUsed,
       availableSequences,
     };

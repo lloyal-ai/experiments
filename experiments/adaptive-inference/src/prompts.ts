@@ -3,6 +3,7 @@ import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 import { digest } from "./artifacts.js";
 import { BUDGETS, LIMITS } from "./budgets.js";
+import { RERANKER } from "./service-config.js";
 import { SAMPLING } from "./configuration.js";
 const directory = fileURLToPath(new URL("../prompts/", import.meta.url));
 const eta = new Eta({ views: directory, autoEscape: false });
@@ -19,13 +20,24 @@ export function recipe() {
     ]),
   );
   const configuration = {
-    name: "adaptive-aa-lcr-v1",
+    name: "adaptive-aa-lcr-corpus-v2",
     system: SYSTEM,
     templates,
     sampling: SAMPLING,
     budgets: BUDGETS,
     limits: LIMITS,
-    tools: ["document", "arithmetic"],
+    tools: ["grep", "read_file", "search", "arithmetic"],
+    ability: {
+      name: "corpus",
+      version: "3.0.0",
+      manifestSha256: digest(
+        readFileSync("node_modules/@lloyal-labs/corpus-ability/ability.json"),
+      ),
+      skillSha256: digest(
+        readFileSync("node_modules/@lloyal-labs/corpus-ability/skill.eta"),
+      ),
+    },
+    reranker: RERANKER,
     thinking: true,
   };
   return { ...configuration, sha256: digest(JSON.stringify(configuration)) };
