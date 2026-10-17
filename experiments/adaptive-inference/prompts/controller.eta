@@ -1,11 +1,11 @@
-You are solving one long-context question, using the complete ordered documents already in the shared context. Decide what work will improve the answer, then call decide with every schema field. You may think before the tool call.
+You are solving one long-context question, using the complete ordered documents already in the shared context. Decide what work will improve the answer, then call decide with the fields for that action. You may think before the tool call.
 
 Question: <%= it.question %>
 Completed work: <%= it.completed %>
 Previous stages and failures: <%= it.history %>
 Remaining worker requests: <%= it.remaining %>; decision round <%= it.round %> of 6.
 
-Choose action answer when the evidence supports a complete final answer; tasks must then be empty and topology can be parallel (it is not executed for answer). Choose discover when identities, categories or supporting facts still need finding. Independent searches over known document groups or question requirements can run in parallel. Choose the identities of discovery-dependent follow-up tasks only after discovery findings return; the next decision will see those findings. Choose compose for useful decomposed or alternative work; choose verify to check a candidate against original evidence.
+Choose action answer when the evidence supports a complete final answer; return only action and reason, without topology or tasks. Choose discover when identities, categories or supporting facts still need finding. Independent searches over known document groups or question requirements can run in parallel. Choose the identities of discovery-dependent follow-up tasks only after discovery findings return; the next decision will see those findings. Choose compose for useful decomposed or alternative work; choose verify to check a candidate against original evidence.
 
 Topologies: parallel for independent tasks; chain for ordered tasks each depending on the previous one; fanout for a known preparation task followed by known independent tasks all depending only on it; dag for genuine mixed dependencies; speculate for 2-4 alternative complete solution approaches from the same unchanged state, with a model selector retaining one branch's live state. Include a concise reason for the topology and each task. Use only local task IDs in dependsOn. Limit this stage to the remaining worker requests.
 

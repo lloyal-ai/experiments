@@ -5,7 +5,7 @@ import type {
   PoolContext,
   SpawnSpec,
 } from "@lloyal-labs/lloyal-agents";
-import type { Decision, WorkTask, Finding } from "./decisions.js";
+import { assertWorkDecision, type Decision, type WorkTask, type Finding } from "./decisions.js";
 
 export class DependencyRejected extends Error {}
 /** Acceptance surrounds the public factories; admission, batching and waits remain the pool's. */
@@ -15,6 +15,7 @@ export function guardedShape(
   findings: Map<string, Finding>,
   accept: (agent: Agent) => Finding | null,
 ): Orchestrator {
+  assertWorkDecision(decision);
   return function* (ctx) {
     const keys = new Map<number, string>(),
       inherited = new Set<string>();

@@ -20,21 +20,34 @@ const taskSchema = z
   })
   .strict();
 export type WorkTask = z.infer<typeof taskSchema>;
-export const decisionSchema = z
-  .object({
-    action: z.enum(["answer", "discover", "compose", "verify"]),
-    reason: cleanText.min(1).max(2000),
-    topology: z.enum(["parallel", "chain", "fanout", "dag", "speculate"]),
-    tasks: z.array(taskSchema).max(8),
-  })
-  .strict()
-  .superRefine((d, c) => {
+const workDecision = z.object({
+  action: z.enum(["discover", "compose", "verify"]),
+  reason: cleanText.min(1).max(2000),
+  topology: z.enum(["parallel", "chain", "fanout", "dag", "speculate"]),
+  tasks: z.array(taskSchema).min(1).max(8),
+}).strict();
+// Keep tool parameters a flat object for tagged tool-call formats. Conditional
+// requirements are validated at the public output boundary.
+export const decisionSchema = z.object({
+  ...workDecision.shape,
+  action: z.enum(["answer", "discover", "compose", "verify"]),
+  topology: workDecision.shape.topology.optional(),
+  tasks: workDecision.shape.tasks.optional(),
+}).strict()
+  .superRefine((value, c) => {
     const error = (message: string) => c.addIssue({ code: "custom", message });
-    if (d.action === "answer") {
-      if (d.tasks.length) error("Answer requires no additional tasks");
+    if (value.action === "answer") {
+      if (value.topology !== undefined || value.tasks !== undefined)
+        error("Answer needs only action and reason; omit topology and tasks");
       return;
     }
-    if (!d.tasks.length) error("Work requires tasks");
+    const work = workDecision.safeParse(value);
+    if (!work.success) {
+      for (const issue of work.error.issues)
+        c.addIssue({ code: "custom", path: issue.path, message: issue.message });
+      return;
+    }
+    const d = work.data;
     try {
       dag(
         d.tasks.map((t) => ({
@@ -91,6 +104,12 @@ export const decisionSchema = z
     }
   });
 export type Decision = z.infer<typeof decisionSchema>;
+export function assertWorkDecision(
+  decision: Decision,
+): asserts decision is z.infer<typeof workDecision> {
+  if (decision.action === "answer" || !decision.topology || !decision.tasks)
+    throw new Error("An answer decision has no work to execute");
+}
 export const EVIDENCE_LIMITS = {
   passageCharacters: 8192,
   totalCharacters: 24 * 1600,

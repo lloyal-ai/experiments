@@ -229,3 +229,9 @@ test("independent discovery tasks can run together before their findings inform 
   assert.equal(findings.size, 2);
   assert.ok(events.indexOf("extend:survey_north") > events.indexOf("complete:2"));
 });
+
+test("answer decisions need only an action and reason; execution fields belong to work", () => {
+  assert.deepEqual(decisionSchema.parse({ action: "answer", reason: "The requested facts are established." }), { action: "answer", reason: "The requested facts are established." });
+  assert.equal(decisionSchema.safeParse({ action: "compose", reason: "More work." }).success, false);
+  assert.equal(decisionSchema.safeParse({ action: "answer", reason: "Done.", topology: "parallel", tasks: [task("unused")] }).success, false);
+});

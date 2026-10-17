@@ -1,12 +1,12 @@
 import { main, scoped, ensure } from "effection";
 import { Branch, BranchStore } from "@lloyal-labs/sdk";
-import { ContextPressure, waitUntilSettled } from "@lloyal-labs/lloyal-agents";
-import { renderSpine } from "@lloyal-labs/rig";
+import { agentPool, parallel, ContextPressure, waitUntilSettled } from "@lloyal-labs/lloyal-agents";
+import { defineOutput, renderSpine } from "@lloyal-labs/rig";
 import { gpuRuntime, command } from "./runtime.js";
 import { writeJson } from "./artifacts.js";
 import { readProblem, validateCapacity } from "./aa-lcr.js";
 import { useCorpus } from "./corpus-ability.js";
-import { AttemptMeter, LIMITS } from "./budgets.js";
+import { AttemptMeter, LimitedPolicy, LIMITS } from "./budgets.js";
 import { executeWork } from "./solver.js";
 import { SAMPLING } from "./configuration.js";
 import { SYSTEM } from "./prompts.js";
@@ -92,6 +92,29 @@ main(function* () {
       throw new Error(
         `Expected four accepted corpus readers, got ${findings.size}: ${JSON.stringify(rejections)}`,
       );
+    const decisionOutput = defineOutput("decide", decisionSchema);
+    const probePolicy = new LimitedPolicy("controller", meter, "decide");
+    const decisionProbe = yield* agentPool({
+      parent: root,
+      terminal: decisionOutput.tool,
+      enableThinking: true,
+      policy: probePolicy,
+      maxTurns: 8,
+      capacity: 1,
+      pruneOnReturn: true,
+      orchestrate: parallel([{
+        key: "answer-contract",
+        systemPrompt: SYSTEM,
+        content: "Runtime contract probe, not the benchmark question: all needed fixture facts are established. Call decide with action answer and a short reason. Omit topology and tasks because no work remains.",
+        seed: 42,
+      }]),
+    });
+    const probeOutcome = decisionProbe.byKey("answer-contract");
+    const probe = probeOutcome && decisionOutput.read(probeOutcome);
+    const physical = decisionProbe.agents.find((a) => a.agentId === probeOutcome?.agentId);
+    if (decisionProbe.failure || probeOutcome?.failed || probeOutcome?.exitReason || !physical || probePolicy.wasCapped(physical.agent) || probe?.action !== "answer")
+      throw new Error("Answer-only decision failed through the public tool/grammar path");
+    record("answer-decision-check", { decision: probe, tokens: decisionProbe.totalTokens });
     const memory = command("nvidia-smi", [
       "--query-gpu=memory.used,memory.free",
       "--format=csv,noheader,nounits",

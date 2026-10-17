@@ -34,6 +34,7 @@ import {
 } from "./budgets.js";
 import {
   decisionSchema,
+  assertWorkDecision,
   acceptedFinding,
   stableSeed,
   type Decision,
@@ -124,6 +125,7 @@ export function* executeWork(
   ability?: Ability,
   rejections: unknown[] = [],
 ): Operation<Map<string, Finding>> {
+  assertWorkDecision(decision);
   const schema = findingOutputSchema(problem.documents);
   const output = defineOutput("report", evidenceSpanSchema(problem.documents), {
     grammarOrder: "sampleFirst",
@@ -371,6 +373,7 @@ export function* solve(
       }
       record("decision", { round, decision });
       if (decision.action === "answer") break;
+      assertWorkDecision(decision);
       if (decision.tasks.length > LIMITS.workerSpawns - requested) {
         history.push({
           round,

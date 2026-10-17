@@ -52,8 +52,8 @@ export function analyzeTrace(events: Event[], trace: Event[]) {
       .filter((e) => e.type === "decision")
       .map((e) => ({
         action: e.data.decision.action,
-        topology: e.data.decision.topology,
-        tasks: e.data.decision.tasks.length,
+        topology: e.data.decision.topology ?? null,
+        tasks: e.data.decision.tasks?.length ?? 0,
       })),
     rejectedFindings: events.filter((e) => e.type === "finding-rejected")
       .length,
