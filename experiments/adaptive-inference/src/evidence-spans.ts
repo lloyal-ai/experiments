@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { baseFinding, decisionSchema, type Finding } from "./decisions.js";
+import { baseFinding, findingSchema, decisionSchema, type Finding } from "./decisions.js";
 const span = z
   .object({
     document: z.number().int().positive(),
@@ -70,4 +70,14 @@ export function decisionFeedback(raw: string): string {
     issues = "Not valid JSON";
   }
   return `The decision was rejected and no tasks ran. Correct the schema errors before choosing the next action. Errors: ${JSON.stringify(issues)}. Previous output: ${raw.slice(0, 16000)}`;
+}
+
+export function findingOutputSchema(documents: readonly { text: string }[]) {
+  // The public terminal hook captures canonical quotations. A completed worker
+  // may instead return its valid tool arguments as JSON without calling the hook.
+  // Validate either representation before admitting the same canonical finding.
+  return z.union([
+    findingSchema(documents),
+    evidenceSpanSchema(documents).transform((report) => resolveFinding(report, documents)),
+  ]);
 }

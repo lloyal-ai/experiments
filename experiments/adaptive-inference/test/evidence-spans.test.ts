@@ -1,7 +1,9 @@
+import { acceptedFinding } from "../src/decisions.js";
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
   evidenceSpanSchema,
+  findingOutputSchema,
   resolveFinding,
   decisionFeedback,
 } from "../src/evidence-spans.js";
@@ -53,4 +55,26 @@ test("decision repair feedback preserves the invalid output and specific validat
   assert.match(feedback, /action/);
   assert.match(feedback, /parallel/);
   assert.match(feedback, /answer/);
+});
+
+
+test("a completed range report is accepted identically to terminal-captured quotations", () => {
+  const schema = findingOutputSchema(docs);
+  const expected = resolveFinding(report, docs);
+  assert.deepEqual(acceptedFinding({ result: JSON.stringify(report), failed: null }, schema, false), expected);
+  assert.deepEqual(acceptedFinding({ result: JSON.stringify(expected), failed: null }, schema, false), expected);
+});
+
+test("normalizing completed reports never admits invalid sources or unfinished workers", () => {
+  const schema = findingOutputSchema(docs);
+  for (const evidence of [
+    [{ document: 1, startLine: 2, endLine: 999 }],
+    [{ document: 2, startLine: 2, endLine: 3 }],
+    [{ document: 1, quote: "This invented quotation is not in the document." }],
+    [{ document: 1, startLine: 2, endLine: 3, quote: "Unexpected mixed representation" }],
+  ]) assert.equal(acceptedFinding({ result: JSON.stringify({ ...report, evidence }), failed: null }, schema, false), null);
+  const outcome = { result: JSON.stringify(report), failed: null };
+  assert.equal(acceptedFinding(outcome, schema, true), null);
+  assert.equal(acceptedFinding({ ...outcome, failed: "tool failure" }, schema, false), null);
+  assert.equal(acceptedFinding({ ...outcome, exitReason: "budget" }, schema, false), null);
 });

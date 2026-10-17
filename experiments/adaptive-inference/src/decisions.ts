@@ -134,7 +134,7 @@ export function acceptedFinding(
     failed: string | null;
     exitReason?: string;
   },
-  schema: ReturnType<typeof findingSchema>,
+  schema: z.ZodType<Finding>,
   capped: boolean,
 ): Finding | null {
   if (capped || outcome.failed || outcome.exitReason || !outcome.result)

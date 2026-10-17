@@ -1,5 +1,6 @@
 import {
   evidenceSpanSchema,
+  findingOutputSchema,
   resolveFinding,
   decisionFeedback,
   InvalidDecision,
@@ -33,7 +34,6 @@ import {
 } from "./budgets.js";
 import {
   decisionSchema,
-  findingSchema,
   acceptedFinding,
   stableSeed,
   type Decision,
@@ -124,7 +124,7 @@ export function* executeWork(
   ability?: Ability,
   rejections: unknown[] = [],
 ): Operation<Map<string, Finding>> {
-  const schema = findingSchema(problem.documents);
+  const schema = findingOutputSchema(problem.documents);
   const output = defineOutput("report", evidenceSpanSchema(problem.documents), {
     grammarOrder: "sampleFirst",
     capture: (value) =>
