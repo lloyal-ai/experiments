@@ -1,0 +1,36 @@
+{
+  "inputTokens": 122307,
+  "generatedTokens": 1149,
+  "peakCells": 131109,
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 9552,
+    "queryTokens": 4,
+    "elapsedMs": 195.3120809999964,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "memoryMiB": [
+    26699,
+    18787
+  ],
+  "accepted": 4,
+  "elapsedMs": 37965.283996,
+  "cleanup": {
+    "cells": 0,
+    "slots": 16
+  },
+  "git": "d1f691bddcf6f0cf1b97905b0a6bc89e6c999e55",
+  "purpose": "Unscored longest-input, source-range evidence, four-worker corpus and cleanup validation. One functional check, not a throughput benchmark.",
+  "rawReceiptSha256": "1a1b65b95d20618df1e05785345cb8c9cbe0fddde160dab5fe34496f6ac3b660",
+  "prefillMs": 19901.655029,
+  "workerStageMs": 16468.145766,
+  "stageCommit": {
+    "kind": "stage-commit",
+    "handle": 1,
+    "previousPosition": 122307,
+    "position": 122860,
+    "ms": 5.6320249999989755
+  }
+}
