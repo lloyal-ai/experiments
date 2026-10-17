@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { run } from "effection";
+import { run, createChannel } from "effection";
 import type { Agent, PoolContext } from "@lloyal-labs/lloyal-agents";
 import {
   decisionSchema,
@@ -87,7 +87,7 @@ test("protocol fragments and capped findings cannot become accepted evidence", (
   );
 });
 
-test("typed decisions reject cycles, unknown prerequisites, and invented discovery-dependent work", () => {
+test("typed decisions reject cycles, unknown prerequisites, and inconsistent topologies", () => {
   assert.ok(
     decisionSchema.safeParse(compose("dag", [task("a"), task("b", ["a"])]))
       .success,
@@ -105,15 +105,6 @@ test("typed decisions reject cycles, unknown prerequisites, and invented discove
   assert.equal(
     decisionSchema.safeParse(compose("parallel", [task("a"), task("b", ["a"])]))
       .success,
-    false,
-  );
-  assert.equal(
-    decisionSchema.safeParse({
-      action: "discover",
-      reason: "Find candidates",
-      topology: "parallel",
-      tasks: [task("a"), task("b")],
-    }).success,
     false,
   );
   assert.equal(
@@ -194,4 +185,47 @@ test("a discovery step accepts any valid singleton topology", () => {
       topology,
     );
   }
+});
+
+
+test("independent discovery tasks can run together before their findings inform later work", { timeout: 1000 }, async () => {
+  const plan = decisionSchema.parse({
+    action: "discover",
+    reason: "Identify candidates in two supplied document groups",
+    topology: "parallel",
+    tasks: [task("survey_north"), task("survey_south")],
+  });
+  const events: string[] = [];
+  let next = 1;
+  const ready = createChannel<void>();
+  const ctx = {
+    spine: {},
+    canFit: () => true,
+    *spawn(spec: { key: string }) {
+      events.push("spawn:" + spec.key);
+      const agent = { id: next++, result: JSON.stringify(report), failed: null } as Agent;
+      if (next === 3) yield* ready.send();
+      return agent;
+    },
+    *waitFor(a: Agent) {
+      const subscription = yield* ready;
+      if (next < 3) yield* subscription.next();
+      events.push("complete:" + a.id);
+      return a;
+    },
+    *extendSpine(id: string) {
+      events.push("extend:" + id);
+      return 1;
+    },
+  } as unknown as PoolContext;
+  const findings = new Map();
+  await run(() => guardedShape(
+    plan,
+    (t) => ({ key: t.id, content: t.instruction, systemPrompt: "" }),
+    findings,
+    (a) => acceptedFinding(a, findingSchema(sources), false),
+  )(ctx));
+  assert.deepEqual(events.slice(0, 2), ["spawn:survey_north", "spawn:survey_south"]);
+  assert.equal(findings.size, 2);
+  assert.ok(events.indexOf("extend:survey_north") > events.indexOf("complete:2"));
 });

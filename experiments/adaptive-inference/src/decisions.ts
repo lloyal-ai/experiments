@@ -35,10 +35,6 @@ export const decisionSchema = z
       return;
     }
     if (!d.tasks.length) error("Work requires tasks");
-    if (d.action === "discover" && d.tasks.length !== 1)
-      error(
-        "Discover requires one survey task; choose discovered follow-up tasks only in the next decision after its findings exist",
-      );
     try {
       dag(
         d.tasks.map((t) => ({

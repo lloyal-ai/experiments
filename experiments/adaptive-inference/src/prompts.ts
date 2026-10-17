@@ -20,7 +20,7 @@ export function recipe() {
     ]),
   );
   const configuration = {
-    name: "adaptive-aa-lcr-corpus-spans-v3",
+    name: "adaptive-aa-lcr-composable-discovery-v4",
     system: SYSTEM,
     templates,
     sampling: SAMPLING,
@@ -42,6 +42,7 @@ export function recipe() {
       "Source line ranges resolved byte-exactly by harness; no model transcription",
     controllerRepair:
       "Typed validation feedback on a fresh controller fork, within the same round/token budget",
+    discovery: "Independent discovery tasks may run together; result-dependent identities are chosen in a subsequent decision",
     thinking: true,
   };
   return { ...configuration, sha256: digest(JSON.stringify(configuration)) };
