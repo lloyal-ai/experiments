@@ -1,0 +1,648 @@
+{
+  "git": "d1f691bddcf6f0cf1b97905b0a6bc89e6c999e55",
+  "recipeSha256": "266772b23c8dc25fcfdb421c62240cd5ffe4005d41b3ee269603b6d8870e89de",
+  "gpu": "NVIDIA L40S, GPU-72c5372a-2d3b-1bd6-57ee-830683026c6b, 565.57.01, 46068 MiB",
+  "loadMs": 2305.338047000001,
+  "rerankerLoadMs": 552.7162749999989,
+  "wallTimeNote": "Tool times and reranker times are cumulative and may overlap; they are not subtracted from elapsed time to infer decoding speed.",
+  "billingRate": null,
+  "operatingDollars": null,
+  "rows": [
+    {
+      "id": "q1-r0",
+      "agents": 5,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "grep": {
+          "calls": 7,
+          "admittedCells": 5779,
+          "cumulativeMs": 75.10975899998448
+        },
+        "read_file": {
+          "calls": 9,
+          "admittedCells": 2679,
+          "cumulativeMs": 79.45026999998663
+        },
+        "search": {
+          "calls": 2,
+          "admittedCells": 1127,
+          "cumulativeMs": 696.8858209999889
+        }
+      },
+      "admittedToolCells": 9585,
+      "cumulativeToolMs": 851.44584999996,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "chain",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 173002.342638,
+      "prefillMs": 14837.729687,
+      "inputTokens": 104010,
+      "generatedTokens": 5916,
+      "generatedByRole": {
+        "controller": 1999,
+        "worker": 3056,
+        "synthesis": 861
+      },
+      "peakGpuMiB": 26688,
+      "peakLiveCells": 117938,
+      "reranker": {
+        "queries": 2,
+        "documents": 200,
+        "documentTokens": 37425,
+        "queryTokens": 10,
+        "elapsedMs": 665.4806439999957,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q6-r0",
+      "agents": 5,
+      "maxConcurrentAgents": 2,
+      "tools": {
+        "search": {
+          "calls": 5,
+          "admittedCells": 2478,
+          "cumulativeMs": 1813.6818430000276
+        },
+        "grep": {
+          "calls": 8,
+          "admittedCells": 2613,
+          "cumulativeMs": 72.76005400007125
+        },
+        "read_file": {
+          "calls": 25,
+          "admittedCells": 6722,
+          "cumulativeMs": 203.1587690000597
+        },
+        "arithmetic": {
+          "calls": 3,
+          "admittedCells": 105,
+          "cumulativeMs": 22.772640999988653
+        }
+      },
+      "admittedToolCells": 11918,
+      "cumulativeToolMs": 2112.373307000147,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "compose",
+          "topology": "parallel",
+          "tasks": 2
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 212914.85180599996,
+      "prefillMs": 12023.585587000009,
+      "inputTokens": 91352,
+      "generatedTokens": 8649,
+      "generatedByRole": {
+        "controller": 1543,
+        "worker": 6000,
+        "synthesis": 1106
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 105974,
+      "reranker": {
+        "queries": 5,
+        "documents": 500,
+        "documentTokens": 22870,
+        "queryTokens": 59,
+        "elapsedMs": 1695.4713690000062,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q69-r0",
+      "agents": 16,
+      "maxConcurrentAgents": 4,
+      "tools": {
+        "read_file": {
+          "calls": 57,
+          "admittedCells": 42477,
+          "cumulativeMs": 580.612274000654
+        },
+        "search": {
+          "calls": 3,
+          "admittedCells": 1710,
+          "cumulativeMs": 783.8917290000245
+        },
+        "grep": {
+          "calls": 21,
+          "admittedCells": 16975,
+          "cumulativeMs": 224.0482049996499
+        }
+      },
+      "admittedToolCells": 61162,
+      "cumulativeToolMs": 1588.5522080003284,
+      "fastForwards": {
+        "stage-commit": 2
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "verify",
+          "topology": "chain",
+          "tasks": 3
+        },
+        {
+          "action": "verify",
+          "topology": "fanout",
+          "tasks": 5
+        }
+      ],
+      "rejectedFindings": 3,
+      "elapsedMs": 770617.708115,
+      "prefillMs": 19519.26112099999,
+      "inputTokens": 120566,
+      "generatedTokens": 27176,
+      "generatedByRole": {
+        "controller": 6233,
+        "worker": 10226,
+        "verifier": 8809,
+        "synthesis": 1908
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 142717,
+      "reranker": {
+        "queries": 3,
+        "documents": 300,
+        "documentTokens": 38514,
+        "queryTokens": 20,
+        "elapsedMs": 737.6779040000401,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q80-r0",
+      "agents": 9,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "grep": {
+          "calls": 11,
+          "admittedCells": 7283,
+          "cumulativeMs": 110.98859300022013
+        },
+        "read_file": {
+          "calls": 25,
+          "admittedCells": 18143,
+          "cumulativeMs": 245.51184699963778
+        },
+        "search": {
+          "calls": 3,
+          "admittedCells": 1651,
+          "cumulativeMs": 1144.9661699996796
+        }
+      },
+      "admittedToolCells": 27077,
+      "cumulativeToolMs": 1501.4666099995375,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "compose",
+          "topology": "chain",
+          "tasks": 1
+        },
+        {
+          "action": "compose",
+          "topology": "chain",
+          "tasks": 4
+        },
+        {
+          "action": "answer",
+          "topology": "chain",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 1,
+      "elapsedMs": 383669.8046260001,
+      "prefillMs": 18328.304046999896,
+      "inputTokens": 116292,
+      "generatedTokens": 11837,
+      "generatedByRole": {
+        "controller": 4006,
+        "worker": 5780,
+        "synthesis": 2051
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 134397,
+      "reranker": {
+        "queries": 3,
+        "documents": 300,
+        "documentTokens": 63087,
+        "queryTokens": 27,
+        "elapsedMs": 1098.2197599997744,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q86-r0",
+      "agents": 9,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "grep": {
+          "calls": 18,
+          "admittedCells": 3326,
+          "cumulativeMs": 161.1028399998322
+        },
+        "read_file": {
+          "calls": 49,
+          "admittedCells": 8864,
+          "cumulativeMs": 402.2613330008462
+        },
+        "search": {
+          "calls": 5,
+          "admittedCells": 3154,
+          "cumulativeMs": 1885.9099060001317
+        }
+      },
+      "admittedToolCells": 15344,
+      "cumulativeToolMs": 2449.27407900081,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 1,
+      "elapsedMs": 552151.7379490002,
+      "prefillMs": 17144.364601999987,
+      "inputTokens": 111935,
+      "generatedTokens": 17901,
+      "generatedByRole": {
+        "controller": 4944,
+        "worker": 11092,
+        "synthesis": 1865
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 129954,
+      "reranker": {
+        "queries": 5,
+        "documents": 500,
+        "documentTokens": 104911,
+        "queryTokens": 53,
+        "elapsedMs": 1823.0754209998995,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q94-r0",
+      "agents": 5,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "grep": {
+          "calls": 4,
+          "admittedCells": 1030,
+          "cumulativeMs": 36.02754099993035
+        },
+        "read_file": {
+          "calls": 6,
+          "admittedCells": 1791,
+          "cumulativeMs": 50.569313999731094
+        },
+        "search": {
+          "calls": 2,
+          "admittedCells": 1305,
+          "cumulativeMs": 786.1001800000668
+        },
+        "arithmetic": {
+          "calls": 1,
+          "admittedCells": 47,
+          "cumulativeMs": 7.707036999985576
+        }
+      },
+      "admittedToolCells": 4173,
+      "cumulativeToolMs": 880.4040719997138,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 180666.91555899987,
+      "prefillMs": 19380.411820999812,
+      "inputTokens": 120153,
+      "generatedTokens": 5596,
+      "generatedByRole": {
+        "controller": 2641,
+        "worker": 1121,
+        "synthesis": 1834
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 126026,
+      "reranker": {
+        "queries": 2,
+        "documents": 200,
+        "documentTokens": 43233,
+        "queryTokens": 23,
+        "elapsedMs": 755.6788160004653,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q100-r0",
+      "agents": 12,
+      "maxConcurrentAgents": 3,
+      "tools": {
+        "grep": {
+          "calls": 27,
+          "admittedCells": 33552,
+          "cumulativeMs": 300.1840449986048
+        },
+        "read_file": {
+          "calls": 62,
+          "admittedCells": 55374,
+          "cumulativeMs": 622.5043700016104
+        },
+        "search": {
+          "calls": 7,
+          "admittedCells": 4436,
+          "cumulativeMs": 2847.015922999941
+        }
+      },
+      "admittedToolCells": 93362,
+      "cumulativeToolMs": 3769.704338000156,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "compose",
+          "topology": "fanout",
+          "tasks": 4
+        },
+        {
+          "action": "discover",
+          "topology": "chain",
+          "tasks": 1
+        }
+      ],
+      "rejectedFindings": 1,
+      "elapsedMs": 685563.6164390002,
+      "prefillMs": 14502.971964000259,
+      "inputTokens": 102109,
+      "generatedTokens": 26359,
+      "generatedByRole": {
+        "controller": 5869,
+        "worker": 18042,
+        "synthesis": 2448
+      },
+      "peakGpuMiB": 26690,
+      "peakLiveCells": 161224,
+      "reranker": {
+        "queries": 7,
+        "documents": 700,
+        "documentTokens": 135743,
+        "queryTokens": 60,
+        "elapsedMs": 2717.7518830001354,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q4-r0",
+      "agents": 5,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "search": {
+          "calls": 3,
+          "admittedCells": 1618,
+          "cumulativeMs": 643.708072999958
+        },
+        "grep": {
+          "calls": 2,
+          "admittedCells": 621,
+          "cumulativeMs": 17.932126000057906
+        },
+        "read_file": {
+          "calls": 6,
+          "admittedCells": 2758,
+          "cumulativeMs": 57.163849000353366
+        }
+      },
+      "admittedToolCells": 4997,
+      "cumulativeToolMs": 718.8040480003692,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "chain",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 160968.2215470001,
+      "prefillMs": 20302.889940999914,
+      "inputTokens": 122320,
+      "generatedTokens": 4752,
+      "generatedByRole": {
+        "controller": 2131,
+        "worker": 1790,
+        "synthesis": 831
+      },
+      "peakGpuMiB": 26696,
+      "peakLiveCells": 129752,
+      "reranker": {
+        "queries": 3,
+        "documents": 300,
+        "documentTokens": 28194,
+        "queryTokens": 29,
+        "elapsedMs": 595.4851149995811,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q12-r0",
+      "agents": 4,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "grep": {
+          "calls": 3,
+          "admittedCells": 3235,
+          "cumulativeMs": 29.278963000047952
+        },
+        "read_file": {
+          "calls": 5,
+          "admittedCells": 12898,
+          "cumulativeMs": 52.69938600016758
+        },
+        "arithmetic": {
+          "calls": 9,
+          "admittedCells": 383,
+          "cumulativeMs": 66.53021199954674
+        }
+      },
+      "admittedToolCells": 16516,
+      "cumulativeToolMs": 148.50856099976227,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "parallel",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 190174.87776099984,
+      "prefillMs": 12656.158459999599,
+      "inputTokens": 93743,
+      "generatedTokens": 6746,
+      "generatedByRole": {
+        "controller": 2234,
+        "worker": 2453,
+        "synthesis": 2059
+      },
+      "peakGpuMiB": 26696,
+      "peakLiveCells": 106247,
+      "reranker": {
+        "queries": 0,
+        "documents": 0,
+        "documentTokens": 0,
+        "queryTokens": 0,
+        "elapsedMs": 0,
+        "failed": 0,
+        "templateTokens": null
+      }
+    },
+    {
+      "id": "q96-r0",
+      "agents": 4,
+      "maxConcurrentAgents": 1,
+      "tools": {
+        "search": {
+          "calls": 3,
+          "admittedCells": 2283,
+          "cumulativeMs": 1112.9887369996868
+        },
+        "grep": {
+          "calls": 5,
+          "admittedCells": 1515,
+          "cumulativeMs": 46.24220100045204
+        },
+        "read_file": {
+          "calls": 5,
+          "admittedCells": 2516,
+          "cumulativeMs": 45.405182000249624
+        }
+      },
+      "admittedToolCells": 6314,
+      "cumulativeToolMs": 1204.6361200003885,
+      "fastForwards": {
+        "stage-commit": 1
+      },
+      "decisions": [
+        {
+          "action": "discover",
+          "topology": "chain",
+          "tasks": 1
+        },
+        {
+          "action": "answer",
+          "topology": "parallel",
+          "tasks": 0
+        }
+      ],
+      "rejectedFindings": 0,
+      "elapsedMs": 123300.24121899996,
+      "prefillMs": 19606.884380000178,
+      "inputTokens": 120149,
+      "generatedTokens": 3276,
+      "generatedByRole": {
+        "controller": 1097,
+        "worker": 1268,
+        "synthesis": 911
+      },
+      "peakGpuMiB": 26696,
+      "peakLiveCells": 127653,
+      "reranker": {
+        "queries": 3,
+        "documents": 300,
+        "documentTokens": 61301,
+        "queryTokens": 20,
+        "elapsedMs": 1073.3955320003442,
+        "failed": 0,
+        "templateTokens": null
+      }
+    }
+  ]
+}

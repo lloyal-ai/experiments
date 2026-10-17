@@ -1,0 +1,130 @@
+{
+  "correct": 5,
+  "total": 10,
+  "percent": 50,
+  "solverFailures": 1,
+  "repeats": [
+    {
+      "repeat": 0,
+      "correct": 5,
+      "total": 10,
+      "percent": 50
+    }
+  ],
+  "label": "aa-lcr-development-corpus-spans-v3",
+  "purpose": "Same declared development questions; source-range evidence and bounded typed-decision repair. Compare all outcomes, not selected reruns.",
+  "git": "d1f691bddcf6f0cf1b97905b0a6bc89e6c999e55",
+  "recipeSha256": "266772b23c8dc25fcfdb421c62240cd5ffe4005d41b3ee269603b6d8870e89de",
+  "reference": {
+    "name": "Artificial Analysis Qwen3.5 4B (Reasoning), AA-LCR v1.1",
+    "percent": 63,
+    "comparableFullSet": false
+  },
+  "solverElapsedMs": 3433030.3176590004,
+  "generatedTokens": 118208,
+  "judgeUsage": {
+    "input": 8770,
+    "output": 252
+  },
+  "rows": [
+    {
+      "questionId": "1",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 173002.342638,
+      "generatedTokens": 5916
+    },
+    {
+      "questionId": "6",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 212914.85180599996,
+      "generatedTokens": 8649
+    },
+    {
+      "questionId": "69",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 770617.708115,
+      "generatedTokens": 27176
+    },
+    {
+      "questionId": "80",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 383669.8046260001,
+      "generatedTokens": 11837
+    },
+    {
+      "questionId": "86",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 552151.7379490002,
+      "generatedTokens": 17901
+    },
+    {
+      "questionId": "94",
+      "repeat": 0,
+      "status": "failed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 180666.91555899987,
+      "generatedTokens": 5596
+    },
+    {
+      "questionId": "100",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 685563.6164390002,
+      "generatedTokens": 26359
+    },
+    {
+      "questionId": "4",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 160968.2215470001,
+      "generatedTokens": 4752
+    },
+    {
+      "questionId": "12",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 190174.87776099984,
+      "generatedTokens": 6746
+    },
+    {
+      "questionId": "96",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 123300.24121899996,
+      "generatedTokens": 3276
+    }
+  ],
+  "interpretation": "Complete predeclared ten-question development pilot, not a full AA-LCR score or an untouched holdout. All failures are included.",
+  "dataset": {
+    "version": "1.1",
+    "revision": "9a77ef56b717057ade24ceab4d273712a0b4f19e"
+  },
+  "resourceTotals": {
+    "rerankerQueries": 33,
+    "rerankerPassages": 3300,
+    "rerankerElapsedMs": 11162.236444000242,
+    "peakGpuMiB": 26696,
+    "maxLiveCells": 161224
+  },
+  "receipts": {
+    "summary.json": "4882e65453e5529c174e9df05174a60765ccf3a518b7a7d89644a952bba0d172",
+    "performance.json": "e3f5f5020faced04cc4704df420b844ef2d474b4d7e8cf048deffdb422958bb0",
+    "manifest.json": "e6587cbf0a5f34389207708728aa87673dbf5e4de31b8bba027f898fd5b5ec6c",
+    "recipe.json": "90c395ad155c05024a5b9fd9cac9b603ecefd24e69279d4497055d8ffab470e0",
+    "plan.json": "3b7aa7076e096f6812ebf58c2aec229c8b84d231e9cedf2335d7001407f6eb11"
+  }
+}
