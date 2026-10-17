@@ -1,0 +1,21 @@
+{
+  "repeats": [
+    0
+  ],
+  "seed": 20261017,
+  "timeoutMs": 19700519,
+  "timeoutEvidence": {
+    "measuredLongestInputTokens": 122139,
+    "prefillMs": 19859.452484,
+    "measuredSingleStreamTokensPerSecond": 40.02094553676689,
+    "conservativeTokensPerSecond": 20,
+    "margin": "50% of measured single-stream throughput, then the specification applies a further 2x time margin"
+  },
+  "datasetRevision": "9a77ef56b717057ade24ceab4d273712a0b4f19e",
+  "label": "integration-v1",
+  "ids": [
+    "1",
+    "5"
+  ],
+  "purpose": "Unscored full-context integration: representative and longest input; not a benchmark score"
+}

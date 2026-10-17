@@ -60,3 +60,54 @@ Four concurrent readers at batch 1024 generated 2747 tokens in 37.30 s, with pea
 GPU usage 19067 MiB; all 16 sequence slots and all cells were released. This verifies
 concurrency and cleanup, not benchmark accuracy: two recovered readability reports
 contained protocol fragments and require stricter semantic validation before scoring.
+
+## Adaptive candidate
+
+The controller reads the question and all documents, then chooses what work is useful.
+It can answer, discover a decomposition, dispatch complementary work, request
+verification, or compare alternative approaches. Decisions can change after findings
+arrive. `composition.ts` uses the public orchestrator callback and supplied factories;
+it does not introduce another scheduler. New answer-driven patterns can be added at
+that callback seam.
+
+Findings are accepted only when their cited quotations occur in the named input
+documents. Missing evidence must be explicit. Failed, capped or malformed findings
+cannot unblock dependencies. These checks establish provenance, not that a claim
+follows logically from a quotation; model verification still matters.
+
+Workers can revisit a numbered document or find a literal phrase in the supplied
+corpus, and perform finite arithmetic. Every document is in the initial context;
+these tools do not replace full-context input or access external sources.
+
+A work stage runs on a direct child of the trunk. Ordinary stages transfer accepted
+findings. Speculative stages retain the pool, select using the same model and evidence,
+and adopt the selected live branch with `Branch.fastForward`. After sibling cleanup,
+the stage commits to the original trunk. Both adoptions preserve parent identity;
+they do not merge sibling KV states or save a copy relative to fork-and-continue.
+
+`src/integration.ts` exercises real-model selection, two-level adoption, continuation
+and cancellation on CUDA. An integration-discovered leaf requirement is reflected
+in the scope order: retained siblings must be released before adopting their parent.
+
+## Run and grade
+
+A declared plan supplies IDs, repeats, seed, purpose and the resolved whole-attempt
+operational timeout. The runner refuses a dirty Git tree and existing attempt
+outputs. Each attempt owns clean inference state and freezes its answer before any
+grading. Stop a batch on systemic runtime faults; do not silently replace poor answers.
+
+    LLOYAL_GPU=cuda LLOYAL_NO_FALLBACK=1 LLOYAL_DEV=1 N_BATCH=2048 \
+    MODEL_PATH=/absolute/model.gguf RUN_DIR=runs/new-run \
+    node --import tsx src/run-aa-lcr.ts plans/development-v1.json PREPARED_DIRECTORY
+
+Grade each frozen submission in a separate process using the earlier grading command,
+with the attempt's `grading` directory as output. Then run:
+
+    node --import tsx src/aggregate-aa-lcr.ts runs/new-run
+
+Aggregation refuses missing, duplicate or unplanned grades and mixed recipes. Solver
+failures remain in the denominator. Repeats are averaged, never selected by grader
+outcome. Run directories include trace JSONL, stage decisions, frozen submissions,
+per-attempt costs, periodic GPU allocation samples and cleanup receipts. Peak GPU and
+live-cell metrics are observations, not a claim about unseen sub-sample transients.
+Raw source documents and traces stay out of Git; publish summary receipts separately.
