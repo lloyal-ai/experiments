@@ -9,13 +9,14 @@ import { useCorpus } from "./corpus-ability.js";
 import { AttemptMeter, LimitedPolicy, LIMITS } from "./budgets.js";
 import { executeWork } from "./solver.js";
 import { SAMPLING } from "./configuration.js";
-import { SYSTEM } from "./prompts.js";
+import { SYSTEM, recipe } from "./prompts.js";
 import { decisionSchema } from "./decisions.js";
 main(function* () {
   const { ctx, out, manifest, trace } = yield* gpuRuntime(
     "corpus-preflight",
     true,
   );
+  writeJson(`${out}/recipe.json`, recipe(), true);
   const problem = readProblem("work/prepared/aa-lcr-v1.1-ready/4.json");
   const events: unknown[] = [];
   const record = (type: string, data: unknown) => {
@@ -52,6 +53,12 @@ main(function* () {
       inputTokens: tokens.length,
       ms: performance.now() - t,
     });
+    const read = corpus.ability.tools.find((t) => t.name === "read_file")!;
+    const offset = yield* read.execute({ filename: "document-1.md", startLine: 112 }) as any;
+    const expected = problem.documents[0]!.text.split("\n").slice(111, 211).join("\n");
+    if (offset.lines?.[0] !== "112-211" || offset.content !== expected)
+      throw new Error("Installed corpus ability failed the offset-read regression");
+    record("offset-read-check", { lines: offset.lines, characters: offset.content.length });
     const search = corpus.ability.tools.find((t) => t.name === "search")!;
     const found = yield* search.execute({
       query: "prompt injection defense evaluation",

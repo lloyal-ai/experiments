@@ -21,7 +21,7 @@ export function recipe() {
     ]),
   );
   const configuration = {
-    name: "adaptive-aa-lcr-evidence-output-v6",
+    name: "adaptive-aa-lcr-corpus-offset-v7",
     system: SYSTEM,
     templates,
     sampling: SAMPLING,
@@ -30,7 +30,9 @@ export function recipe() {
     tools: ["grep", "read_file", "search", "arithmetic"],
     ability: {
       name: "corpus",
-      version: "3.0.0",
+      version: "3.0.0-bench-offset.1",
+      build: JSON.parse(readFileSync("vendor/corpus-offset-build.json", "utf8")),
+      executableSha256: digest(readFileSync("node_modules/@lloyal-labs/corpus-ability/dist/tools/read-file.js")),
       manifestSha256: digest(
         readFileSync("node_modules/@lloyal-labs/corpus-ability/ability.json"),
       ),
