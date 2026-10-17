@@ -14,6 +14,7 @@ Evaluate whether fixed model weights can answer long-context questions better th
 | GPU preflights, development scores and measured costs | [results/](results/) |
 | Corpus fix provenance and packed benchmark build | [vendor/corpus-offset-build.json](vendor/corpus-offset-build.json) |
 | Fixes, corresponding PRs and next-release adoption guidance | [Release handoff](RELEASE-HANDOFF.md) |
+| Operator replacement, host loss and continuation boundaries | [Recovery guide](RECOVERY.md) |
 
 Commands run from **`experiments/adaptive-inference`**. Dependencies and results are independent of the memory and Fieldnote reasoning experiments. AA-LCR is the implemented benchmark; DeepPlanning is next, with no result claimed here.
 
@@ -140,4 +141,4 @@ The V7 launch checks recorded **41 harness tests plus typecheck**, **15 upstream
 
 `python3 scripts/publish-answer-receipts.py RUN_DIRECTORY` waits for both a frozen submission and cleanup metrics, then commits one sanitized receipt per answer under `results/RUN_NAME/`. Later grades create separate updates. Receipts contain source/submission/recipe hashes, numeric costs and verdicts; raw answers, source documents, judge payloads, error text and credentials stay out of Git. `progress.json` keeps interim and final grading separate and reports no full-set percentage until all planned final verdicts exist.
 
-A separate authenticated relay polls every 30 seconds and pushes those commits. It catches up after connectivity loss; the GPU solver does not depend on it. Raw artifacts are also backed up off Brev. See the [release handoff](RELEASE-HANDOFF.md) before carrying any fix into HDK, Glass or the research template; benchmark policy and upstream defects have different owners.
+A separate authenticated relay polls every 30 seconds, backs up the raw run privately, verifies the corresponding submission/metrics and available grade hashes, then pushes new receipt commits. It catches up after connectivity loss; the GPU solver does not depend on it. The [recovery guide](RECOVERY.md) explains the remaining backup window, lost-host continuation and the absence of automatic in-place resume. See the [release handoff](RELEASE-HANDOFF.md) before carrying any fix into HDK, Glass or the research template; benchmark policy and upstream defects have different owners.
