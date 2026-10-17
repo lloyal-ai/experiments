@@ -10,6 +10,7 @@ import { AttemptMeter, LIMITS } from "./budgets.js";
 import { executeWork } from "./solver.js";
 import { SAMPLING } from "./configuration.js";
 import { SYSTEM } from "./prompts.js";
+import { decisionSchema } from "./decisions.js";
 main(function* () {
   const { ctx, out, manifest, trace } = yield* gpuRuntime(
     "corpus-preflight",
@@ -70,9 +71,9 @@ main(function* () {
     const findings = yield* executeWork(
       root,
       problem,
-      {
-        action: "compose",
-        reason: "Validate four full-context corpus workers together",
+      decisionSchema.parse({
+        action: "discover",
+        reason: "Validate four independent full-context discovery workers together",
         topology: "parallel",
         tasks: Array.from({ length: 4 }, (_, i) => ({
           id: `reader_${i}`,
@@ -80,7 +81,7 @@ main(function* () {
           reason: "Exercise the corpus protocol and exact evidence capture",
           dependsOn: [],
         })),
-      },
+      }),
       meter,
       42,
       record,
