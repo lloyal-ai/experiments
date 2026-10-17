@@ -76,7 +76,7 @@ main(function* () {
         topology: "parallel",
         tasks: Array.from({ length: 4 }, (_, i) => ({
           id: `reader_${i}`,
-          instruction: `Use read_file to read lines 1-12 of document-${i + 1}.md. Report its opening subject in one sentence, quoting 8-80 exact characters from those lines as evidence with document number ${i + 1}. Do not solve the benchmark question.`,
+          instruction: `Use read_file to read lines 1-12 of document-${i + 1}.md. Report its opening subject in one sentence, citing a short exact startLine/endLine range from read_file as evidence with document number ${i + 1}. Do not solve the benchmark question.`,
           reason: "Exercise the corpus protocol and exact evidence capture",
           dependsOn: [],
         })),
