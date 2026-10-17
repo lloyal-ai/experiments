@@ -10,12 +10,15 @@
   "scripts": {
     "test": "node --import tsx --test test/*.test.ts",
     "typecheck": "tsc --noEmit",
-    "smoke": "LLOYAL_GPU=cuda LLOYAL_NO_FALLBACK=1 LLOYAL_DEV=1 node --import tsx src/smoke.ts"
+    "smoke": "LLOYAL_GPU=cuda LLOYAL_NO_FALLBACK=1 LLOYAL_DEV=1 node --import tsx src/smoke.ts",
+    "prepare:aa-lcr": "node --import tsx src/prepare-aa-lcr.ts",
+    "preflight": "LLOYAL_GPU=cuda LLOYAL_NO_FALLBACK=1 LLOYAL_DEV=1 node --import tsx src/preflight.ts"
   },
   "dependencies": {
     "@lloyal-labs/lloyal-agents": "7.1.0",
     "@lloyal-labs/rig": "6.1.0",
     "@lloyal-labs/sdk": "5.1.0",
+    "csv-parse": "7.0.3",
     "effection": "4.2.0",
     "eta": "4.6.0",
     "zod": "4.6.7"

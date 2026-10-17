@@ -1,20 +1,16 @@
-import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { closeSync, mkdirSync, openSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { ensure, type Operation } from 'effection';
 import { createContext } from '@lloyal-labs/sdk/node';
 import { initAgents, JsonlTraceWriter, NSeqMax, PoolDefaults, waitUntilSettled } from '@lloyal-labs/lloyal-agents';
-export function digest(data: string | Buffer): string {
-  return createHash('sha256').update(data).digest('hex');
-}
-export function writeJson(path: string, value: unknown): void {
-  writeFileSync(path, JSON.stringify(value, null, 2) + '\n');
-}
+import { digest, writeJson } from './artifacts.js';
+export { digest, writeJson } from './artifacts.js';
+import { benchmarkOptions, verifyModelReceipt } from './configuration.js';
 export function command(file: string, args: string[]): string {
   return execFileSync(file, args, { encoding: 'utf8', maxBuffer: 4 * 1024 * 1024 }).trim();
 }
-export function* gpuRuntime(label: string): Operation<{
+export function* gpuRuntime(label: string, benchmark = false): Operation<{
   ctx: Awaited<ReturnType<typeof createContext>>; out: string;
   trace: JsonlTraceWriter; manifest: Record<string, unknown>;
 }> {
@@ -28,12 +24,12 @@ export function* gpuRuntime(label: string): Operation<{
   const packages = Object.fromEntries(['sdk', 'lloyal-agents', 'rig'].map(name => [
     name, JSON.parse(readFileSync(`node_modules/@lloyal-labs/${name}/package.json`, 'utf8')).version,
   ]));
-  const options = {
+  const options = benchmark ? benchmarkOptions(modelPath, Number(process.env.N_BATCH ?? 512)) : {
     modelPath, nCtx: Number(process.env.N_CTX ?? 32768),
-    nSeqMax: Number(process.env.N_SEQ_MAX ?? 16), nBatch: 512,
+    nSeqMax: Number(process.env.N_SEQ_MAX ?? 16), nBatch: 512, typeK: 'f16' as const, typeV: 'f16' as const,
   };
-  if (!Number.isInteger(options.nCtx) || options.nCtx < 4096 ||
-      !Number.isInteger(options.nSeqMax) || options.nSeqMax < 4)
+  if (!Number.isInteger(options.nCtx!) || options.nCtx! < 4096 ||
+      !Number.isInteger(options.nSeqMax!) || options.nSeqMax! < 4)
     throw new Error('Invalid context or sequence capacity');
   const manifest: Record<string, unknown> = {
     label, startedAt: new Date().toISOString(), modelPath,
@@ -44,6 +40,11 @@ export function* gpuRuntime(label: string): Operation<{
     node: process.version, gpuVariant: 'cuda', fallback: false,
     gpu: command('nvidia-smi', ['--query-gpu=name,uuid,driver_version,memory.total', '--format=csv,noheader']),
   };
+  if (benchmark) {
+    const receipt = JSON.parse(readFileSync(process.env.MODEL_RECEIPT ?? 'work/provision/model-receipt.json', 'utf8'));
+    verifyModelReceipt(receipt, manifest.modelSha256 as string);
+    manifest.modelReceipt = receipt;
+  }
   writeJson(`${out}/manifest.json`, manifest);
   const fd = openSync(`${out}/trace.jsonl`, 'wx');
   const trace = new JsonlTraceWriter(fd);
@@ -58,7 +59,7 @@ export function* gpuRuntime(label: string): Operation<{
   Object.assign(manifest, { loadMs: performance.now() - start, pid: process.pid, gpuMemoryMiB: allocation[1] });
   writeJson(`${out}/manifest.json`, manifest);
   yield* initAgents(ctx, { traceWriter: trace, disposeContext: false });
-  yield* NSeqMax.set(options.nSeqMax);
+  yield* NSeqMax.set(options.nSeqMax!);
   yield* PoolDefaults.set({ enableThinking: true, pruneOnReturn: true, trace: false });
   console.error(`CUDA verified: PID ${process.pid}, ${allocation[1]} MiB. Receipts: ${out}`);
   return { ctx, out, trace, manifest };
