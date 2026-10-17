@@ -1,0 +1,26 @@
+{
+  "inputTokens": 122307,
+  "generatedTokens": 2867,
+  "peakCells": 130773,
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 9552,
+    "queryTokens": 4,
+    "elapsedMs": 194.5923369999946,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "memoryMiB": [
+    26699,
+    18787
+  ],
+  "accepted": 4,
+  "elapsedMs": 58360.269994999995,
+  "cleanup": {
+    "cells": 0,
+    "slots": 16
+  },
+  "git": "3ec67ae9a1a1301ff0b361a1010a01e9e52797b3",
+  "purpose": "Unscored longest-input, corpus-tool, four-worker and cleanup validation."
+}
