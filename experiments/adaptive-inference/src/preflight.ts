@@ -1,3 +1,6 @@
+import { z } from 'zod';
+import { defineOutput } from '@lloyal-labs/rig';
+import { AttemptMeter, LimitedPolicy, BUDGETS } from './budgets.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { main, ensure, scoped } from 'effection';
@@ -43,10 +46,15 @@ main(function* () {
       tokensPerSecond: tokens.length / (prefillMs / 1000), pressure }, true);
     console.error(JSON.stringify({ phase: 'full-input-prefilled', inputTokens: tokens.length, prefillMs }));
     if (process.env.PREFLIGHT_PREFILL_ONLY === '1') return { prefillMs, inputTokens: tokens.length };
+    const report = defineOutput('readability', z.object({
+      subject: z.string(), datedFact: z.string(), quote: z.string(), document: z.number().int(),
+    }));
+    const meter = new AttemptMeter();
+    const policy = new LimitedPolicy('worker', meter, report.tool.name);
     const decoding = performance.now();
     const pool = yield* agentPool({
-      parent: root, enableThinking: true, acceptFreeText: true, capacity: 4, pruneOnReturn: true,
-      budget: { maxTurns: 1, context: { softLimit: 49152, hardLimit: 24576 }, recoveryBudget: 8192 },
+      parent: root, enableThinking: true, capacity: 4, pruneOnReturn: true,
+      terminal: report.tool, policy, maxTurns: BUDGETS.worker.maxTurns,
       orchestrate: parallel([0, 1, 2, 3].map(index => ({
         key: `reader-${index}`, seed: 42 + index,
         systemPrompt: 'You are checking that a shared full-document context is readable. Give a concise factual answer under 80 words.',
@@ -54,14 +62,19 @@ main(function* () {
       }))),
     });
     if (pool.failure) throw pool.failure;
+    const valid = pool.outcomes.map(outcome => ({ key: outcome.key, report: report.read(outcome),
+      failed: outcome.failed, exitReason: outcome.exitReason }));
     writeJson(`${out}/parallel-readability.json`, {
       ms: performance.now() - decoding,
-      outcomes: pool.outcomes, agents: pool.agents.map(a => ({
+      generatedTokens: meter.total, aggregateTokensPerSecond: meter.total / ((performance.now() - decoding) / 1000),
+      valid, outcomes: pool.outcomes, agents: pool.agents.map(a => ({
         agentId: a.agentId, tokens: a.agent.tokenCount, failed: a.agent.failed,
         exitReason: a.agent.exitReason, result: a.agent.result,
       })),
     }, true);
-    return { prefillMs, inputTokens: tokens.length, parallelMs: performance.now() - decoding };
+    if (valid.length !== 4 || valid.some(x => !x.report || x.failed || x.exitReason))
+      throw new Error('Concurrent context-readability validation failed; inspect saved outcomes');
+    return { prefillMs, inputTokens: tokens.length, generatedTokens: meter.total, parallelMs: performance.now() - decoding };
   });
   const remaining = new ContextPressure(ctx);
   if (remaining.cellsUsed !== 0) throw new Error('Preflight left live KV after scope teardown');
