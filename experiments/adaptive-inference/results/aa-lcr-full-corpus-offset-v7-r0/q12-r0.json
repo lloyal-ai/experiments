@@ -48,6 +48,14 @@
         "apiCalls": 1,
         "manifestSha256": "0d4685272a552a816d2295b013245c0e9fd61e9d1e0b80a977cca1e049cca389",
         "gradeSha256": "a95e04f80f6b31bc495c046fe7e7366d7202042fc6603062cd7c8508df5c4bcf"
+      },
+      {
+        "snapshot": "interim-local-20261017T151742Z",
+        "track": "interim",
+        "verdict": "INCORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "0d4685272a552a816d2295b013245c0e9fd61e9d1e0b80a977cca1e049cca389",
+        "gradeSha256": "a95e04f80f6b31bc495c046fe7e7366d7202042fc6603062cd7c8508df5c4bcf"
       }
     ]
   },
