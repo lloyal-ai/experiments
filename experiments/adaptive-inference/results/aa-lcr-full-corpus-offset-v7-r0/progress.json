@@ -1,10 +1,10 @@
 {
   "run": "aa-lcr-full-corpus-offset-v7-r0",
   "planned": 100,
-  "finished": 16,
+  "finished": 17,
   "solverFailures": 0,
-  "generatedTokens": 280254,
-  "solverElapsedMs": 6736631.196262001,
+  "generatedTokens": 304666,
+  "solverElapsedMs": 7252717.208317001,
   "finalGrading": {
     "graded": 0,
     "correct": 0
