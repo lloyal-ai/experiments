@@ -1,0 +1,111 @@
+{
+  "correct": 6,
+  "total": 10,
+  "percent": 60,
+  "solverFailures": 0,
+  "repeats": [
+    {
+      "repeat": 0,
+      "correct": 6,
+      "total": 10,
+      "percent": 60
+    }
+  ],
+  "label": "aa-lcr-development-evidence-checks-v5",
+  "purpose": "Complete same-set development evaluation of concurrent discovery, exact metric/population/source checks, and public captured final report text. Official grading unchanged. V4 scored plan was not run; its GPU preflight passed before this generic post-v3 revision.",
+  "git": "feab5587c8cb8f6fb4dd4bc6f5b1011dc3c584e4",
+  "recipeSha256": "a71f51f4fd0c32db339ef378eb894480615a6d774f5bd8e36abaff8c7f26cc78",
+  "reference": {
+    "name": "Artificial Analysis Qwen3.5 4B (Reasoning), AA-LCR v1.1",
+    "percent": 63,
+    "comparableFullSet": false
+  },
+  "solverElapsedMs": 5509905.51727,
+  "generatedTokens": 246687,
+  "judgeUsage": {
+    "input": 9994,
+    "output": 531
+  },
+  "rows": [
+    {
+      "questionId": "1",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 254091.62033900002,
+      "generatedTokens": 8506
+    },
+    {
+      "questionId": "6",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 266943.35418300005,
+      "generatedTokens": 10965
+    },
+    {
+      "questionId": "69",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 740260.1539389999,
+      "generatedTokens": 36654
+    },
+    {
+      "questionId": "80",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 386082.9663789999,
+      "generatedTokens": 16027
+    },
+    {
+      "questionId": "86",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 913948.46746,
+      "generatedTokens": 42882
+    },
+    {
+      "questionId": "94",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 270630.219879,
+      "generatedTokens": 10169
+    },
+    {
+      "questionId": "100",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "INCORRECT",
+      "elapsedMs": 1793194.2726000003,
+      "generatedTokens": 88504
+    },
+    {
+      "questionId": "4",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 139424.41396499984,
+      "generatedTokens": 5029
+    },
+    {
+      "questionId": "12",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 417209.42421999946,
+      "generatedTokens": 18230
+    },
+    {
+      "questionId": "96",
+      "repeat": 0,
+      "status": "completed",
+      "verdict": "CORRECT",
+      "elapsedMs": 328120.62430599984,
+      "generatedTokens": 9721
+    }
+  ]
+}

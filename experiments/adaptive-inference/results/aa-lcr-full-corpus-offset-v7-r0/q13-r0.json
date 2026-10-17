@@ -1,0 +1,63 @@
+{
+  "run": "aa-lcr-full-corpus-offset-v7-r0",
+  "attemptId": "q13-r0",
+  "questionId": "13",
+  "repeat": 0,
+  "status": "completed",
+  "solverGit": "32d1eee9535f0713cbcd0730437f30018b820100",
+  "recipeSha256": "6c7b031b6f7a992ab2630332d126cb6628b497e707b74f4fdd33aca3b7a599da",
+  "datasetRevision": "9a77ef56b717057ade24ceab4d273712a0b4f19e",
+  "promptSha256": "4990d7437d197014ba6d861bfd4eb08c103e78206614a95b56c645abb9093c03",
+  "submissionSha256": "5d758f98425dd7b375d2ebd3dde4613f5aba1e33b897c6049540113c70b03eb6",
+  "metricsSha256": "23b282a3341367563234b47277e2040f5daec417b844b0b8c4502772b0365924",
+  "answerSha256": "e0025724ba27cd436e54856cfe8238bf93bf32c98071f9420c5ab892beed2d55",
+  "failureRecorded": false,
+  "metrics": {
+    "elapsedMs": 172042.46013800055,
+    "generatedTokens": 7296,
+    "peakLiveCells": 118491,
+    "peakGpuMiB": 26694,
+    "remainingCells": 0,
+    "availableSequences": 16
+  },
+  "input": {
+    "inputTokens": 93716,
+    "prefillMs": 12512.460313000716
+  },
+  "generatedByRole": {
+    "controller": 1548,
+    "worker": 5277,
+    "synthesis": 471
+  },
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 4003,
+    "queryTokens": 8,
+    "elapsedMs": 366.481354999356,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "grading": {
+    "final": null,
+    "interim": [
+      {
+        "snapshot": "interim-20261017T144246Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "2395ec9779c45fac230c1447a5bb01a0a98468b6a3c45f52b163797d5954a89d",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      },
+      {
+        "snapshot": "interim-local-20261017T151742Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "2395ec9779c45fac230c1447a5bb01a0a98468b6a3c45f52b163797d5954a89d",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      }
+    ]
+  },
+  "rawArtifacts": "Private backup: full submission, trace, source documents and judge request/response; not included in this receipt."
+}

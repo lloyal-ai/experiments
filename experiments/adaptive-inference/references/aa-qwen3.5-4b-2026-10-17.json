@@ -1,0 +1,39 @@
+{
+  "source": "https://artificialanalysis.ai/models/qwen3-5-4b?models=qwen3-5-4b#intelligence-breakdown",
+  "accessedOn": "2026-10-17",
+  "publisher": "Artificial Analysis",
+  "model": "Qwen3.5 4B",
+  "variant": "Reasoning",
+  "verification": "Public browser evaluation charts, filtered to this model; all 28 evaluations selected. Values transcribed at displayed precision.",
+  "primaryReference": {
+    "benchmark": "AA-LCR",
+    "version": "1.1",
+    "displayedScorePercent": 63,
+    "comparisonUnit": "percentage points",
+    "exactUnroundedScore": null,
+    "publishedRepeatCount": null,
+    "publishedRuntime": null,
+    "publishedWeightPrecision": null,
+    "publishedCachePrecision": null
+  },
+  "otherDisplayedScoresPercent": {
+    "GPQA Diamond": 77,
+    "IFBench": 52,
+    "Humanity's Last Exam": 10,
+    "MMMU-Pro": 65,
+    "Terminal-Bench 2.1": 26,
+    "Terminal-Bench Hard": 18,
+    "tau2-Bench Telecom": 92,
+    "tau3-Banking": 7,
+    "AA-Omniscience Accuracy": 15,
+    "AA-Omniscience Non-Hallucination Rate": 13
+  },
+  "underReviewDisplayedScoresPercent": { "CritPt": 0 },
+  "intelligenceIndex": { "version": "4.3.2", "score": 13, "status": "estimated" },
+  "comparisonNotes": [
+    "63% is the AA-LCR v1.1 published reference, not the overall Intelligence Index.",
+    "Qwen's own model-card AA-LCR result of 57.0 is a separate publisher's result and is not substituted for this reference.",
+    "Missing chart data is not a zero score. LiveCodeBench and AIME 2025 showed no data for this model.",
+    "Our full-context compositional harness and compute configuration must be disclosed separately from this published reference."
+  ]
+}

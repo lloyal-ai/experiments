@@ -1,0 +1,20 @@
+{
+  "kind": "local-benchmark-build",
+  "signedRelease": false,
+  "package": "@lloyal-labs/corpus-ability",
+  "version": "3.0.0-bench-offset.1",
+  "repository": "https://github.com/lloyal-ai/hdk",
+  "git": "ae79ebc2c17166b68d9871301ade22372aff755e",
+  "baseGit": "490b014013b9e8319e8a9fb20489a9125ae46e18",
+  "tarball": "lloyal-labs-corpus-ability-3.0.0-bench-offset.1.tgz",
+  "sha256": "5d6e83b504d85e61c513b004588f8cc0edb27e6581c80f96094bffba4e035104",
+  "compiledBehaviorDiff": [
+    "dist/tools/read-file.js"
+  ],
+  "validation": {
+    "redFirstRegressions": 3,
+    "corpusTestsPassed": 15,
+    "typescriptBuild": "passed"
+  },
+  "change": "An omitted endLine uses a window from startLine; attended-history subtraction uses the same span."
+}

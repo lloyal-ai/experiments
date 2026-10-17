@@ -1,0 +1,104 @@
+{
+  "repeats": [
+    0
+  ],
+  "seed": 20261017,
+  "timeoutMs": 19700519,
+  "timeoutEvidence": {
+    "measuredLongestInputTokens": 122139,
+    "prefillMs": 19859.452484,
+    "measuredSingleStreamTokensPerSecond": 40.02094553676689,
+    "conservativeTokensPerSecond": 20,
+    "margin": "50% of measured single-stream throughput, then the specification applies a further 2x time margin"
+  },
+  "datasetRevision": "9a77ef56b717057ade24ceab4d273712a0b4f19e",
+  "label": "aa-lcr-development-composable-v4",
+  "ids": [
+    "1",
+    "6",
+    "69",
+    "80",
+    "86",
+    "94",
+    "100",
+    "4",
+    "12",
+    "96"
+  ],
+  "purpose": "The same ten declared development questions and seed, with independent discovery tasks permitted. Preserve all v3 outcomes; this is a separate complete candidate, never a selected rerun.",
+  "selection": {
+    "rule": "First numbered question per category; longest actual Qwen input; remaining positions at ascending 25th/75th/50th context-length percentile, skipping duplicates. No answer keys or correctness consulted.",
+    "cases": [
+      {
+        "id": "1",
+        "inputTokens": 103829,
+        "publishedInputTokens": 94494,
+        "promptSha256": "a269513ecbc7823bd4a2caad9d6678f4ec82484d65963b4a68326da959afafec",
+        "category": "Academia"
+      },
+      {
+        "id": "6",
+        "inputTokens": 91171,
+        "publishedInputTokens": 71709,
+        "promptSha256": "d456bb035f8f645482f18e8c77466b3043c0453673b252053a5f1358967a96fa",
+        "category": "Company_Documents"
+      },
+      {
+        "id": "69",
+        "inputTokens": 120385,
+        "publishedInputTokens": 114563,
+        "promptSha256": "359d28a7774e0622743d7735c6e163f55428441ca63f871d4ba59ff93dee8870",
+        "category": "Government_Consultations"
+      },
+      {
+        "id": "80",
+        "inputTokens": 116111,
+        "publishedInputTokens": 109057,
+        "promptSha256": "c89ba1e8ffef3f7150a9ddd3769ee120fdc8796343ba407cac2fe46cc07c3eaf",
+        "category": "Legal"
+      },
+      {
+        "id": "86",
+        "inputTokens": 111754,
+        "publishedInputTokens": 106087,
+        "promptSha256": "3df19a67e17116f073be3de3a442c9c48f1f289e8b3dc65533ea555b3bdca97b",
+        "category": "Industry_Reports"
+      },
+      {
+        "id": "94",
+        "inputTokens": 119972,
+        "publishedInputTokens": 110550,
+        "promptSha256": "cff9397165af42a045add2d4fc452c90557765da2479cf72964521b2049d8807",
+        "category": "Marketing"
+      },
+      {
+        "id": "100",
+        "inputTokens": 101928,
+        "publishedInputTokens": 94652,
+        "promptSha256": "fefe163cf91dd89f4cd856316cf7c15dc27f5058bd827d2f7cd7b49acf286be8",
+        "category": "Survey_Reports"
+      },
+      {
+        "id": "4",
+        "inputTokens": 122139,
+        "publishedInputTokens": 113263,
+        "promptSha256": "19961bf1b04e2fc7193eaeb0d7eefa2342aee660c58d5c1ae3464edde01f73a8",
+        "category": "Academia"
+      },
+      {
+        "id": "12",
+        "inputTokens": 93562,
+        "publishedInputTokens": 73597,
+        "promptSha256": "d62c8c82fcf3d663c6e8ee347b8896be89665d482cae5ba2b85d13edb201ece1",
+        "category": "Company_Documents"
+      },
+      {
+        "id": "96",
+        "inputTokens": 119968,
+        "publishedInputTokens": 110546,
+        "promptSha256": "23101972e889e54ae07174714b08f1a0718bd053a498c08b474341c226a8bb46",
+        "category": "Marketing"
+      }
+    ]
+  }
+}

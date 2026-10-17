@@ -1,0 +1,72 @@
+{
+  "run": "aa-lcr-full-corpus-offset-v7-r0",
+  "attemptId": "q1-r0",
+  "questionId": "1",
+  "repeat": 0,
+  "status": "completed",
+  "solverGit": "32d1eee9535f0713cbcd0730437f30018b820100",
+  "recipeSha256": "6c7b031b6f7a992ab2630332d126cb6628b497e707b74f4fdd33aca3b7a599da",
+  "datasetRevision": "9a77ef56b717057ade24ceab4d273712a0b4f19e",
+  "promptSha256": "a269513ecbc7823bd4a2caad9d6678f4ec82484d65963b4a68326da959afafec",
+  "submissionSha256": "530b3eecfcbc2a2c938d4105e92cb07fa1bb01cc48cec0aae1bc4ca2a5ad4e15",
+  "metricsSha256": "fe4e2bbfc4bd5c1cb52f24be05118d0cf2afd887aeef970d2b6f1f88b2bb52ac",
+  "answerSha256": "d48b53bbac208a81dcb4ecf01abad6f006d9c0335486290b3f1152da358fd9a3",
+  "failureRecorded": false,
+  "metrics": {
+    "elapsedMs": 524732.992113,
+    "generatedTokens": 20594,
+    "peakLiveCells": 121046,
+    "peakGpuMiB": 26690,
+    "remainingCells": 0,
+    "availableSequences": 16
+  },
+  "input": {
+    "inputTokens": 104010,
+    "prefillMs": 14617.752123000002
+  },
+  "generatedByRole": {
+    "controller": 5173,
+    "worker": 8853,
+    "verifier": 5720,
+    "synthesis": 848
+  },
+  "reranker": {
+    "queries": 5,
+    "documents": 500,
+    "documentTokens": 99175,
+    "queryTokens": 33,
+    "elapsedMs": 2574.9508459999633,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "grading": {
+    "final": null,
+    "interim": [
+      {
+        "snapshot": "interim-20261017T134951Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "f9cb051c8cc1a855b70eb76a7adaf586b762cc6737fffbcacfda286b5d8038d8",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      },
+      {
+        "snapshot": "interim-20261017T144246Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "f9cb051c8cc1a855b70eb76a7adaf586b762cc6737fffbcacfda286b5d8038d8",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      },
+      {
+        "snapshot": "interim-local-20261017T151742Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "f9cb051c8cc1a855b70eb76a7adaf586b762cc6737fffbcacfda286b5d8038d8",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      }
+    ]
+  },
+  "rawArtifacts": "Private backup: full submission, trace, source documents and judge request/response; not included in this receipt."
+}

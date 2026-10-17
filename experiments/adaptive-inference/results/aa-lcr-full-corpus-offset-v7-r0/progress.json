@@ -1,0 +1,20 @@
+{
+  "run": "aa-lcr-full-corpus-offset-v7-r0",
+  "planned": 100,
+  "finished": 19,
+  "solverFailures": 0,
+  "generatedTokens": 347682,
+  "solverElapsedMs": 8298920.466351002,
+  "finalGrading": {
+    "graded": 0,
+    "correct": 0
+  },
+  "interimGrading": {
+    "graded": 19,
+    "correct": 12,
+    "fullSetComparison": false
+  },
+  "fullSetScorePercent": null,
+  "status": "in-progress",
+  "note": "Completed execution is not correctness. Interim grades are separate observations, never substituted for the final grading track. All planned cases remain in the final denominator."
+}

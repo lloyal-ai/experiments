@@ -1,0 +1,54 @@
+{
+  "inputTokens": 122307,
+  "generatedTokens": 1616,
+  "peakCells": 132013,
+  "reranker": {
+    "queries": 1,
+    "documents": 100,
+    "documentTokens": 9552,
+    "queryTokens": 4,
+    "elapsedMs": 194.1735090000002,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "memoryMiB": [
+    26699,
+    18787
+  ],
+  "accepted": 4,
+  "elapsedMs": 47755.820497999994,
+  "cleanup": {
+    "cells": 0,
+    "slots": 16
+  },
+  "git": "3d42269133233f4d61b6866f5e8d206a30c3c376",
+  "rawReceiptSha256": "053fbc7718686097fb4f9d6f5bae952beada5ef1ec95215893b60a05e87e66e5",
+  "purpose": "Unscored full-context corpus, corrected installed offset read, four concurrent workers, answer-only typed decision, GPU headroom and cleanup check; not a benchmark score.",
+  "offsetReadCheck": {
+    "lines": [
+      "112-211"
+    ],
+    "characters": 4920
+  },
+  "answerDecisionAccepted": true,
+  "abilityBuild": {
+    "kind": "local-benchmark-build",
+    "signedRelease": false,
+    "package": "@lloyal-labs/corpus-ability",
+    "version": "3.0.0-bench-offset.1",
+    "repository": "https://github.com/lloyal-ai/hdk",
+    "git": "ae79ebc2c17166b68d9871301ade22372aff755e",
+    "baseGit": "490b014013b9e8319e8a9fb20489a9125ae46e18",
+    "tarball": "lloyal-labs-corpus-ability-3.0.0-bench-offset.1.tgz",
+    "sha256": "5d6e83b504d85e61c513b004588f8cc0edb27e6581c80f96094bffba4e035104",
+    "compiledBehaviorDiff": [
+      "dist/tools/read-file.js"
+    ],
+    "validation": {
+      "redFirstRegressions": 3,
+      "corpusTestsPassed": 15,
+      "typescriptBuild": "passed"
+    },
+    "change": "An omitted endLine uses a window from startLine; attended-history subtraction uses the same span."
+  }
+}
