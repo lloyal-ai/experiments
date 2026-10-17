@@ -1,0 +1,55 @@
+{
+  "run": "aa-lcr-full-corpus-offset-v7-r0",
+  "attemptId": "q8-r0",
+  "questionId": "8",
+  "repeat": 0,
+  "status": "completed",
+  "solverGit": "32d1eee9535f0713cbcd0730437f30018b820100",
+  "recipeSha256": "6c7b031b6f7a992ab2630332d126cb6628b497e707b74f4fdd33aca3b7a599da",
+  "datasetRevision": "9a77ef56b717057ade24ceab4d273712a0b4f19e",
+  "promptSha256": "cf4d373f82b12c2bb334b523672786d91811ffe080c8c6231951105d54d5cd8a",
+  "submissionSha256": "287c6f88fb2a6c4e302e53df918585de1b10f460de90efc2ded6a3b2e849793f",
+  "metricsSha256": "18e41c2a08bf3aac28fc2092969669429123e36b8b649554342f1e87183ae524",
+  "answerSha256": "c16b8ae78f2815e174a7b0b27bafdfd7ef8f757d931c716a9b37394e2cfc2271",
+  "failureRecorded": false,
+  "metrics": {
+    "elapsedMs": 387930.8062180001,
+    "generatedTokens": 21366,
+    "peakLiveCells": 129270,
+    "peakGpuMiB": 26694,
+    "remainingCells": 0,
+    "availableSequences": 16
+  },
+  "input": {
+    "inputTokens": 91401,
+    "prefillMs": 12029.89738400001
+  },
+  "generatedByRole": {
+    "controller": 2480,
+    "worker": 17147,
+    "synthesis": 1739
+  },
+  "reranker": {
+    "queries": 3,
+    "documents": 300,
+    "documentTokens": 15760,
+    "queryTokens": 22,
+    "elapsedMs": 805.7695349999703,
+    "failed": 0,
+    "templateTokens": null
+  },
+  "grading": {
+    "final": null,
+    "interim": [
+      {
+        "snapshot": "interim-20261017T134951Z",
+        "track": "interim",
+        "verdict": "CORRECT",
+        "apiCalls": 1,
+        "manifestSha256": "e2bf425855903fc406c24ba4f2153310e15b13e4b818d98466b2bd22bc0c43f2",
+        "gradeSha256": "4761c08a672bb55ba0a855ab6e7431b39304f0b30964ec5dce46e3d14c5ce7b6"
+      }
+    ]
+  },
+  "rawArtifacts": "Private backup: full submission, trace, source documents and judge request/response; not included in this receipt."
+}
