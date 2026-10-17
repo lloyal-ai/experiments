@@ -2,13 +2,12 @@
 
 Benchmark solvers composed from Lloyal's released SDK, agents and rig APIs. The objective is stronger task performance from fixed model weights through inference-time planning, exploration, verification and selection.
 
-Implementation and GPU execution happen on Brev. This directory is independent of the earlier memory and reasoning experiments. The first checkpoint pins the current public runtime; runner and benchmark adapters follow in subsequent commits.
+Implementation and GPU execution happen on Brev. This directory is independent of the earlier memory and reasoning experiments. The initial runner validates CUDA loading, agent execution and public fast-forward behavior. AA-LCR is the first benchmark target, followed by DeepPlanning.
 
 ## Environment
 
 - Node.js 24 or newer; `npm ci` restores exact package versions.
 - NVIDIA CUDA GPU for native evaluations. CPU fallback must be disabled.
-- Docker for isolated execution of generated programs.
 - Model weights, downloaded benchmarks and run artifacts stay outside Git.
 
 The lockfile pins SDK 5.1.0, agents 7.1.0, rig 6.1.0 and the transitive native binding 4.1.0. `Branch.fastForward` is available through the SDK. Harness code must use public APIs; no native addon access or replacement scheduling loop.
@@ -19,4 +18,10 @@ Fetch branch `feat/adaptive-inference-evals` in `lloyal-ai/experiments`, run `np
 
 ## Evaluation boundaries
 
-Only public problem statements, starter code and public examples reach solvers. Hidden tests grade frozen submissions in a separate phase. Development runs are labeled as such; a small pilot is not a benchmark score. The benchmark shortlist remains open, and adapters are chosen for executable feedback and demonstrated opportunity.
+Only public questions and supplied documents reach the AA-LCR solver. Reference answers grade frozen submissions in a separate process. Development runs are labeled as such; a small pilot is not a full benchmark score. Published model scores are external references, not local measurements.
+
+## Mechanics smoke
+
+Run `MODEL_PATH=/path/to/model.gguf npm run smoke` to validate the installed public runtime on CUDA. This short check defaults to a 32K context and is not the AA-LCR configuration. AA-LCR targets BF16 weights, F16 attention KV and 262,144 context after capacity validation. No benchmark score is claimed by the smoke.
+
+`npm test` checks harness contracts; `npm run typecheck` checks TypeScript. Neither substitutes for real-model evaluation.
